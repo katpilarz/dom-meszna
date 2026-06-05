@@ -12,7 +12,7 @@ const floors = [
     rooms: [
       'Wiatrołap',
       'Przedpokój',
-      'Pokój',
+      'Pomieszczenie gospodarcze / Pokój',
       'Kotłownia',
       'Pomieszczenie gospodarcze',
       'Garaż',

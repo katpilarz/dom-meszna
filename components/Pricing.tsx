@@ -124,7 +124,7 @@ export default function Pricing() {
             <div className="label-mono opacity-50 mb-3">Forma własności</div>
             <div className="display-serif text-3xl">Pełna własność</div>
             <div className="text-xs opacity-60 mt-2">
-              Działka 1 600 m² · ogrodzona
+              Działka 1600 m² · ogrodzona
             </div>
           </div>
           <div className="pricing-detail">
@@ -139,9 +139,9 @@ export default function Pricing() {
         </div>
 
         <div className="pricing-detail mt-20 max-w-4xl">
-          <p className="display-serif text-2xl md:text-4xl italic leading-snug opacity-95">
+          <p className="display-serif text-6xl italic leading-snug opacity-95">
             Cena{' '}
-            <span className="text-[var(--accent)] not-italic">wprost od właścicielki</span>.
+            <span className="text-[var(--accent)] not-italic">wprost od właścicielki</span>.<br></br>
             Bez prowizji, bez doliczonych marż.
           </p>
           <div className="mt-4 label-mono opacity-60">

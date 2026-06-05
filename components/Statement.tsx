@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const text =
-  '402 m2 powierzchni całkowitej. 170 m2 powierzchni użytkowej. 1880 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
+  '402 m2 powierzchni całkowitej. 170 m2 powierzchni użytkowej. 1600 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
 
 export default function Statement() {
   const root = useRef<HTMLElement>(null);
