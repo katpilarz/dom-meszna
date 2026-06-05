@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const stats = [
   { label: 'Powierzchnia całkowita', value: '402,35', unit: 'm²' },
   { label: 'Powierzchnia użytkowa', value: '170,75', unit: 'm²' },
-  { label: 'Działka', value: '1600', unit: 'm²' },
+  { label: 'Działka', value: '1880', unit: 'm²' },
   { label: 'Pokoje', value: '7', unit: '' },
   { label: 'Kondygnacje', value: '3', unit: '' },
   { label: 'Rok budowy', value: '2018', unit: '' },
@@ -54,7 +54,7 @@ export default function Stats() {
 
   return (
     <section ref={root} id="dom" className="py-24 md:py-32 relative">
-      <div className="mx-auto max-w-[1800px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-16">
           <div className="label-mono opacity-60">01 — Najważniejsze fakty</div>
           <div className="label-mono opacity-60 hidden md:block">Studio Atrium · projekt 2006 · realizacja 2018</div>

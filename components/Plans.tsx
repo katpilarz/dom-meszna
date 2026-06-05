@@ -45,7 +45,7 @@ export default function Plans() {
 
   return (
     <section ref={root} id="plany" className="py-32 md:py-48 relative">
-      <div className="mx-auto max-w-[1800px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="plans-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">08 — Dokumentacja</div>

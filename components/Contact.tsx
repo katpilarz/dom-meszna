@@ -58,7 +58,7 @@ export default function Contact() {
       ref={root}
       className="py-32 md:py-48 relative"
     >
-      <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex items-center justify-between mb-16">
           <div className="label-mono opacity-60">10 — Kontakt</div>
           <div className="label-mono opacity-60 hidden md:block">
@@ -86,10 +86,10 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-12 gap-6 md:gap-16">
+        <div className="grid grid-cols-12 gap-6 lg:gap-16">
           {/* Form */}
           <form
-            className="contact-form col-span-12 md:col-span-7 space-y-8"
+            className="contact-form col-span-12 lg:col-span-7 space-y-8"
             name="kontakt"
             method="POST"
             data-netlify="true"
@@ -233,14 +233,14 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="group inline-flex items-center justify-between gap-6 w-full md:w-auto lg:min-w-[400px] border border-[var(--fg)] px-6 md:px-8 py-5 md:py-6 hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
+                className="group inline-flex items-center justify-between gap-6 w-full lg:min-w-[400px] border border-[var(--fg)] px-6 md:px-8 py-5 md:py-6 hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
               >
-                <span className="display-serif italic text-lg md:text-xl">
+                <span className="display-serif italic text-2xl">
                   {status === 'submitting' ? 'Wysyłam…' : 'Wyślij zapytanie'}
                 </span>
                 <Arrow size={34} className="transition-transform duration-500 group-hover:translate-x-1.5" />
               </button>
-              <p className="text-xs opacity-60 mt-5 max-w-md leading-relaxed">
+              <p className="text-xs opacity-60 mt-5 max-w-full leading-relaxed">
                 Wysyłając zapytanie, potwierdzasz zapoznanie się z{' '}
                 <a href="/polityka-prywatnosci" className="underline decoration-dotted underline-offset-2 hover:text-[var(--accent)]">
                   polityką prywatności
@@ -254,7 +254,7 @@ export default function Contact() {
           </form>
 
           {/* Contact info */}
-          <div className="contact-info col-span-12 md:col-span-5 mt-12 md:mt-0 md:pl-8 lg:pl-12 lg:border-l lg:border-[var(--line)]">
+          <div className="contact-info col-span-12 lg:col-span-5 mt-12 lg:mt-0 pl-0 lg:pl-16 lg:border-l lg:border-[var(--line)]">
             <div className="contact-info-item mb-10">
               <div className="label-mono opacity-50 mb-2">Sprzedająca</div>
               <div className="display-serif text-2xl">

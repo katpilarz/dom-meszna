@@ -59,7 +59,7 @@ export default function Pricing() {
 
   return (
     <section ref={root} className="py-32 md:py-48 relative bg-[var(--bg-alt)]">
-      <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex items-center justify-between mb-16">
           <div className="label-mono opacity-60">09 — Oferta</div>
           <div className="label-mono opacity-60 hidden md:block">

@@ -47,19 +47,17 @@ export default function Gallery() {
 
   return (
     <section ref={root} id="galeria" className="py-32 md:py-48 relative">
-      <div className="mx-auto max-w-[1800px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="gallery-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">03 — Galeria</div>
             <div className="label-mono opacity-60 hidden md:block">Zdjęcia: luty 2024</div>
           </div>
           <h2 className="display-serif" style={{ fontSize: 'clamp(2.5rem, 9vw, 9rem)', lineHeight: 0.85, letterSpacing: '-0.03em' }}>
-            <span className="inline-block">Bryła</span>&nbsp;
-            <span className="inline-block italic">i</span>&nbsp;
-            <span className="inline-block italic text-[var(--accent)]">krajobraz.</span>
+            <span className="inline-block">Architektura</span>&nbsp;
             <br />
-            <span className="inline-block">Z każdej</span>&nbsp;
-            <span className="inline-block italic">strony.</span>
+            <span className="inline-block">wpisana w</span>&nbsp;
+            <span className="inline-block italic text-[var(--accent)]">krajobraz.</span>
           </h2>
         </div>
 
