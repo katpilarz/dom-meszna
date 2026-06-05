@@ -107,7 +107,7 @@ export default function Floorplan() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--line-strong)] border border-[var(--line-strong)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--line-strong)] rounded-sm border border-[var(--line-strong)]">
           {floors.map((floor) => (
             <div
               key={floor.level}

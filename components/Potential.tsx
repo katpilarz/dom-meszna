@@ -102,7 +102,7 @@ export default function Potential() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--line-strong)] border border-[var(--line-strong)] mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--line-strong)] rounded-sm border border-[var(--line-strong)] mb-24">
           {opportunities.map((opp) => (
             <div
               key={opp.n}

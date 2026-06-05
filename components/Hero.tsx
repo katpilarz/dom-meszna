@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section ref={root} id="hero" className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <div className="hero-img-bg absolute inset-[-5%]">
+        <div className="hero-img-bg absolute inset-0">
           <Image
             src="/images/house/house-01.jpg"
             alt="Dom w Mesznej — elewacja południowa"
@@ -46,7 +46,7 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(14,14,12,0.55) 0%, rgba(14,14,12,0.5) 30%, rgba(14,14,12,0.78) 50%, rgba(14,14,12,0.72) 68%, rgba(14,14,12,0.6) 82%, rgba(14,14,12,0.78) 92%, rgba(14,14,12,0.72) 100%)',
+              'linear-gradient(to bottom, rgba(14,14,12,0.55) 0%, rgba(14,14,12,0.3) 30%, rgba(14,14,12,0.7) 50%, rgba(14,14,12,0.78) 68%, rgba(14,14,12,0.8) 92%, rgba(14,14,12,0.88) 100%)',
           }}
         />
       </div>

@@ -63,7 +63,7 @@ export default function Plans() {
           {plans.map((p) => (
             <div key={p.title} className="plan-item">
               <div
-                className="plan-paper relative flex items-center justify-center overflow-hidden"
+                className="plan-paper rounded-sm relative flex items-center justify-center overflow-hidden"
                 style={{
                   background: '#f4f1ea',
                   padding: '1.5rem',
@@ -88,7 +88,7 @@ export default function Plans() {
           ))}
         </div>
 
-        <div className="plans-note mt-16 p-6 md:p-8 border border-[var(--line-strong)] max-w-3xl">
+        <div className="plans-note mt-16 p-6 md:p-8 rounded-sm border border-[var(--line-strong)] max-w-3xl">
           <div className="label-mono text-[var(--accent)] mb-3">✦ Pełna dokumentacja</div>
           <p className="text-sm leading-relaxed opacity-80">
             Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.

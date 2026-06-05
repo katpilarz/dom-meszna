@@ -50,11 +50,12 @@ export default function Home() {
           position="top"
           headline={
             <span>
-              Kolumny, kamień, kąt 39°.
+              Kolumny, kamień.
               <br />
               <span className="italic" style={{ color: '#d4a76a' }}>
-                Klasyka, która się broni.
+                Klasyka&nbsp;
               </span>
+              która się broni
             </span>
           }
           accent="Projekt: Studio Atrium, Bielsko-Biała. Keramzyt, wełna 20 cm, ceramiczna dachówka."
