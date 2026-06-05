@@ -7,25 +7,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const interiors = [
   // Strefa dzienna — parter
-  { src: '/images/interior/interior-30.jpg', label: 'Salon z kominkiem', tag: '01', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
-  { src: '/images/interior/interior-12.jpg', label: 'Sypialnia z łukowym oknem', tag: '02', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/interior/interior-31.jpg', label: 'Otwarta strefa dzienna z kominkiem', tag: '03', span: 'col-span-12', aspect: '21/9' },
-  { src: '/images/interior/interior-07.jpg', label: 'Kuchnia otwarta na salon', tag: '04', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-30.jpg', label: 'Strefa wypoczynkowa', tag: '01', span: 'col-span-12', aspect: '16/9' },
+  { src: '/images/interior/interior-42.jpg', label: 'Otwarta strefa dzienna z kominkiem', tag: '02', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-31.jpg', label: 'Salon z kominkiem', tag: '03', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-07.jpg', label: 'Otwarta kuchnia', tag: '04', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
   { src: '/images/interior/interior-41.jpg', label: 'Kominek z bliska', tag: '05', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  // Łazienki + hol
-  { src: '/images/interior/interior-28.jpg', label: 'Łazienka główna z wanną z hydromasażem', tag: '06', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
-  { src: '/images/interior/interior-32.jpg', label: 'Hol z klatką schodową', tag: '07', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/interior/interior-29.jpg', label: 'Druga łazienka z bidetem', tag: '08', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  { src: '/images/interior/interior-42.jpg', label: 'Strefa wypoczynkowa', tag: '09', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  // Strefa nocna + biuro + poddasze
-  { src: '/images/interior/interior-22.jpg', label: 'Domowe biuro', tag: '10', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/interior/interior-18.jpg', label: 'Pokój dziecięcy', tag: '11', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/interior/interior-17.jpg', label: 'Kącik na poddaszu', tag: '12', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/interior/interior-15.jpg', label: 'Garderoba z widokiem na góry', tag: '13', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  { src: '/images/interior/interior-24.jpg', label: 'Pokój na poddaszu z widokiem na las', tag: '14', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  // Closing wide shots
-  { src: '/images/interior/interior-43.jpg', label: 'Pokój dzienny', tag: '15', span: 'col-span-12 md:col-span-7', aspect: '4/3' },
-  { src: '/images/interior/interior-14.jpg', label: 'Pokój z balkonem', tag: '16', span: 'col-span-12 md:col-span-5', aspect: '4/3' },
+  { src: '/images/interior/interior-46.jpg', label: 'Strefa wypoczynkowa dzienna', tag: '06', span: 'col-span-12', aspect: '16/9' },
+  { src: '/images/interior/interior-47.jpg', label: 'Jadalnia', tag: '07', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-48.jpg', label: 'Otwarty salon', tag: '08', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-49.jpg', label: 'Dodatkowy pokój dzienny', tag: '09', span: 'col-span-12', aspect: '16/9' },
+  { src: '/images/interior/interior-43.jpg', label: 'Pokój dzienny', tag: '09', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-44.jpg', label: 'Pokój dzienny', tag: '10', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+
+  //Poddasze
+   { src: '/images/interior/interior-51.jpg', label: 'Główna sypialnia', tag: '11', span: 'col-span-12 ', aspect: '16/9,' },
+
 ];
 
 export default function Interior() {

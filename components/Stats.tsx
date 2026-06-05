@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const stats = [
   { label: 'Powierzchnia całkowita', value: '402,35', unit: 'm²' },
   { label: 'Powierzchnia użytkowa', value: '170,75', unit: 'm²' },
-  { label: 'Działka', value: '1880', unit: 'm²' },
+  { label: 'Działka', value: '1600', unit: 'm²' },
   { label: 'Pokoje', value: '7', unit: '' },
   { label: 'Kondygnacje', value: '3', unit: '' },
   { label: 'Rok budowy', value: '2018', unit: '' },
