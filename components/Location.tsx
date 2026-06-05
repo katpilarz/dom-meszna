@@ -101,7 +101,7 @@ export default function Location() {
 
         {/* Beskidy landscape banner */}
         <div className="location-banner mb-12 md:mb-20 relative overflow-hidden border border-[var(--line-strong)]">
-          <div className="relative" style={{ aspectRatio: '21/9' }}>
+          <div className="relative" style={{ aspectRatio: '16/9' }}>
             <Image
               src="/images/landscape/beskidy.jpg"
               alt="Beskid Śląski — krajobraz w okolicy"
@@ -114,17 +114,17 @@ export default function Location() {
             className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white"
             style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 100%)' }}
           >
-            <div className="flex items-end justify-between gap-4">
+         { /*  <div className="flex items-end justify-between gap-4">
               <div className="label-mono text-xs md:text-sm opacity-90">↳ Beskid Śląski — krajobraz w sąsiedztwie</div>
               <div className="label-mono text-[0.6rem] md:text-xs opacity-70 hidden sm:block">Klimczok · Skrzyczne · Magurka</div>
-            </div>
+            </div>*/} 
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 lg:col-span-7">
             {/* Map illustration */}
-            <div className="map-illustration relative border border-[var(--line-strong)] aspect-[16/9] bg-[var(--bg)] overflow-hidden">
+            <div className="map-illustration relative rounded-sm border border-[var(--line-strong)] aspect-[16/9] bg-[var(--bg)] overflow-hidden">
               <svg
                 viewBox="0 0 800 450"
                 className="absolute inset-0 w-full h-full"

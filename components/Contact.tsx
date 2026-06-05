@@ -233,9 +233,9 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="group inline-flex items-center justify-between gap-6 w-full lg:min-w-[400px] border border-[var(--fg)] px-6 md:px-8 py-5 md:py-6 hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
+                className="group inline-flex rounded-sm items-center justify-between gap-6 w-full lg:min-w-[400px] border border-[var(--fg)] px-6 md:px-8 py-6 lg:py-8 hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
               >
-                <span className="display-serif italic text-2xl">
+                <span className="display-serif italic text-4xl">
                   {status === 'submitting' ? 'Wysyłam…' : 'Wyślij zapytanie'}
                 </span>
                 <Arrow size={34} className="transition-transform duration-500 group-hover:translate-x-1.5" />
@@ -285,7 +285,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="contact-info-item mt-12 p-6 border border-[var(--line-strong)]">
+            <div className="contact-info-item mt-12 p-6 rounded-sm border border-[var(--line-strong)]">
               <div className="label-mono text-[var(--accent)] mb-3">
                 ✦ Dlaczego bezpośrednio
               </div>
