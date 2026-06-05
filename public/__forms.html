@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Forms — Netlify Detection</title>
+  <meta name="robots" content="noindex, nofollow" />
+</head>
+<body>
+  <!--
+    This file exists ONLY so Netlify's build plugin can detect the form schema.
+    Required by @netlify/plugin-nextjs v5+ (was previously done via JSX in layout.tsx).
+    The user-facing form lives in components/Contact.tsx and submits to "/" via fetch.
+    See: https://ntl.fyi/next-runtime-forms-migration
+  -->
+  <form
+    name="kontakt"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    hidden
+  >
+    <input type="text" name="form-name" value="kontakt" />
+    <input type="text" name="bot-field" />
+    <input type="text" name="imie" />
+    <input type="email" name="email" />
+    <input type="tel" name="telefon" />
+    <input type="text" name="termin" />
+    <textarea name="wiadomosc"></textarea>
+  </form>
+</body>
+</html>
