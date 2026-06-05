@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dom w Mesznej — z widokiem na Beskid Śląski</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter+Tight:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: { fontFamily: {
+      display: ['"Cormorant Garamond"', 'serif'],
+      sans: ['"Inter Tight"', 'sans-serif'],
+      mono: ['"JetBrains Mono"', 'monospace'],
+    }}}
+  }
+</script>
+<style>
+  :root {
+    --bg: #f4f1ea; --bg-alt: #e8e4dc; --fg: #0e0e0c; --fg-muted: #5a5a52;
+    --accent: #b8935a; --line: rgba(14, 14, 12, 0.12); --line-strong: rgba(14, 14, 12, 0.2);
+  }
+  .dark {
+    --bg: #0e0e0c; --bg-alt: #1a1a18; --fg: #f4f1ea; --fg-muted: #a8a59c;
+    --accent: #d4a76a; --line: rgba(244, 241, 234, 0.12); --line-strong: rgba(244, 241, 234, 0.22);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: "Inter Tight", system-ui, sans-serif; font-weight: 300;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    transition: background-color .4s ease, color .4s ease;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--line-strong); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  .grain::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    opacity: 0.035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .dark .grain::before { opacity: 0.08; }
+  .display-serif { font-family: "Cormorant Garamond", serif; font-weight: 300; letter-spacing: -0.025em; line-height: 0.9; }
+  .label-mono { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .marquee-track { animation: marquee 50s linear infinite; }
+  .hairline { height: 1px; background: var(--line); }
+  .img-warm { filter: saturate(0.95) contrast(1.04); }
+  .no-select { user-select: none; }
+  .glass {
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+
+  /* Header color states */
+  .header-light { color: #ffffff; }
+  .header-light .header-toggle { border: 1px solid rgba(255,255,255,0.55); }
+  .header-light .header-cta { border: 1px solid rgba(255,255,255,0.65); }
+  .header-light .header-cta:hover { background: #ffffff; color: #000000; }
+
+  .header-opaque { color: var(--fg); border-bottom: 1px solid var(--line); }
+  .header-opaque .header-toggle { border: 1px solid var(--line-strong); }
+  .header-opaque .header-cta { border: 1px solid var(--fg); }
+  .header-opaque .header-cta:hover { background: var(--fg); color: var(--bg); }
+  .bg-app { background: var(--bg); }
+  .bg-app-alt { background: var(--bg-alt); }
+  .text-fg { color: var(--fg); }
+  .text-accent { color: var(--accent); }
+  .border-line { border-color: var(--line); }
+  .border-line-strong { border-color: var(--line-strong); }
+  .border-fg { border-color: var(--fg); }
+  .hover-bg-fg:hover { background: var(--fg); color: var(--bg); }
+  .hover-text-accent:hover { color: var(--accent); }
+  input, textarea {
+    background: transparent; color: var(--fg);
+    border-bottom: 1px solid var(--line-strong);
+    transition: border-color .3s;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  ::placeholder { color: var(--fg-muted); opacity: 0.5; }
+  a, button { cursor: pointer; }
+  .hero-word, .pricing-line, .contact-line, .big-headline-line { display: inline-block; }
+  /* Mega headlines */
+  .mega { font-family: "Cormorant Garamond", serif; font-weight: 300; line-height: 0.85; letter-spacing: -0.03em; }
+  /* Plan paper */
+  .plan-paper {
+    background: #f4f1ea;
+    padding: 1.5rem;
+    border: 1px solid rgba(14, 14, 12, 0.15);
+    transition: transform .4s ease;
+    aspect-ratio: 5 / 7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .plan-paper:hover { transform: translateY(-4px); }
+  .dark .plan-paper { background: #e8e4dc; }
+  .plan-paper img {
+    filter: contrast(1.1);
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  /* CTA hairline arrow — slides right on hover */
+  .cta-arrow { transition: transform .35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .group:hover .cta-arrow { transform: translateX(4px); }
+</style>
+</head>
+<body class="grain">
+
+<!-- ====== HEADER ====== -->
+<header id="header" class="fixed top-0 inset-x-0 z-50 py-6 transition-all duration-500 header-light">
+  <div class="mx-auto max-w-[1800px] px-5 md:px-12 flex items-center justify-between gap-4">
+    <a href="#" class="flex items-center gap-3 group flex-shrink-0">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" class="transition-transform group-hover:rotate-90 duration-700">
+        <path d="M16 2 L28 14 L28 30 L4 30 L4 14 Z" stroke="currentColor" stroke-width="1" fill="none"/>
+        <path d="M16 2 L16 30" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="16" cy="20" r="1.5" fill="currentColor"/>
+      </svg>
+      <div class="leading-tight">
+        <div class="display-serif text-lg md:text-xl">Dom w Mesznej</div>
+        <div class="label-mono text-[0.55rem] opacity-60 hidden sm:block">Bezpośrednio od właścicielki</div>
+      </div>
+    </a>
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" aria-label="Przełącz motyw"
+              class="header-toggle w-10 h-10 rounded-full flex items-center justify-center hover:opacity-70 transition-colors flex-shrink-0">
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="hidden">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
+      <a id="header-cta" href="#kontakt" class="header-cta group inline-flex items-center gap-3 display-serif italic text-sm md:text-base px-5 md:px-6 py-2.5 md:py-3 transition-colors duration-500 whitespace-nowrap">
+        Umów oglądanie
+        <svg class="cta-arrow" width="24" height="20" viewBox="0 0 49 41" fill="none" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M29.512 4.84586C30.6795 7.24224 32.6491 10.4444 35.8536 13.6488C39.1905 16.9857 42.3709 18.5704 44.7006 19.3234C45.8667 19.7003 46.8223 19.8696 47.4807 19.945C47.8099 19.9827 48.0648 19.9969 48.2344 20.0018C48.241 20.002 48.2474 20.0022 48.2537 20.0023H48.3942C48.4122 20.002 48.4283 20.0019 48.4425 20.0018C48.4645 20.0017 48.482 20.0019 48.4948 20.0021L48.5106 20.0024L48.5159 20.0026L48.5179 20.0027C48.5182 20.0027 48.5194 20.0027 48.5 20.5023C48.5235 21.0018 48.5232 21.0018 48.5228 21.0018L48.5201 21.0019L48.5144 21.0022L48.4964 21.0028C48.4814 21.0032 48.4604 21.0037 48.4337 21.0039C48.4096 21.0042 48.3809 21.0043 48.3476 21.004C48.334 21.0045 48.3193 21.0052 48.3037 21.0059C48.1723 21.0122 47.9692 21.0278 47.6968 21.0654C47.1521 21.1406 46.3293 21.304 45.248 21.6583C43.0857 22.3665 39.8839 23.8394 35.8 26.9023C32.8988 29.0783 30.942 32.3639 29.7069 35.1429C29.0917 36.5272 28.6609 37.7735 28.3841 38.6728C28.2459 39.1222 28.1463 39.4844 28.0815 39.7329C28.0491 39.8572 28.0255 39.953 28.0101 40.0171C28.0024 40.0491 27.9967 40.0732 27.9931 40.089L27.9891 40.1063L27.9882 40.1102C27.9882 40.1101 27.9881 40.1108 27.5 40.0023C27.0119 39.8939 27.0119 39.8937 27.012 39.8935L27.0125 39.8912L27.0138 39.8853L27.0188 39.8638C27.0231 39.8452 27.0294 39.8183 27.0378 39.7833C27.0546 39.7133 27.0798 39.6114 27.1138 39.4808C27.1819 39.2196 27.2854 38.8434 27.4284 38.3787C27.7141 37.45 28.1583 36.165 28.7931 34.7368C30.058 31.8908 32.1012 28.4264 35.2 26.1023C38.8763 23.3451 41.8785 21.8319 44.0979 21.0023H0.5V20.0023H43.6107C41.2419 19.1174 38.2486 17.4581 35.1464 14.3559C31.8509 11.0603 29.8205 7.76245 28.613 5.28383C28.0092 4.04447 27.6108 3.00935 27.3626 2.28077C27.2385 1.91643 27.1519 1.62861 27.0959 1.43007C27.0679 1.33079 27.0476 1.25382 27.034 1.20074C27.0272 1.17421 27.0221 1.15364 27.0186 1.13925L27.0146 1.12231L27.0134 1.11736L27.013 1.11577C27.013 1.11555 27.0128 1.11478 27.5 1.00235C27.9822 0.891082 27.9871 0.889784 27.9871 0.889648L27.9877 0.891858L27.9904 0.903138C27.9929 0.913738 27.9971 0.930465 28.0029 0.953121C28.0144 0.998434 28.0327 1.06746 28.0584 1.15861C28.1098 1.34092 28.1912 1.6117 28.3092 1.9583C28.5454 2.65159 28.9283 3.64773 29.512 4.84586ZM48.5 20.5023L48.5228 21.0018L48.5194 20.0027L48.5 20.5023Z" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ====== HERO — FULL BLEED IMAGE ====== -->
+<section id="hero" class="relative min-h-screen overflow-hidden">
+  <!-- Background image -->
+  <div class="absolute inset-0 z-0">
+    <div class="hero-img-bg absolute inset-[-5%]">
+      <img id="hero-img" alt="Dom w Mesznej" class="w-full h-full object-cover img-warm" />
+    </div>
+    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(14,14,12,0.6) 0%, rgba(14,14,12,0.3) 22%, rgba(14,14,12,0.4) 55%, rgba(14,14,12,0.7) 85%, rgba(14,14,12,0.9) 100%);"></div>
+  </div>
+
+  <!-- Foreground content -->
+  <div class="relative z-10 min-h-screen flex flex-col justify-between pt-32 pb-12 text-white">
+    <div class="mx-auto max-w-[1800px] w-full px-6 md:px-12">
+      <div class="flex items-center justify-between mb-12">
+        <div class="hero-label label-mono opacity-80">
+          <span style="color: #d4a76a;">●</span> Sprzedaż bezpośrednio od właściciela
+        </div>
+        <div class="hero-label label-mono opacity-80 hidden md:block">Meszna · Wilkowice · Śląskie</div>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-[1800px] w-full px-6 md:px-12">
+      <h1 class="mega" style="font-size: clamp(4rem, 14vw, 16rem);">
+        <div class="overflow-hidden">
+          <span class="hero-word">Dom z&nbsp;</span><span class="hero-word italic" style="color: #d4a76a;">widokiem</span>
+        </div>
+        <div class="overflow-hidden">
+          <span class="hero-word">na&nbsp;</span><span class="hero-word italic">Beskidy.</span>
+        </div>
+      </h1>
+    </div>
+
+    <div class="mx-auto max-w-[1800px] w-full px-6 md:px-12">
+      <p class="hero-sub display-serif text-2xl md:text-3xl italic opacity-90 max-w-3xl">
+        402 m² · 1 600 m² działki · trzy kondygnacje · widok na Beskid Śląski. 300 m do lasu, 600 m do szlaków na Klimczok.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MARQUEE ====== -->
+<section class="py-10 border-y border-line overflow-hidden no-select" aria-hidden="true">
+  <div class="marquee-track flex whitespace-nowrap" id="marquee-track"></div>
+</section>
+
+<!-- ====== STATS / KEY NUMBERS ====== -->
+<section id="dom" class="py-24 md:py-32 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="flex items-center justify-between mb-16">
+      <div class="label-mono opacity-60">01 — Najważniejsze fakty</div>
+      <div class="label-mono opacity-60 hidden md:block">Studio Atrium · projekt 2006 · realizacja 2018</div>
+    </div>
+
+    <div class="stats-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px border-y border-line-strong" style="background: var(--line-strong);">
+      <div class="stat-item bg-app p-6 md:p-10">
+        <div class="label-mono opacity-50 mb-3 text-[0.6rem]">Powierzchnia całkowita</div>
+        <div class="display-serif text-3xl md:text-5xl"><span class="spec-number" data-value="402,35">0</span><span class="text-base opacity-50 ml-1">m²</span></div>
+      </div>
+      <div class="stat-item bg-app p-6 md:p-10">
+        <div class="label-mono opacity-50 mb-3 text-[0.6rem]">Powierzchnia użytkowa</div>
+        <div class="display-serif text-3xl md:text-5xl"><span class="spec-number" data-value="170,75">0</span><span class="text-base opacity-50 ml-1">m²</span></div>
+      </div>
+      <div class="stat-item bg-app p-6 md:p-10">
+        <div class="label-mono opacity-50 mb-3 text-[0.6rem]">Działka</div>
+        <div class="display-serif text-3xl md:text-5xl"><span class="spec-number" data-value="1600">0</span><span class="text-base opacity-50 ml-1">m²</span></div>
+      </div>
+      <div class="stat-item bg-app p-6 md:p-10">
+        <div class="label-mono opacity-50 mb-3 text-[0.6rem]">Pokoje</div>
+        <div class="display-serif text-3xl md:text-5xl"><span class="spec-number" data-value="7">0</span></div>
+      </div>
+      <div class="stat-item bg-app p-6 md:p-10">
+        <div class="label-mono opacity-50 mb-3 text-[0.6rem]">Kondygnacje</div>
+        <div class="display-serif text-3xl md:text-5xl"><span class="spec-number" data-value="3">0</span></div>
+      </div>
+      <div class="stat-item bg-app p-6 md:p-10">
+        <div class="label-mono opacity-50 mb-3 text-[0.6rem]">Rok budowy</div>
+        <div class="display-serif text-3xl md:text-5xl"><span class="spec-number" data-value="2018">0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MEGA STATEMENT ====== -->
+<section class="py-32 md:py-48 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="flex items-center justify-between mb-20">
+      <div class="label-mono opacity-60">02 — Charakter miejsca</div>
+      <div class="label-mono opacity-60 hidden md:block">Meszna · Podbeskidzie</div>
+    </div>
+
+    <h2 class="statement mega" id="statement-text" style="font-size: clamp(2.5rem, 6vw, 6rem); max-width: 1400px;"></h2>
+  </div>
+</section>
+
+<!-- ====== BIG IMAGE SHOWCASE — Mountain panorama ====== -->
+<section class="relative h-screen overflow-hidden">
+  <div class="showcase-img-wrap absolute inset-[-5%]">
+    <img id="showcase-img-1" alt="Widok na Beskid Śląski z działki" class="w-full h-full object-cover img-warm" />
+  </div>
+  <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(14,14,12,0.45) 0%, rgba(14,14,12,0.1) 28%, rgba(14,14,12,0.45) 60%, rgba(14,14,12,0.85) 90%, rgba(14,14,12,0.92) 100%);"></div>
+  <div class="absolute bottom-12 left-0 right-0 px-6 md:px-12 text-white">
+    <div class="mx-auto max-w-[1800px] flex items-end justify-between">
+      <div>
+        <div class="label-mono opacity-70 mb-3">↳ Widok</div>
+        <div class="display-serif text-3xl md:text-5xl italic" style="line-height: 1.1;">Codziennie ten sam,<br>i nigdy taki sam.</div>
+      </div>
+      <div class="label-mono opacity-70 hidden md:block">Klimczok · Skrzyczne · Beskid Śląski</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== GALLERY — Editorial big photos ====== -->
+<section id="galeria" class="py-32 md:py-48 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="gallery-heading mb-20">
+      <div class="flex items-center justify-between mb-12">
+        <div class="label-mono opacity-60">03 — Galeria</div>
+        <div class="label-mono opacity-60 hidden md:block">Zdjęcia: luty 2024</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(2.5rem, 9vw, 9rem);">
+        <span class="big-headline-line">Bryła</span>&nbsp;<span class="big-headline-line italic">i</span>&nbsp;<span class="big-headline-line italic text-accent">krajobraz.</span><br>
+        <span class="big-headline-line">Z każdej</span>&nbsp;<span class="big-headline-line italic">strony.</span>
+      </h2>
+    </div>
+
+    <!-- Editorial grid: large hero + smaller supporting -->
+    <div class="grid grid-cols-12 gap-4 md:gap-6">
+      <!-- 01 — Elewacja południowa (hero shot, big landscape) -->
+      <figure class="gallery-item col-span-12 md:col-span-8">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="g-img-1" alt="Elewacja południowa" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Elewacja południowa</div>
+          <div class="label-mono opacity-50">01 / 06</div>
+        </figcaption>
+      </figure>
+
+      <!-- 02 — Kolumny i kamień (vertical detail) -->
+      <figure class="gallery-item col-span-12 md:col-span-4">
+        <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
+          <img id="g-img-2" alt="Detal — kolumny i kamień" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Kolumny i kamień</div>
+          <div class="label-mono opacity-50">02 / 06</div>
+        </figcaption>
+      </figure>
+
+      <!-- 03 — Brama, podjazd, adres -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="g-img-3" alt="Brama wjazdowa i podjazd" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Brama, podjazd, adres</div>
+          <div class="label-mono opacity-50">03 / 06</div>
+        </figcaption>
+      </figure>
+
+      <!-- 04 — Widok od ulicy -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="g-img-4" alt="Widok od ulicy" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Widok od ulicy</div>
+          <div class="label-mono opacity-50">04 / 06</div>
+        </figcaption>
+      </figure>
+
+      <!-- 05 — Panorama od strony drogi (wide) -->
+      <figure class="gallery-item col-span-12">
+        <div class="relative overflow-hidden" style="aspect-ratio: 21/9;">
+          <img id="g-img-5" alt="Panorama od strony drogi" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Panorama od strony drogi</div>
+          <div class="label-mono opacity-50">05 / 06</div>
+        </figcaption>
+      </figure>
+
+      <!-- 06 — Sąsiedztwo i działka (wide) -->
+      <figure class="gallery-item col-span-12">
+        <div class="relative overflow-hidden" style="aspect-ratio: 21/9;">
+          <img id="g-img-6" alt="Sąsiedztwo i działka" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Sąsiedztwo i działka</div>
+          <div class="label-mono opacity-50">06 / 06</div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ====== INTERIOR GALLERY ====== -->
+<section id="wnetrza" class="py-32 md:py-48 relative bg-app-alt">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="interior-heading mb-20">
+      <div class="flex items-center justify-between mb-12">
+        <div class="label-mono opacity-60">04 — Wnętrza</div>
+        <div class="label-mono opacity-60 hidden md:block">Stan obecny · do odświeżenia pod siebie</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(2.5rem, 9vw, 9rem);">
+        <span class="big-headline-line">Wnętrza,</span>&nbsp;<span class="big-headline-line italic">które</span><br>
+        <span class="big-headline-line">żyły</span>&nbsp;<span class="big-headline-line italic text-accent">codziennością.</span>
+      </h2>
+      <p class="mt-12 max-w-3xl text-xl md:text-2xl opacity-80 leading-relaxed" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;">
+        Salon z kominkiem, otwarta kuchnia, sypialnia z łukowym oknem na poddaszu, łazienka z wanną z hydromasażem, domowe biuro i widok na las z okien dachowych. Zdjęcia pokazują dom takim, jakim jest dziś — z charakterem, ale też z miejscem na Twoją wizję.
+      </p>
+    </div>
+
+    <!-- Editorial grid — 14 photos -->
+    <div class="grid grid-cols-12 gap-4 md:gap-6">
+      <!-- 01 — Salon z jadalnią (hero shot) -->
+      <figure class="gallery-item col-span-12 md:col-span-8">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-1" alt="Salon i jadalnia" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Salon z kominkiem</div>
+          <div class="label-mono opacity-50">01 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 02 — Sypialnia z łukowym oknem (vertical) -->
+      <figure class="gallery-item col-span-12 md:col-span-4">
+        <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
+          <img id="int-img-2" alt="Sypialnia z łukowym oknem" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Sypialnia z łukowym oknem</div>
+          <div class="label-mono opacity-50">02 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 03 — Otwarta strefa dzienna (panorama) -->
+      <figure class="gallery-item col-span-12">
+        <div class="relative overflow-hidden" style="aspect-ratio: 21/9;">
+          <img id="int-img-3" alt="Strefa dzienna z kominkiem" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Otwarta strefa dzienna z kominkiem</div>
+          <div class="label-mono opacity-50">03 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 04 — Kuchnia -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-4" alt="Kuchnia" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Kuchnia otwarta na salon</div>
+          <div class="label-mono opacity-50">04 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 05 — Kominek -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-5" alt="Kominek" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Kominek z bliska</div>
+          <div class="label-mono opacity-50">05 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 06 — Łazienka główna z wanną hydromasażem (PREMIUM feature) -->
+      <figure class="gallery-item col-span-12 md:col-span-8">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-6" alt="Łazienka główna z wanną z hydromasażem" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Łazienka główna z wanną z hydromasażem</div>
+          <div class="label-mono opacity-50">06 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 07 — Hol z klatką schodową (vertical) -->
+      <figure class="gallery-item col-span-12 md:col-span-4">
+        <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
+          <img id="int-img-7" alt="Klatka schodowa" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Hol z klatką schodową</div>
+          <div class="label-mono opacity-50">07 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 08 — Druga łazienka z bidetem -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-8" alt="Druga łazienka z bidetem" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Druga łazienka z bidetem</div>
+          <div class="label-mono opacity-50">08 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 09 — Domowe biuro -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-9" alt="Domowe biuro" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Domowe biuro</div>
+          <div class="label-mono opacity-50">09 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 10 — Pokój dziecięcy (vertical) -->
+      <figure class="gallery-item col-span-12 md:col-span-4">
+        <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
+          <img id="int-img-10" alt="Pokój dziecięcy" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Pokój dziecięcy</div>
+          <div class="label-mono opacity-50">10 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 11 — Kącik na poddaszu (vertical) -->
+      <figure class="gallery-item col-span-12 md:col-span-4">
+        <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
+          <img id="int-img-11" alt="Kącik na poddaszu" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Kącik na poddaszu</div>
+          <div class="label-mono opacity-50">11 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 12 — Pokój dzienny (vertical) -->
+      <figure class="gallery-item col-span-12 md:col-span-4">
+        <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
+          <img id="int-img-12" alt="Pokój dzienny" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Pokój dzienny</div>
+          <div class="label-mono opacity-50">12 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 13 — Garderoba z widokiem na góry -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-13" alt="Garderoba z widokiem na góry" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Garderoba z widokiem na góry</div>
+          <div class="label-mono opacity-50">13 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 14 — Pokój na poddaszu z widokiem na las -->
+      <figure class="gallery-item col-span-12 md:col-span-6">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-14" alt="Pokój na poddaszu z widokiem na las" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Pokój na poddaszu z widokiem na las</div>
+          <div class="label-mono opacity-50">14 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 15 — Pokój dzienny -->
+      <figure class="gallery-item col-span-12 md:col-span-7">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-15" alt="Pokój dzienny" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Pokój dzienny</div>
+          <div class="label-mono opacity-50">15 / 16</div>
+        </figcaption>
+      </figure>
+
+      <!-- 16 — Pokój z balkonem -->
+      <figure class="gallery-item col-span-12 md:col-span-5">
+        <div class="relative overflow-hidden" style="aspect-ratio: 4/3;">
+          <img id="int-img-16" alt="Pokój z balkonem" class="gallery-img w-full h-full object-cover img-warm" />
+        </div>
+        <figcaption class="mt-3 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Pokój z balkonem</div>
+          <div class="label-mono opacity-50">16 / 16</div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ====== POSSIBILITIES ====== -->
+<section id="mozliwosci" class="py-32 md:py-48 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="pot-heading mb-20">
+      <div class="flex items-center justify-between mb-12">
+        <div class="label-mono opacity-60">05 — Możliwości</div>
+        <div class="label-mono opacity-60 hidden md:block">Stan: dobry · do remontu i odświeżenia</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(2.5rem, 9vw, 9rem);">
+        <span class="big-headline-line">Gotowy</span>&nbsp;<span class="big-headline-line italic">do życia.</span><br>
+        <span class="big-headline-line italic text-accent">Otwarty</span>&nbsp;<span class="big-headline-line">na zmiany.</span>
+      </h2>
+      <p class="mt-12 max-w-3xl text-xl md:text-2xl opacity-80 leading-relaxed" style="font-family: var(--font-display, 'Cormorant Garamond', serif); font-style: italic; font-weight: 300;">
+        Dom umeblowany, w dobrym stanie technicznym — można wprowadzić się od razu. Remont instalacji ogrzewania i odświeżenie wnętrz to szansa, by dom stał się dokładnie taki, jakiego chcesz.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px border border-line-strong" style="background: var(--line-strong);">
+      <div class="pot-card bg-app p-10 md:p-14 min-h-[320px] flex flex-col">
+        <div class="flex items-start justify-between mb-8">
+          <div class="display-serif text-2xl">Solidna baza</div>
+          <div class="display-serif text-6xl opacity-15">01</div>
+        </div>
+        <p class="text-sm opacity-75 leading-relaxed mt-auto">Dom wybudowany w 2018 — keramzyt, wełna 20 cm, ceramiczna dachówka na pełnym deskowaniu. Konstrukcja, której nie da się dziś tanio odtworzyć.</p>
+      </div>
+      <div class="pot-card bg-app p-10 md:p-14 min-h-[320px] flex flex-col">
+        <div class="flex items-start justify-between mb-8">
+          <div class="display-serif text-2xl">Mieszkalny od razu</div>
+          <div class="display-serif text-6xl opacity-15">02</div>
+        </div>
+        <p class="text-sm opacity-75 leading-relaxed mt-auto">Dom umeblowany, w dobrym stanie technicznym. Remont i odświeżenie możesz zaplanować na własnych warunkach, w swoim tempie.</p>
+      </div>
+      <div class="pot-card bg-app p-10 md:p-14 min-h-[320px] flex flex-col">
+        <div class="flex items-start justify-between mb-8">
+          <div class="display-serif text-2xl">Zakres remontu</div>
+          <div class="display-serif text-6xl opacity-15">03</div>
+        </div>
+        <p class="text-sm opacity-75 leading-relaxed mt-auto">Wymiana instalacji ogrzewania (obecnie węglowe) i odświeżenie wnętrz — pozostałe elementy są w porządku. Zakres jasny, kosztorys przewidywalny.</p>
+      </div>
+      <div class="pot-card bg-app p-10 md:p-14 min-h-[320px] flex flex-col">
+        <div class="flex items-start justify-between mb-8">
+          <div class="display-serif text-2xl">Wnętrze pod Ciebie</div>
+          <div class="display-serif text-6xl opacity-15">04</div>
+        </div>
+        <p class="text-sm opacity-75 leading-relaxed mt-auto">Odświeżenie to szansa, by układ funkcjonalny, kolory i materiały dopasować dokładnie do swojego stylu życia — bez kompromisów na cudze gusta.</p>
+      </div>
+      <div class="pot-card bg-app p-10 md:p-14 min-h-[320px] flex flex-col">
+        <div class="flex items-start justify-between mb-8">
+          <div class="display-serif text-2xl">Cena z marginesem</div>
+          <div class="display-serif text-6xl opacity-15">05</div>
+        </div>
+        <p class="text-sm opacity-75 leading-relaxed mt-auto">1 899 000 zł za 402 m² i 1 600 m² działki. Cena uwzględnia zakres prac — zostawia realny budżet na ich przeprowadzenie.</p>
+      </div>
+      <div class="pot-card bg-app p-10 md:p-14 min-h-[320px] flex flex-col">
+        <div class="flex items-start justify-between mb-8">
+          <div class="display-serif text-2xl">Lokalizacja premium</div>
+          <div class="display-serif text-6xl opacity-15">06</div>
+        </div>
+        <p class="text-sm opacity-75 leading-relaxed mt-auto">Działki w Mesznej i okolicach Szczyrku zyskują na wartości od lat. Po remoncie — naturalny wzrost rynkowy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BIG IMAGE — Architectural detail ====== -->
+<section class="relative h-screen overflow-hidden">
+  <div class="showcase-img-wrap absolute inset-[-5%]">
+    <img id="showcase-img-2" alt="Bryła domu — detal architektoniczny" class="w-full h-full object-cover img-warm" />
+  </div>
+  <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(14,14,12,0.45) 0%, rgba(14,14,12,0.1) 28%, rgba(14,14,12,0.45) 60%, rgba(14,14,12,0.85) 90%, rgba(14,14,12,0.92) 100%);"></div>
+  <div class="absolute bottom-12 left-0 right-0 px-6 md:px-12 text-white">
+    <div class="mx-auto max-w-[1800px]">
+      <div class="label-mono opacity-70 mb-3">↳ Architektura</div>
+      <div class="mega" style="font-size: clamp(2.5rem, 7vw, 7rem);">
+        Kolumny, kamień, <span class="italic" style="color: #d4a76a;">kąt 39°.</span>
+      </div>
+      <p class="mt-4 display-serif italic text-xl md:text-2xl opacity-80 max-w-2xl">Projekt: Studio Atrium, Bielsko-Biała. Keramzyt, wełna 20 cm, ceramiczna dachówka.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FLOOR LIST ====== -->
+<section class="py-32 md:py-48 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="floor-heading mb-20">
+      <div class="flex items-center justify-between mb-12">
+        <div class="label-mono opacity-60">06 — Układ pomieszczeń</div>
+        <div class="label-mono opacity-60 hidden md:block">3 kondygnacje · 7 pokoi</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(2.5rem, 9vw, 9rem);">
+        <span class="big-headline-line">Trzy</span>&nbsp;<span class="big-headline-line italic">poziomy.</span><br>
+        <span class="big-headline-line">Jedno</span>&nbsp;<span class="big-headline-line italic text-accent">wnętrze.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px border border-line-strong" style="background: var(--line-strong);">
+      <div class="floor-card bg-app p-10 md:p-14 min-h-[520px] flex flex-col">
+        <div class="flex items-start justify-between mb-12">
+          <div>
+            <div class="label-mono text-accent mb-2">Kondygnacja 01</div>
+            <h3 class="display-serif text-3xl md:text-4xl">Parter</h3>
+            <div class="text-sm opacity-60 mt-2 italic">Strefa techniczna i powitalna</div>
+          </div>
+          <div class="display-serif text-7xl md:text-8xl opacity-10">01</div>
+        </div>
+        <ul class="space-y-3 mt-auto">
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Wiatrołap</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Przedpokój</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Pokój</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Kotłownia</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Pomieszczenie gospodarcze</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Garaż</span></li>
+        </ul>
+      </div>
+      <div class="floor-card bg-app p-10 md:p-14 min-h-[520px] flex flex-col">
+        <div class="flex items-start justify-between mb-12">
+          <div>
+            <div class="label-mono text-accent mb-2">Kondygnacja 02</div>
+            <h3 class="display-serif text-3xl md:text-4xl">Pierwsze piętro</h3>
+            <div class="text-sm opacity-60 mt-2 italic">Strefa dzienna z wyjściem na taras</div>
+          </div>
+          <div class="display-serif text-7xl md:text-8xl opacity-10">02</div>
+        </div>
+        <ul class="space-y-3 mt-auto">
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Salon z otwartą kuchnią</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Wyjście na ogród i taras</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Spiżarnia</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Dwa pokoje</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Łazienka</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Korytarz</span></li>
+        </ul>
+      </div>
+      <div class="floor-card bg-app p-10 md:p-14 min-h-[520px] flex flex-col">
+        <div class="flex items-start justify-between mb-12">
+          <div>
+            <div class="label-mono text-accent mb-2">Kondygnacja 03</div>
+            <h3 class="display-serif text-3xl md:text-4xl">Drugie piętro</h3>
+            <div class="text-sm opacity-60 mt-2 italic">Strefa nocna w panoramie gór</div>
+          </div>
+          <div class="display-serif text-7xl md:text-8xl opacity-10">03</div>
+        </div>
+        <ul class="space-y-3 mt-auto">
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Trzy sypialnie</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Garderoba przy sypialni głównej</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Łazienka z prysznicem i wanną</span></li>
+          <li class="floor-room flex items-center gap-3 text-sm border-b border-line pb-2"><span class="text-accent text-xs">○</span><span>Pralnia</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== LOCATION ====== -->
+<section id="lokalizacja" class="py-32 md:py-48 bg-app-alt relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="location-heading mb-20">
+      <div class="flex items-center justify-between mb-12">
+        <div class="label-mono opacity-60">07 — Lokalizacja</div>
+        <div class="label-mono opacity-60 hidden md:block">49°48′N · 19°02′E</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(2.5rem, 9vw, 9rem);">
+        <span class="big-headline-line">300 m</span>&nbsp;<span class="big-headline-line italic">do lasu.</span><br>
+        <span class="big-headline-line">600 m</span>&nbsp;<span class="big-headline-line italic text-accent">do gór.</span>
+      </h2>
+      <p class="mt-12 max-w-3xl text-xl md:text-2xl opacity-80 leading-relaxed" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;">
+        Cicha uliczka w Mesznej. 600 metrów do Chaty na Groniu i szlaków na Klimczok. Bielsko-Biała 10 km, Szczyrk 7 km, obwodnica 4 km. Adres, który sprzedaje się sam.
+      </p>
+    </div>
+
+    <!-- Beskidy landscape banner -->
+    <div class="location-banner mb-12 md:mb-20 relative overflow-hidden border border-line-strong">
+      <div style="aspect-ratio: 21/9;">
+        <img id="beskidy-img" alt="Beskid Śląski — krajobraz w okolicy" class="w-full h-full object-cover img-warm" />
+      </div>
+      <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6" style="background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 100%);">
+        <div class="flex items-end justify-between gap-4 text-white">
+          <div class="label-mono text-xs md:text-sm opacity-90">↳ Beskid Śląski — krajobraz w sąsiedztwie</div>
+          <div class="label-mono text-[0.6rem] md:text-xs opacity-70 hidden sm:block">Klimczok · Skrzyczne · Magurka</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6 md:gap-10">
+      <div class="col-span-12 lg:col-span-7">
+        <div class="map-illustration relative border border-line-strong bg-app overflow-hidden" style="aspect-ratio: 16/9;">
+          <svg viewBox="0 0 800 450" class="absolute inset-0 w-full h-full">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.15"/>
+              </pattern>
+            </defs>
+            <rect width="800" height="450" fill="url(#grid)"/>
+            <path d="M0 280 L80 220 L160 250 L240 180 L320 210 L400 140 L480 190 L560 160 L640 200 L720 170 L800 220 L800 450 L0 450 Z" fill="currentColor" opacity="0.08"/>
+            <path d="M0 320 L100 270 L200 300 L320 250 L420 280 L520 240 L640 270 L740 250 L800 280 L800 450 L0 450 Z" fill="currentColor" opacity="0.12"/>
+            <path class="map-line" d="M50 380 Q200 350, 360 320 T720 250" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+            <g class="map-pin" transform="translate(360, 320)">
+              <circle r="20" fill="var(--accent)" opacity="0.2"/>
+              <circle r="10" fill="var(--accent)" opacity="0.4"/>
+              <circle r="4" fill="var(--accent)"/>
+              <text x="0" y="-30" text-anchor="middle" fill="currentColor" font-size="11" font-family="JetBrains Mono" letter-spacing="0.15em">MESZNA</text>
+            </g>
+            <g class="map-pin" transform="translate(200, 350)">
+              <circle r="3" fill="currentColor" opacity="0.6"/>
+              <text x="6" y="3" fill="currentColor" font-size="9" font-family="JetBrains Mono" letter-spacing="0.1em" opacity="0.6">BIELSKO-BIAŁA</text>
+            </g>
+            <g class="map-pin" transform="translate(520, 280)">
+              <circle r="3" fill="currentColor" opacity="0.6"/>
+              <text x="6" y="3" fill="currentColor" font-size="9" font-family="JetBrains Mono" letter-spacing="0.1em" opacity="0.6">SZCZYRK</text>
+            </g>
+            <g class="map-pin" transform="translate(640, 200)">
+              <circle r="3" fill="currentColor" opacity="0.6"/>
+              <text x="6" y="3" fill="currentColor" font-size="9" font-family="JetBrains Mono" letter-spacing="0.1em" opacity="0.6">WISŁA</text>
+            </g>
+            <g class="map-pin" transform="translate(720, 250)">
+              <circle r="3" fill="currentColor" opacity="0.6"/>
+              <text x="6" y="3" fill="currentColor" font-size="9" font-family="JetBrains Mono" letter-spacing="0.1em" opacity="0.6">USTROŃ</text>
+            </g>
+          </svg>
+          <div class="absolute bottom-4 left-4 label-mono opacity-60">Schemat poglądowy · Podbeskidzie</div>
+        </div>
+      </div>
+
+      <div class="col-span-12 lg:col-span-5 lg:pl-10">
+        <div class="label-mono opacity-60 mb-4">↳ W zasięgu ręki</div>
+        <div class="nearby-list" id="nearby-list"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PLANY — ARCHITECTURAL DOCS ====== -->
+<section id="plany" class="py-32 md:py-48 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="plans-heading mb-20">
+      <div class="flex items-center justify-between mb-12">
+        <div class="label-mono opacity-60">08 — Dokumentacja</div>
+        <div class="label-mono opacity-60 hidden md:block">Studio Atrium · Bielsko-Biała</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(2.5rem, 7vw, 7rem);">
+        Plany do <span class="italic text-accent">wglądu.</span>
+      </h2>
+      <p class="mt-8 max-w-3xl text-lg md:text-xl opacity-75 leading-relaxed">
+        Dom został zaprojektowany przez Studio Atrium z Bielska-Białej. Pełna dokumentacja architektoniczna dostępna do wglądu — poniżej skany planów i sytuacji geodezyjnej.
+      </p>
+    </div>
+
+    <div class="plans-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div class="plan-item">
+        <div class="plan-paper">
+          <img id="plan-site-img" alt="Plan sytuacyjny działki" class="w-full h-auto" />
+        </div>
+        <div class="mt-4 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Sytuacja</div>
+          <div class="label-mono opacity-50">Działka 1 600 m²</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-paper">
+          <img id="plan-piwnica-img" alt="Plan piwnicy / parteru" class="w-full h-auto" />
+        </div>
+        <div class="mt-4 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Parter</div>
+          <div class="label-mono opacity-50">Strefa techniczna</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-paper">
+          <img id="plan-parter-img" alt="Plan parteru" class="w-full h-auto" />
+        </div>
+        <div class="mt-4 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Strefa wejściowa</div>
+          <div class="label-mono opacity-50">Wjazd · garaż</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-paper">
+          <img id="plan-pietro-img" alt="Plan piętra" class="w-full h-auto" />
+        </div>
+        <div class="mt-4 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Pierwsze piętro</div>
+          <div class="label-mono opacity-50">Strefa dzienna</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-paper">
+          <img id="plan-poddasze-img" alt="Plan poddasza" class="w-full h-auto" />
+        </div>
+        <div class="mt-4 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Poddasze</div>
+          <div class="label-mono opacity-50">Strefa nocna</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-paper">
+          <img id="plan-przekroj-img" alt="Przekrój pionowy" class="w-full h-auto" />
+        </div>
+        <div class="mt-4 flex items-baseline justify-between">
+          <div class="display-serif text-xl italic">Przekrój</div>
+          <div class="label-mono opacity-50">Konstrukcja A-A · C-C</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plans-note mt-16 p-6 md:p-8 border border-line-strong max-w-3xl">
+      <div class="label-mono text-accent mb-3">✦ Pełna dokumentacja</div>
+      <p class="text-sm leading-relaxed opacity-80">
+        Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRICING ====== -->
+<section class="py-32 md:py-48 relative bg-app-alt">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="flex items-center justify-between mb-16">
+      <div class="label-mono opacity-60">09 — Oferta</div>
+      <div class="label-mono opacity-60 hidden md:block">Sprzedaż bezpośrednio od właścicielki</div>
+    </div>
+
+    <div class="pricing-block">
+      <div class="overflow-hidden">
+        <div class="pricing-line label-mono text-accent mb-8">✦ Bez pośredników · bez prowizji · bez ukrytych kosztów</div>
+      </div>
+      <h2 class="mega" style="font-size: clamp(3rem, 12vw, 14rem);">
+        <span class="big-price">2 250 000</span><span class="text-accent"> zł</span>
+      </h2>
+      <div class="overflow-hidden">
+        <div class="pricing-line italic opacity-70 mt-6 display-serif" style="font-size: clamp(1.3rem, 3vw, 2.4rem);">
+          4 720 zł / m² za 402 m² i 1 600 m² działki.
+        </div>
+      </div>
+
+      <div class="price-anchor-note mt-8 max-w-xl">
+        <div class="label-mono opacity-50 text-[0.65rem] mb-2">↳ Wcześniej w ofertach agencyjnych</div>
+        <p class="text-sm md:text-base opacity-75 leading-relaxed">
+          Nieruchomość była wystawiona w ofertach pośredników za <span class="display-serif italic text-accent">2 250 000 zł</span>. Sprzedaż bezpośrednia oznacza realną oszczędność na prowizji i marży pośrednika — różnica trafia do Ciebie.
+        </p>
+      </div>
+    </div>
+
+    <div class="hairline my-20"></div>
+
+    <div class="pricing-details grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-16">
+      <div class="pricing-detail">
+        <div class="label-mono opacity-50 mb-3">Cena za m²</div>
+        <div class="display-serif text-4xl">4 720 zł</div>
+        <div class="text-xs opacity-60 mt-2">Atrakcyjna stawka jak na lokalizację</div>
+      </div>
+      <div class="pricing-detail">
+        <div class="label-mono opacity-50 mb-3">Stan</div>
+        <div class="display-serif text-4xl">Dobry</div>
+        <div class="text-xs opacity-60 mt-2">Mieszkalny, do remontu i odświeżenia</div>
+      </div>
+      <div class="pricing-detail">
+        <div class="label-mono opacity-50 mb-3">Forma własności</div>
+        <div class="display-serif text-4xl">Pełna</div>
+        <div class="text-xs opacity-60 mt-2">Działka 1 600 m² · ogrodzona</div>
+      </div>
+      <div class="pricing-detail">
+        <div class="label-mono opacity-50 mb-3">Status</div>
+        <div class="display-serif text-4xl text-accent">Dostępne</div>
+        <div class="text-xs opacity-60 mt-2">Sprzedaż bezpośrednia · bez pośredników</div>
+      </div>
+    </div>
+
+    <div class="pricing-detail mt-24 max-w-4xl">
+      <p class="display-serif text-3xl md:text-5xl italic leading-snug opacity-95">
+        Cena <span class="text-accent not-italic">wprost od właścicielki</span>. Bez prowizji, bez doliczonych marż.
+      </p>
+      <div class="mt-6 label-mono opacity-60">↳ Sprzedaż prywatna</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTACT ====== -->
+<section id="kontakt" class="py-32 md:py-48 relative">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="flex items-center justify-between mb-16">
+      <div class="label-mono opacity-60">10 — Kontakt</div>
+      <div class="label-mono opacity-60 hidden md:block">Umów oglądanie</div>
+    </div>
+
+    <div class="contact-headline mb-20">
+      <h2 class="mega" style="font-size: clamp(2.5rem, 10vw, 10rem);">
+        <span class="contact-line">Porozmawiajmy</span><br>
+        <span class="contact-line italic text-accent">wprost.</span>
+      </h2>
+      <p class="mt-12 max-w-2xl text-xl md:text-2xl opacity-80 leading-relaxed" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;">
+        Sprzedaję dom osobiście. Chętnie odpowiem na pytania i pokażę nieruchomość w dogodnym terminie. Zostaw kontakt — odpowiem w ciągu doby.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6 md:gap-16">
+      <form class="contact-form col-span-12 md:col-span-7 space-y-10" onsubmit="event.preventDefault(); alert('Dziękujemy — skontaktujemy się wkrótce.');">
+        <div class="contact-field grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <label class="label-mono opacity-50 block mb-2">Imię i nazwisko</label>
+            <input type="text" class="w-full py-3" />
+          </div>
+          <div>
+            <label class="label-mono opacity-50 block mb-2">Telefon</label>
+            <input type="tel" class="w-full py-3" />
+          </div>
+        </div>
+        <div class="contact-field">
+          <label class="label-mono opacity-50 block mb-2">Adres e-mail</label>
+          <input type="email" class="w-full py-3" />
+        </div>
+        <div class="contact-field">
+          <label class="label-mono opacity-50 block mb-2">Preferowany termin oglądania</label>
+          <input type="text" placeholder="np. najbliższa sobota, popołudnie" class="w-full py-3" />
+        </div>
+        <div class="contact-field">
+          <label class="label-mono opacity-50 block mb-2">Dodatkowe pytania</label>
+          <textarea rows="4" class="w-full py-3 resize-none"></textarea>
+        </div>
+        <div class="contact-field pt-4">
+          <button type="submit" class="group inline-flex items-center justify-between gap-6 w-full md:w-auto lg:min-w-[440px] border border-fg px-6 md:px-10 py-5 md:py-6 hover-bg-fg transition-colors duration-500">
+            <span class="display-serif italic text-lg md:text-xl">Wyślij zapytanie</span>
+            <svg class="cta-arrow" width="34" height="28" viewBox="0 0 49 41" fill="none" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M29.512 4.84586C30.6795 7.24224 32.6491 10.4444 35.8536 13.6488C39.1905 16.9857 42.3709 18.5704 44.7006 19.3234C45.8667 19.7003 46.8223 19.8696 47.4807 19.945C47.8099 19.9827 48.0648 19.9969 48.2344 20.0018C48.241 20.002 48.2474 20.0022 48.2537 20.0023H48.3942C48.4122 20.002 48.4283 20.0019 48.4425 20.0018C48.4645 20.0017 48.482 20.0019 48.4948 20.0021L48.5106 20.0024L48.5159 20.0026L48.5179 20.0027C48.5182 20.0027 48.5194 20.0027 48.5 20.5023C48.5235 21.0018 48.5232 21.0018 48.5228 21.0018L48.5201 21.0019L48.5144 21.0022L48.4964 21.0028C48.4814 21.0032 48.4604 21.0037 48.4337 21.0039C48.4096 21.0042 48.3809 21.0043 48.3476 21.004C48.334 21.0045 48.3193 21.0052 48.3037 21.0059C48.1723 21.0122 47.9692 21.0278 47.6968 21.0654C47.1521 21.1406 46.3293 21.304 45.248 21.6583C43.0857 22.3665 39.8839 23.8394 35.8 26.9023C32.8988 29.0783 30.942 32.3639 29.7069 35.1429C29.0917 36.5272 28.6609 37.7735 28.3841 38.6728C28.2459 39.1222 28.1463 39.4844 28.0815 39.7329C28.0491 39.8572 28.0255 39.953 28.0101 40.0171C28.0024 40.0491 27.9967 40.0732 27.9931 40.089L27.9891 40.1063L27.9882 40.1102C27.9882 40.1101 27.9881 40.1108 27.5 40.0023C27.0119 39.8939 27.0119 39.8937 27.012 39.8935L27.0125 39.8912L27.0138 39.8853L27.0188 39.8638C27.0231 39.8452 27.0294 39.8183 27.0378 39.7833C27.0546 39.7133 27.0798 39.6114 27.1138 39.4808C27.1819 39.2196 27.2854 38.8434 27.4284 38.3787C27.7141 37.45 28.1583 36.165 28.7931 34.7368C30.058 31.8908 32.1012 28.4264 35.2 26.1023C38.8763 23.3451 41.8785 21.8319 44.0979 21.0023H0.5V20.0023H43.6107C41.2419 19.1174 38.2486 17.4581 35.1464 14.3559C31.8509 11.0603 29.8205 7.76245 28.613 5.28383C28.0092 4.04447 27.6108 3.00935 27.3626 2.28077C27.2385 1.91643 27.1519 1.62861 27.0959 1.43007C27.0679 1.33079 27.0476 1.25382 27.034 1.20074C27.0272 1.17421 27.0221 1.15364 27.0186 1.13925L27.0146 1.12231L27.0134 1.11736L27.013 1.11577C27.013 1.11555 27.0128 1.11478 27.5 1.00235C27.9822 0.891082 27.9871 0.889784 27.9871 0.889648L27.9877 0.891858L27.9904 0.903138C27.9929 0.913738 27.9971 0.930465 28.0029 0.953121C28.0144 0.998434 28.0327 1.06746 28.0584 1.15861C28.1098 1.34092 28.1912 1.6117 28.3092 1.9583C28.5454 2.65159 28.9283 3.64773 29.512 4.84586ZM48.5 20.5023L48.5228 21.0018L48.5194 20.0027L48.5 20.5023Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <p class="text-xs opacity-60 mt-5 max-w-md leading-relaxed">
+            Wysyłając zapytanie, potwierdzasz zapoznanie się z
+            <a href="/polityka-prywatnosci" class="underline decoration-dotted underline-offset-2 hover-text-accent"> polityką prywatności</a>
+            i akceptujesz przetwarzanie podanych danych w celu udzielenia odpowiedzi (RODO, art. 6 ust. 1 lit. b).
+          </p>
+          <p class="text-xs opacity-50 mt-2">Zapytanie jest niezobowiązujące. Odpowiem w ciągu 24 godzin.</p>
+        </div>
+      </form>
+
+      <div class="contact-info col-span-12 md:col-span-5 mt-12 md:mt-0 md:pl-8 lg:pl-12 lg:border-l border-line">
+        <div class="contact-info-item mb-12">
+          <div class="label-mono opacity-50 mb-2">Sprzedająca</div>
+          <div class="display-serif text-3xl">Właścicielka domu</div>
+          <div class="text-sm opacity-70 mt-2">Bez pośredników · bez prowizji · rozmowa wprost</div>
+        </div>
+        <div class="contact-info-item mb-12">
+          <div class="label-mono opacity-50 mb-2">E-mail</div>
+          <a href="mailto:dommeszna@proton.me" class="display-serif text-2xl hover-text-accent transition-colors break-all">dommeszna@proton.me</a>
+        </div>
+        <div class="contact-info-item mb-12">
+          <div class="label-mono opacity-50 mb-2">Lokalizacja</div>
+          <div class="display-serif text-2xl">Meszna, gmina Wilkowice</div>
+          <div class="text-sm opacity-70 mt-1">powiat bielski · województwo śląskie</div>
+        </div>
+        <div class="contact-info-item mt-16 p-6 border border-line-strong">
+          <div class="label-mono text-accent mb-3">✦ Dlaczego bezpośrednio</div>
+          <div class="text-sm leading-relaxed">Brak pośredników oznacza realną cenę bez doliczonych prowizji i bezpośrednią rozmowę o szczegółach, terminie i ewentualnych ustaleniach.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="pt-32 pb-12 border-t border-line relative overflow-hidden">
+  <div class="mx-auto max-w-[1800px] px-6 md:px-12">
+    <div class="grid grid-cols-12 gap-8 mb-32">
+      <div class="col-span-12 md:col-span-5">
+        <div class="display-serif text-3xl mb-2">Dom w Mesznej</div>
+        <div class="label-mono opacity-60">Bezpośrednio od właścicielki · Beskid Śląski · 402 m²</div>
+      </div>
+      <div class="col-span-6 md:col-span-4">
+        <div class="label-mono opacity-50 mb-4">Kontakt</div>
+        <ul class="space-y-2 text-sm">
+          <li>Bezpośrednio od właścicielki</li>
+          <li class="break-all">dommeszna@proton.me</li>
+          <li>Meszna, Wilkowice</li>
+        </ul>
+      </div>
+      <div class="col-span-6 md:col-span-3">
+        <div class="label-mono opacity-50 mb-4">Oferta</div>
+        <div class="font-mono text-sm">Sprzedaż prywatna</div>
+        <div class="text-xs opacity-50 mt-2">Bez pośredników · bez prowizji</div>
+        <div class="text-xs opacity-50 mt-1">Aktualizacja: 2025</div>
+      </div>
+    </div>
+
+    <div class="footer-mega mega overflow-hidden" style="font-size: clamp(4rem, 22vw, 22rem);">
+      <span class="italic">Beskidy.</span>
+    </div>
+
+    <div class="hairline mt-12 mb-6"></div>
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 label-mono opacity-50 text-[0.65rem]">
+      <div>© 2025 Dom w Mesznej · Sprzedaż prywatna</div>
+      <div class="flex items-center gap-6">
+        <a href="/polityka-prywatnosci" class="hover-text-accent">Polityka prywatności · RODO</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./images-data.js"></script>
+<script>
+  // Assign images
+  document.getElementById('hero-img').src = IMG.h01;          // Elewacja południowa (front)
+  document.getElementById('showcase-img-1').src = IMG.h02;    // mountain panorama view
+  document.getElementById('showcase-img-2').src = IMG.h08;    // dramatic architectural detail
+
+  // Gallery — 6 photos (duplicates dropped)
+  document.getElementById('g-img-1').src = IMG.h01;   // Elewacja południowa
+  document.getElementById('g-img-2').src = IMG.h08;   // Kolumny i kamień
+  document.getElementById('g-img-3').src = IMG.h03;   // Brama, podjazd, adres
+  document.getElementById('g-img-4').src = IMG.h05;   // Widok od ulicy
+  document.getElementById('g-img-5').src = IMG.h02;   // Panorama
+  document.getElementById('g-img-6').src = IMG.h06;   // Sąsiedztwo i działka
+
+  // Interior gallery — 16 photos (refreshed with newest bright shots)
+  document.getElementById('int-img-1').src = IMG.i01;   // Salon z kominkiem (interior-30 NEW)
+  document.getElementById('int-img-2').src = IMG.i02;   // Sypialnia z łukowym oknem
+  document.getElementById('int-img-3').src = IMG.i03;   // Strefa dzienna panorama (interior-31 NEW)
+  document.getElementById('int-img-4').src = IMG.i04;   // Kuchnia
+  document.getElementById('int-img-5').src = IMG.i05;   // Kominek z bliska (interior-41 NEW)
+  document.getElementById('int-img-6').src = IMG.i06;   // Łazienka główna jacuzzi
+  document.getElementById('int-img-7').src = IMG.i07;   // Hol klatka schodowa (interior-32 NEW)
+  document.getElementById('int-img-8').src = IMG.i08;   // Druga łazienka z bidetem
+  document.getElementById('int-img-9').src = IMG.i09;   // Strefa wypoczynkowa (interior-42 NEW)
+  document.getElementById('int-img-10').src = IMG.i10;  // Domowe biuro
+  document.getElementById('int-img-11').src = IMG.i11;  // Pokój dziecięcy
+  document.getElementById('int-img-12').src = IMG.i12;  // Kącik na poddaszu
+  document.getElementById('int-img-13').src = IMG.i13;  // Garderoba
+  document.getElementById('int-img-14').src = IMG.i14;  // Pokój poddasze widok
+  document.getElementById('int-img-15').src = IMG.i15;  // Pokój dzienny (interior-43 NEW)
+  document.getElementById('int-img-16').src = IMG.i16;  // Pokój z balkonem (interior-14)
+
+  // Plans
+  document.getElementById('plan-site-img').src = IMG.pSite;
+  document.getElementById('plan-piwnica-img').src = IMG.pPiwnica;
+  document.getElementById('plan-parter-img').src = IMG.pParter;
+  document.getElementById('plan-pietro-img').src = IMG.pPietro;
+  document.getElementById('plan-poddasze-img').src = IMG.pPoddasze;
+  document.getElementById('plan-przekroj-img').src = IMG.pPrzekroj;
+
+  // Landscape banner (Location section)
+  document.getElementById('beskidy-img').src = IMG.beskidy;
+
+  // ===== Theme toggle =====
+  const themeToggle = document.getElementById('theme-toggle');
+  const iconMoon = document.getElementById('icon-moon');
+  const iconSun = document.getElementById('icon-sun');
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      iconMoon.classList.add('hidden');
+      iconSun.classList.remove('hidden');
+    } else {
+      document.documentElement.classList.remove('dark');
+      iconMoon.classList.remove('hidden');
+      iconSun.classList.add('hidden');
+    }
+    localStorage.setItem('theme', theme);
+  }
+  applyTheme(localStorage.getItem('theme') || 'light');
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  // ===== Header scroll — toggle light (over hero) / opaque (scrolled) =====
+  const header = document.getElementById('header');
+  const updateHeader = () => {
+    if (window.scrollY > 40) {
+      header.classList.add('glass', 'py-4', 'header-opaque');
+      header.classList.remove('py-6', 'header-light');
+    } else {
+      header.classList.remove('glass', 'py-4', 'header-opaque');
+      header.classList.add('py-6', 'header-light');
+    }
+  };
+  window.addEventListener('scroll', updateHeader);
+  updateHeader(); // initial state
+
+  // ===== Marquee =====
+  const marqueeItems = ['Beskid Śląski','Bezpośrednio od właściciela','402 m² · 7 pokoi','Budowa 2018','300 m do lasu','600 m do szlaków na Klimczok','Bielsko-Biała 10 km','Szczyrk 7 km','Działka 1 600 m²','Bez pośredników'];
+  const marqueeHTML = (text) => `<span class="display-serif text-3xl md:text-5xl italic px-8 opacity-90">${text}<span class="text-accent mx-8 not-italic">✦</span></span>`;
+  document.getElementById('marquee-track').innerHTML = [...marqueeItems, ...marqueeItems, ...marqueeItems].map(marqueeHTML).join('');
+
+  // ===== Nearby =====
+  const nearby = [
+    { name: 'Las', distance: '300 m', type: 'Bezpośrednie sąsiedztwo' },
+    { name: 'Chata na Groniu', distance: '600 m', type: 'Schronisko górskie' },
+    { name: 'Szlak na Klimczok', distance: '600 m', type: 'Szlaki górskie' },
+    { name: 'Bielsko-Biała', distance: '10 km', type: 'Miasto' },
+    { name: 'Szczyrk', distance: '7 km', type: 'Kurort narciarski' },
+    { name: 'Obwodnica S52', distance: '4 km', type: 'Komunikacja' },
+    { name: 'Szczyrk Mountain Resort', distance: '8 km', type: 'Narty' },
+    { name: 'Skocznia Skalite', distance: '7 km', type: 'Atrakcja' },
+    { name: 'Aquapark Aries', distance: '7 km', type: 'Rekreacja' },
+    { name: 'Jezioro Międzybrodzkie', distance: '15 km', type: 'Natura' },
+    { name: 'Wisła / Ustroń', distance: '25 km', type: 'Kurort' },
+  ];
+  document.getElementById('nearby-list').innerHTML = nearby.map((item, i) => `
+    <div class="nearby-row flex items-center justify-between py-5 border-b border-line group">
+      <div class="flex items-baseline gap-4">
+        <span class="label-mono opacity-40 text-[0.65rem]">${String(i+1).padStart(2,'0')}</span>
+        <div>
+          <div class="display-serif text-xl group-hover:text-[var(--accent)] transition-colors">${item.name}</div>
+          <div class="text-xs opacity-50 mt-1">${item.type}</div>
+        </div>
+      </div>
+      <div class="label-mono text-accent">${item.distance}</div>
+    </div>
+  `).join('');
+
+  // ===== Statement word by word =====
+  const statementText = '402 metry kwadratowe. 1 600 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
+  document.getElementById('statement-text').innerHTML = statementText.split(' ').map(w => `<span class="stmt-word inline-block mr-[0.18em]">${w}</span>`).join('');
+
+  // ===== GSAP animations =====
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .from('.hero-label', { opacity: 0, y: 20, duration: 1, delay: 0.3 })
+    .from('.hero-word', { yPercent: 110, duration: 1.4, stagger: 0.1, ease: 'expo.out' }, '-=0.6')
+    .from('.hero-sub', { opacity: 0, y: 20, duration: 1 }, '-=0.8');
+
+  gsap.to('.hero-img-bg', {
+    yPercent: 15, scale: 1.05, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  // Stats
+  document.querySelectorAll('.spec-number').forEach(el => {
+    const raw = el.dataset.value || '0';
+    const num = parseFloat(raw.replace(/\s/g, '').replace(',', '.'));
+    if (!isFinite(num)) return;
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: num, duration: 1.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' },
+      onUpdate: () => {
+        const formatted = raw.includes(',')
+          ? obj.val.toFixed(2).replace('.', ',')
+          : Math.round(obj.val).toLocaleString('pl-PL');
+        el.textContent = formatted;
+      }
+    });
+  });
+  gsap.from('.stat-item', {
+    opacity: 0, y: 40, stagger: 0.08, duration: 0.9,
+    scrollTrigger: { trigger: '.stats-grid', start: 'top 80%' }
+  });
+
+  // Statement
+  gsap.fromTo('.stmt-word', { opacity: 0.12 }, {
+    opacity: 1, stagger: 0.03, ease: 'none',
+    scrollTrigger: { trigger: '.statement', start: 'top 75%', end: 'bottom 60%', scrub: 1 }
+  });
+
+  // Showcase images parallax
+  document.querySelectorAll('.showcase-img-wrap').forEach(el => {
+    gsap.to(el, {
+      yPercent: 12, ease: 'none',
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+  });
+
+  // Gallery items reveal
+  gsap.from('.gallery-heading > *', {
+    opacity: 0, y: 50, stagger: 0.1, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.gallery-heading', start: 'top 80%' }
+  });
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    gsap.from(item, {
+      opacity: 0, y: 60, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: item, start: 'top 88%' }
+    });
+    const img = item.querySelector('img');
+    if (img) {
+      gsap.from(img, {
+        scale: 1.15, ease: 'none',
+        scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: 1 }
+      });
+    }
+  });
+
+  // Potential
+  gsap.from('.pot-heading > *', {
+    opacity: 0, y: 50, stagger: 0.1, duration: 1,
+    scrollTrigger: { trigger: '.pot-heading', start: 'top 80%' }
+  });
+  document.querySelectorAll('.pot-card').forEach((card, i) => {
+    gsap.from(card, {
+      y: 50, opacity: 0, duration: 1, delay: (i % 3) * 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: card, start: 'top 85%' }
+    });
+  });
+
+  // Floor
+  gsap.from('.floor-heading > *', {
+    y: 50, opacity: 0, stagger: 0.1, duration: 1,
+    scrollTrigger: { trigger: '.floor-heading', start: 'top 80%' }
+  });
+  document.querySelectorAll('.floor-card').forEach((card, i) => {
+    gsap.from(card, {
+      y: 60, opacity: 0, duration: 1.1, delay: i * 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: card, start: 'top 85%' }
+    });
+    gsap.from(card.querySelectorAll('.floor-room'), {
+      opacity: 0, x: -20, stagger: 0.06, duration: 0.6,
+      scrollTrigger: { trigger: card, start: 'top 75%' }
+    });
+  });
+
+  // Location
+  gsap.from('.location-heading > *', {
+    opacity: 0, y: 40, stagger: 0.1, duration: 1,
+    scrollTrigger: { trigger: '.location-heading', start: 'top 80%' }
+  });
+  gsap.from('.nearby-row', {
+    opacity: 0, x: -30, stagger: 0.06, duration: 0.6,
+    scrollTrigger: { trigger: '.nearby-list', start: 'top 80%' }
+  });
+  gsap.from('.map-pin', {
+    scale: 0, opacity: 0, stagger: 0.1, duration: 0.6, ease: 'back.out(2)', transformOrigin: 'center',
+    scrollTrigger: { trigger: '.map-illustration', start: 'top 70%' }
+  });
+
+  // Plans
+  gsap.from('.plans-heading > *', {
+    opacity: 0, y: 40, stagger: 0.1, duration: 1,
+    scrollTrigger: { trigger: '.plans-heading', start: 'top 80%' }
+  });
+  document.querySelectorAll('.plan-item').forEach((item, i) => {
+    gsap.from(item, {
+      opacity: 0, y: 50, duration: 1, delay: (i % 3) * 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: item, start: 'top 85%' }
+    });
+  });
+  gsap.from('.plans-note', {
+    opacity: 0, y: 30, duration: 1,
+    scrollTrigger: { trigger: '.plans-note', start: 'top 90%' }
+  });
+
+  // Interior gallery
+  gsap.from('.interior-heading > *', {
+    opacity: 0, y: 50, stagger: 0.1, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.interior-heading', start: 'top 80%' }
+  });
+
+  // Letter from owner
+  gsap.from('.letter-mark', {
+    opacity: 0, scale: 0.6, duration: 1.4, ease: 'expo.out',
+    scrollTrigger: { trigger: '.letter-block', start: 'top 80%' }
+  });
+  gsap.from('.letter-line', {
+    yPercent: 110, stagger: 0.08, duration: 1.2, ease: 'expo.out',
+    scrollTrigger: { trigger: '.letter-block', start: 'top 75%' }
+  });
+  gsap.from('.letter-body > p', {
+    opacity: 0, y: 30, stagger: 0.15, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.letter-body', start: 'top 80%' }
+  });
+  gsap.from('.letter-signoff', {
+    opacity: 0, y: 20, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.letter-signoff', start: 'top 90%' }
+  });
+
+  // Pricing
+  gsap.from('.pricing-line', {
+    yPercent: 110, stagger: 0.1, duration: 1.2, ease: 'expo.out',
+    scrollTrigger: { trigger: '.pricing-block', start: 'top 75%' }
+  });
+  gsap.from('.pricing-detail', {
+    opacity: 0, y: 30, stagger: 0.1, duration: 0.8,
+    scrollTrigger: { trigger: '.pricing-details', start: 'top 80%' }
+  });
+  const priceEl = document.querySelector('.big-price');
+  if (priceEl) {
+    priceEl.textContent = (2250000).toLocaleString('pl-PL');
+    const obj = { val: 2250000 };
+    gsap.to(obj, {
+      val: 1899000, duration: 2.6, ease: 'power3.out',
+      scrollTrigger: { trigger: priceEl, start: 'top 80%' },
+      onUpdate: () => { priceEl.textContent = Math.round(obj.val).toLocaleString('pl-PL'); }
+    });
+  }
+  gsap.from('.price-anchor-note', {
+    opacity: 0, y: 12, duration: 1.2, ease: 'power2.out',
+    scrollTrigger: { trigger: '.big-price', start: 'top 80%' },
+    delay: 2.4
+  });
+
+  // Contact
+  gsap.from('.contact-line', {
+    yPercent: 110, stagger: 0.08, duration: 1.2, ease: 'expo.out',
+    scrollTrigger: { trigger: '.contact-headline', start: 'top 75%' }
+  });
+  gsap.from('.contact-field', {
+    opacity: 0, y: 30, stagger: 0.08, duration: 0.7,
+    scrollTrigger: { trigger: '.contact-form', start: 'top 80%' }
+  });
+  gsap.from('.contact-info-item', {
+    opacity: 0, x: 30, stagger: 0.1, duration: 0.8,
+    scrollTrigger: { trigger: '.contact-info', start: 'top 80%' }
+  });
+
+  gsap.from('.footer-mega', {
+    yPercent: 30, opacity: 0, duration: 1.5, ease: 'expo.out',
+    scrollTrigger: { trigger: '.footer-mega', start: 'top 90%' }
+  });
+
+  // Refresh
+  window.addEventListener('load', () => {
+    setTimeout(() => ScrollTrigger.refresh(), 500);
+  });
+</script>
+</body>
+</html>
