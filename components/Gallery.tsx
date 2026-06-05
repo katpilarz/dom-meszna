@@ -6,12 +6,9 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const photos = [
-  { src: '/images/house/house-01.jpg', label: 'Elewacja południowa', tag: '01', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
-  { src: '/images/house/house-08.jpg', label: 'Kolumny i kamień', tag: '02', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/house/house-03.jpg', label: 'Brama, podjazd, adres', tag: '03', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  { src: '/images/house/house-05.jpg', label: 'Widok od ulicy', tag: '04', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  { src: '/images/house/house-02.jpg', label: 'Panorama od strony drogi', tag: '05', span: 'col-span-12', aspect: '21/9' },
-  { src: '/images/house/house-06.jpg', label: 'Sąsiedztwo i działka', tag: '06', span: 'col-span-12', aspect: '21/9' },
+  { src: '/images/house/house-05.jpg', label: 'Elewacja południowa', tag: '01', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
+  { src: '/images/house/house-07.jpg', label: 'Kolumny i kamień', tag: '02', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
+  { src: '/images/house/house-02.jpg', label: 'Panorama od strony drogi', tag: '05', span: 'col-span-12', aspect: '16/9' },
 ];
 
 export default function Gallery() {
