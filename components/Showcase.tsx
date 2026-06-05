@@ -66,7 +66,7 @@ export default function Showcase({
         }}
       />
       <div className="absolute bottom-12 left-0 right-0 px-6 md:px-12 text-white">
-        <div className="mx-auto max-w-[1800px]">
+        <div className="mx-auto max-w-[1880px]">
           <div className="label-mono opacity-70 mb-3">↳ {caption}</div>
           <div
             className="display-serif"

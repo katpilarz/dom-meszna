@@ -61,7 +61,7 @@ export default function Interior() {
 
   return (
     <section ref={root} id="wnetrza" className="py-32 md:py-48 relative bg-[var(--bg-alt)]">
-      <div className="mx-auto max-w-[1800px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="interior-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">04 — Wnętrza</div>

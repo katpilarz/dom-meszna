@@ -37,7 +37,7 @@ export default function Statement() {
 
   return (
     <section ref={root} className="py-32 md:py-48 relative">
-      <div className="mx-auto max-w-[1800px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-20">
           <div className="label-mono opacity-60">02 — Charakter miejsca</div>
           <div className="label-mono opacity-60 hidden md:block">Meszna · Podbeskidzie</div>

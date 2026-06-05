@@ -46,16 +46,16 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(14,14,12,0.6) 0%, rgba(14,14,12,0.3) 22%, rgba(14,14,12,0.4) 55%, rgba(14,14,12,0.7) 85%, rgba(14,14,12,0.9) 100%)',
+              'linear-gradient(to bottom, rgba(14,14,12,0.55) 0%, rgba(14,14,12,0.5) 30%, rgba(14,14,12,0.78) 50%, rgba(14,14,12,0.72) 68%, rgba(14,14,12,0.6) 82%, rgba(14,14,12,0.78) 92%, rgba(14,14,12,0.72) 100%)',
           }}
         />
       </div>
 
-      <div className="relative z-10 min-h-screen flex flex-col justify-between pt-32 pb-12 text-white">
-        <div className="mx-auto max-w-[1800px] w-full px-6 md:px-12">
-          <div className="flex items-center justify-between mb-12">
+      <div className="relative z-10 min-h-screen flex flex-col justify-end pb-24 text-white">
+        <div className="mx-auto max-w-[1880px] w-full px-6 md:px-12">
+          <div className="flex items-center justify-start gap-14 mb-12">
             <div className="hero-label label-mono opacity-80">
-              <span style={{ color: '#d4a76a' }}>●</span> Sprzedaż bezpośrednio od właściciela
+              <span style={{ color: '#d4a76a' }}>●</span> Sprzedaż bezpośrednia 
             </div>
             <div className="hero-label label-mono opacity-80 hidden md:block">
               Meszna · Wilkowice · Śląskie
@@ -63,7 +63,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-[1800px] w-full px-6 md:px-12">
+        <div className="mx-auto max-w-[1880px] w-full px-6 md:px-12">
           <h1
             className="display-serif"
             style={{
@@ -88,7 +88,7 @@ export default function Hero() {
           </h1>
         </div>
 
-        <div className="mx-auto max-w-[1800px] w-full px-6 md:px-12">
+        <div className="mx-auto max-w-[1880px] w-full px-6 md:px-12">
           <p className="hero-sub display-serif text-2xl md:text-3xl italic opacity-90 max-w-3xl">
             402 m² · 1 600 m² działki · trzy kondygnacje · widok na Beskid Śląski. 300 m do lasu, 600 m do szlaków na Klimczok.
           </p>

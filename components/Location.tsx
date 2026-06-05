@@ -15,7 +15,7 @@ const nearby = [
   { name: 'Szczyrk Mountain Resort', distance: '8 km', type: 'Narty' },
   { name: 'Skocznia Skalite', distance: '7 km', type: 'Atrakcja' },
   { name: 'Aquapark Aries', distance: '7 km', type: 'Rekreacja' },
-  { name: 'Jezioro Międzybrodzkie', distance: '15 km', type: 'Natura' },
+  { name: 'Jezioro Żywieckie', distance: '15 km', type: 'Natura' },
   { name: 'Wisła / Ustroń', distance: '25 km', type: 'Kurort' },
 ];
 
@@ -76,7 +76,7 @@ export default function Location() {
       ref={root}
       className="py-32 md:py-48 bg-[var(--bg-alt)] relative"
     >
-      <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="location-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">07 — Lokalizacja</div>
@@ -85,9 +85,9 @@ export default function Location() {
             </div>
           </div>
           <h2 className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl">
-            Adres, który&nbsp;
-            <span className="italic text-[var(--accent)]">znają</span>&nbsp;
-            tylko miłośnicy gór.
+            Adres, który znają&nbsp;
+            <br></br> prawdziwi&nbsp;
+            <span className="italic text-[var(--accent)]">miłośnicy gór.</span>&nbsp;
           </h2>
           <p className="mt-8 max-w-2xl text-lg opacity-75 leading-relaxed">
             300 metrów do lasu. 600 metrów do Chaty na Groniu i szlaków

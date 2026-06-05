@@ -90,7 +90,7 @@ export default function Floorplan() {
       ref={root}
       className="py-32 md:py-48 relative"
     >
-      <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="floor-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">06 — Układ kondygnacji</div>
@@ -100,8 +100,10 @@ export default function Floorplan() {
           </div>
           <h2 className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl">
             Trzy poziomy.&nbsp;
-            <span className="italic text-[var(--accent)]">Jedno</span>
-            &nbsp;przemyślane wnętrze.
+            <br></br>
+            <span>Jedno</span>
+            <span className="italic text-[var(--accent)]">&nbsp;przemyślane wnętrze.</span>
+            
           </h2>
         </div>
 

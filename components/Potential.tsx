@@ -77,7 +77,7 @@ export default function Potential() {
 
   return (
     <section ref={root} id="mozliwosci" className="py-32 md:py-48 relative">
-      <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="pot-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">
@@ -89,9 +89,10 @@ export default function Potential() {
           </div>
           <h2 className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl">
             Gotowy do życia.&nbsp;
-            <span className="italic text-[var(--accent)]">Otwarty</span>
+        
             <br />
-            na Twoje zmiany.
+        Otwarty na
+                <span className="italic text-[var(--accent)]">Twoje zmiany</span>
           </h2>
           <p className="mt-8 max-w-2xl text-lg opacity-75 leading-relaxed">
             Dom umeblowany, w dobrym stanie technicznym — można wprowadzić
