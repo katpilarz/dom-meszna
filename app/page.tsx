@@ -24,22 +24,6 @@ export default function Home() {
         <Marquee />
         <Stats />
         <Statement />
-        <Showcase
-          src="/images/house/house-02.jpg"
-          alt="Widok na Beskid Śląski z działki"
-          caption="Widok"
-          position="top"
-          headline={
-            <span>
-              Codziennie ten sam,
-              <br />
-              <span className="italic" style={{ color: '#d4a76a' }}>
-                i nigdy taki sam.
-              </span>
-            </span>
-          }
-          accent="Widok na Klimczok, Skrzyczne i Beskid Śląski wprost z okien."
-        />
         <Gallery />
         <Interior />
         <Potential />

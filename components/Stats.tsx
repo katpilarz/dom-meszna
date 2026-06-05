@@ -53,19 +53,19 @@ export default function Stats() {
   }, []);
 
   return (
-    <section ref={root} id="dom" className="py-24 md:py-32 relative">
+    <section ref={root} id="dom" className="py-24 md:py-32 relative bg-[var(--bg-alt)]">
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-16">
           <div className="label-mono opacity-60">01 — Najważniejsze fakty</div>
-          <div className="label-mono opacity-60 hidden md:block">Studio Atrium · projekt 2006 · realizacja 2018</div>
+          <div className="label-mono opacity-60 hidden md:block">Projekt Studio Atrium · oddany do użytku 2018</div>
         </div>
 
         <div
-          className="stats-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px border-y border-[var(--line-strong)]"
+          className="stats-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px border-y border-[var(--line-strong)] bg-[var(--bg-alt)]"
           style={{ background: 'var(--line-strong)' }}
         >
           {stats.map((s) => (
-            <div key={s.label} className="stat-item bg-[var(--bg)] p-6 md:p-10">
+            <div key={s.label} className="stat-item bg-[var(--bg-alt)] p-6 md:p-10">
               <div className="label-mono opacity-50 mb-3 text-[0.6rem]">{s.label}</div>
               <div className="display-serif text-3xl md:text-5xl">
                 <span className="spec-number" data-value={s.value}>0</span>

@@ -16,7 +16,7 @@ export default function Marquee() {
 
   return (
     <section
-      className="py-8 border-y border-[var(--line)] overflow-hidden no-select"
+      className="py-8 border-y border-[var(--line)] overflow-hidden no-select bg-[var(--bg-alt)]"
       aria-hidden="true"
     >
       <div className="marquee-track flex whitespace-nowrap">
