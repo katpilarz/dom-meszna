@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const text =
-  '402 metry kwadratowe. 1 600 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
+  '402 m2 powierzchni całkowitej. 170 m2 powierzchni użytkowej. 1880 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
 
 export default function Statement() {
   const root = useRef<HTMLElement>(null);
@@ -36,7 +36,7 @@ export default function Statement() {
   }, []);
 
   return (
-    <section ref={root} className="py-32 md:py-48 relative">
+    <section ref={root} className="pt-26 pb-40 lg:pb-56 relative bg-[var(--bg-alt)]">
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-20">
           <div className="label-mono opacity-60">02 — Charakter miejsca</div>
@@ -46,10 +46,10 @@ export default function Statement() {
         <h2
           className="statement-text display-serif"
           style={{
-            fontSize: 'clamp(2.5rem, 6vw, 6rem)',
+            fontSize: 'clamp(2.5rem, 5.9vw, 4.9rem)',
             lineHeight: 1.05,
             letterSpacing: '-0.025em',
-            maxWidth: '1400px',
+            maxWidth: '1550px',
           }}
         >
           {text.split(' ').map((word, i) => (
