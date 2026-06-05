@@ -1,5 +1,6 @@
 {
-  "name": "villa-meszna",
+  "name": "dom-meszna",
+  "author":"paisak4u",
   "version": "1.0.0",
   "private": true,
   "scripts": {

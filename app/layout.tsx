@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'Dom w Mesznej — sprzedaż bezpośrednio od właścicielki',
   description:
     'Dom 402 m² w Mesznej u stóp Beskidu Śląskiego. Działka 1 600 m², 7 pokoi, budowa 2018. Bez pośredników.',
+  authors: { name: 'PAISAK4U' },
   openGraph: {
     title: 'Dom w Mesznej — sprzedaż bezpośrednio od właścicielki',
     description:
