@@ -16,11 +16,16 @@ const interiors = [
   { src: '/images/interior/interior-47.jpg', label: 'Jadalnia', tag: '07', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
   { src: '/images/interior/interior-48.jpg', label: 'Otwarty salon', tag: '08', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
   { src: '/images/interior/interior-49.jpg', label: 'Dodatkowy pokój dzienny', tag: '09', span: 'col-span-12', aspect: '16/9' },
-  { src: '/images/interior/interior-43.jpg', label: 'Pokój dzienny', tag: '09', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
-  { src: '/images/interior/interior-44.jpg', label: 'Pokój dzienny', tag: '10', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-43.jpg', label: 'Pokój dzienny', tag: '10', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-44.jpg', label: 'Pokój dzienny', tag: '11', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
 
   //Poddasze
-   { src: '/images/interior/interior-51.jpg', label: 'Główna sypialnia', tag: '11', span: 'col-span-12 ', aspect: '16/9,' },
+  { src: '/images/interior/interior-51.jpg', label: 'Główna sypialnia', tag: '12', span: 'col-span-12', aspect: '16/9,' },
+  { src: '/images/interior/interior-17.jpg', label: 'Pokój dziecięcy', tag: '13', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-18.jpg', label: 'Pokój dziecięcy', tag: '14', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-24.jpg', label: 'Pokój nastolatki', tag: '15', span: 'col-span-12', aspect: '16/9,' },
+  { src: '/images/interior/interior-29.jpg', label: 'Łazienka główna', tag: '16', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
+  { src: '/images/interior/interior-28.jpg', label: 'Łazienka główna', tag: '16', span: 'col-span-12 md:col-span-6', aspect: '4/3' },
 
 ];
 
