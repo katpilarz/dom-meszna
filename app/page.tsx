@@ -28,7 +28,7 @@ export default function Home() {
         <Interior />
         <Potential />
         <Showcase
-          src="/images/house/house-08.jpg"
+          src="/images/house/house-03.jpg"
           alt="Bryła domu — detal architektoniczny"
           caption="Architektura"
           position="top"
