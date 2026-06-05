@@ -48,7 +48,9 @@ Możesz zmienić nazwę w **Site settings → Change site name** albo podpiąć 
 
 ### 3. Konfiguracja Netlify Forms (auto-detekcja)
 
-Formularz w `components/Contact.tsx` jest już skonfigurowany z `data-netlify="true"` i pasującym ukrytym statycznym formularzem w `app/layout.tsx` (Netlify skanuje statyczny HTML przy buildzie, dlatego oba są potrzebne).
+Formularz w `components/Contact.tsx` jest skonfigurowany z `data-netlify="true"` i wysyła dane przez `fetch()` do `/`. Aby Netlify wykrył formularz przy buildzie, w `public/__forms.html` znajduje się ukryty statyczny HTML z definicją pól.
+
+> **Uwaga:** `@netlify/plugin-nextjs` od wersji 5 wymaga osobnego pliku `__forms.html` (poprzednio wystarczał ukryty formularz w `layout.tsx`). Patrz: https://ntl.fyi/next-runtime-forms-migration
 
 **Po pierwszym deployu:**
 
