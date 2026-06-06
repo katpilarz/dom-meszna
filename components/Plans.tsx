@@ -77,7 +77,7 @@ export default function Plans() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="mt-4 flex items-baseline justify-between">
+              <div className="mt-4 flex gap-2 flex-col sm:flex-row items-baseline justify-between">
                 <div className="display-serif text-xl italic">{p.title}</div>
                 <div className="label-mono opacity-50">{p.subtitle}</div>
               </div>
