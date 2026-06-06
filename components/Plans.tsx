@@ -6,12 +6,12 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const plans = [
-  { src: '/images/plans/plan-site.jpg', title: 'Sytuacja', subtitle: 'Działka 1 600 m²' },
-  { src: '/images/plans/plan-piwnica.jpg', title: 'Parter', subtitle: 'Strefa techniczna' },
-  { src: '/images/plans/plan-parter.jpg', title: 'Strefa wejściowa', subtitle: 'Wjazd · garaż' },
-  { src: '/images/plans/plan-pietro.jpg', title: 'Pierwsze piętro', subtitle: 'Strefa dzienna' },
-  { src: '/images/plans/plan-poddasze.jpg', title: 'Poddasze', subtitle: 'Strefa nocna' },
-  { src: '/images/plans/plan-przekroj.jpg', title: 'Przekrój', subtitle: 'Konstrukcja A-A · C-C' },
+  { src: '/images/plans/plan-site.jpg',     title: 'Sytuacja',   subtitle: 'Plan zagospodarowania · Meszna' },
+    { src: '/images/plans/plan-przekroj.jpg', title: 'Przekrój',   subtitle: 'Przekroje A-A i C-C · spadek dachu 39°' },
+  { src: '/images/plans/plan-parter.jpg',   title: 'Parter',     subtitle: 'Otwarta przestrzeń' },
+  { src: '/images/plans/plan-poddasze.jpg', title: 'Poddasze',   subtitle: 'Pokoje pod skosami · balkon · druga łazienka' },
+    { src: '/images/plans/plan-pietro.jpg',   title: 'Poziom 0',     subtitle: 'Garaż · pomieszczenia gospodarcze' },
+
 ];
 
 export default function Plans() {
@@ -86,13 +86,12 @@ export default function Plans() {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="plans-note mt-16 p-6 md:p-8 rounded-sm border border-[var(--line-strong)] max-w-3xl">
+                  <div className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-sm border border-[var(--line-strong)] max-w-3xl">
           <div className="label-mono text-[var(--accent)] mb-3">✦ Pełna dokumentacja</div>
           <p className="text-sm leading-relaxed opacity-80">
             Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.
           </p>
+        </div>
         </div>
       </div>
     </section>
