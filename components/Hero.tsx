@@ -58,14 +58,14 @@ export default function Hero() {
           className="absolute inset-0"
 style={{
             background:
-              'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.72) 85%, rgba(0,0,0,0.84) 100%)',
+              'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.67) 85%, rgba(0,0,0,0.77) 100%)',
           }}
         />
       </div>
 
       <div className="relative z-10 min-h-screen flex flex-col justify-end pb-24 text-white">
         <div className="mx-auto max-w-[1880px] w-full px-6 md:px-12">
-          <div className="flex items-center justify-start gap-14 mb-12">
+          <div className="flex items-center justify-start gap-14 mb-4 lg:mb-12">
             <div className="hero-label label-mono opacity-80">
               <span style={{ color: '#d4a76a' }}>●</span> Oferta bezpośrednia
             </div>
