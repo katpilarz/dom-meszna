@@ -76,12 +76,12 @@ export default function Potential() {
   }, []);
 
   return (
-    <section ref={root} id="mozliwosci" className="py-32 md:py-48 relative">
+    <section ref={root} id="mozliwosci" className="py-32 md:py-48 relative bg-[var(--bg-alt)]">
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="pot-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">
-              04 — Możliwości
+              03 — Możliwości
             </div>
             <div className="label-mono opacity-60 hidden md:block">
               Stan: dobry · do indywidualnego dostosowania
@@ -106,7 +106,7 @@ export default function Potential() {
           {opportunities.map((opp) => (
             <div
               key={opp.n}
-              className="pot-card bg-[var(--bg)] p-8 md:p-12 min-h-[280px] flex flex-col"
+              className="pot-card bg-[var(--bg-alt)] p-8 md:p-12 min-h-[280px] flex flex-col"
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="display-serif text-xl">{opp.title}</div>

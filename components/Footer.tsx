@@ -27,7 +27,7 @@ export default function Footer() {
   return (
     <footer
       ref={ref}
-      className="pt-32 pb-12 border-t border-[var(--line)] relative overflow-hidden bg-[var(--bg-alt)]"
+      className="pt-32 pb-12 border-t border-[var(--line)] relative overflow-hidden"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex footer-mega display-serif text-[clamp(4rem,14vw,14rem)] justify-between tracking-tight overflow-hidden">

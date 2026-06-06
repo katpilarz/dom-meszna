@@ -74,12 +74,12 @@ export default function Location() {
     <section
       id="lokalizacja"
       ref={root}
-      className="py-32 md:py-48 bg-[var(--bg-alt)] relative"
+      className="py-32 md:py-48 relative"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="location-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">06 — Lokalizacja</div>
+            <div className="label-mono opacity-60">05 — Lokalizacja</div>
             <div className="label-mono opacity-60 hidden md:block">
               49°48′N · 19°02′E
             </div>
