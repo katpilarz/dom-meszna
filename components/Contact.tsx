@@ -94,35 +94,35 @@ export default function Contact() {
             method="POST"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
-            onSubmit={async (e) => {
-              e.preventDefault();
-              if (status === 'submitting') return;
-              setStatus('submitting');
-              setErrorMsg('');
-              const form = e.currentTarget;
-              const formData = new FormData(form);
-              const payload: Record<string, string> = { 'form-name': 'kontakt' };
-              formData.forEach((value, key) => {
-                payload[key] = value.toString();
-              });
-              try {
-                const res = await fetch('/', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                  body: encode(payload),
-                });
-                if (!res.ok) throw new Error(`Status ${res.status}`);
-                setStatus('success');
-                form.reset();
-              } catch (err) {
-                setStatus('error');
-                setErrorMsg(
-                  err instanceof Error
-                    ? err.message
-                    : 'Nieznany błąd. Spróbuj ponownie lub napisz na e-mail.'
-                );
-              }
-            }}
+           onSubmit={async (e) => {
+  e.preventDefault();
+  if (status === 'submitting') return;
+  setStatus('submitting');
+  setErrorMsg('');
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+  const payload: Record<string, string> = { 'form-name': 'kontakt' };
+  formData.forEach((value, key) => {
+    payload[key] = value.toString();
+  });
+  try {
+    const res = await fetch('/__forms.html', {   // ← zmiana tutaj
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode(payload),
+    });
+    if (!res.ok) throw new Error(`Status ${res.status}`);
+    setStatus('success');
+    form.reset();
+  } catch (err) {
+    setStatus('error');
+    setErrorMsg(
+      err instanceof Error
+        ? err.message
+        : 'Nieznany błąd. Spróbuj ponownie lub napisz na e-mail.'
+    );
+  }
+}}
           >
             {/* Required hidden input — tells Netlify which form was submitted */}
             <input type="hidden" name="form-name" value="kontakt" />
