@@ -55,7 +55,7 @@ export default function Header() {
             <circle cx="16" cy="20" r="1.5" fill="currentColor" />
           </svg>
           <div className="leading-tight">
-            <div className="display-serif text-lg md:text-xl">Dom w Mesznej</div>
+            <div className="display-serif text-lg md:text-xl hidden sm:block">Dom w Mesznej</div>
             <div className="label-mono text-[0.55rem] opacity-60 hidden sm:block">
               Bez pośredników
             </div>

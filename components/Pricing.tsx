@@ -94,7 +94,7 @@ export default function Pricing() {
             </div>
             <p className="text-sm md:text-base opacity-75 leading-relaxed">
               Nieruchomość była wystawiona w ofertach pośredników za{' '}
-              <span className="display-serif italic" style={{ color: 'var(--accent)' }}>
+              <span className="!text-lg display-serif italic" style={{ color: 'var(--accent)' }}>
                 2 250 000 zł
               </span>
               . Oferta bezpośrednia oznacza realną oszczędność na prowizji i marży
