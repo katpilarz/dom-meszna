@@ -12,7 +12,6 @@ const photos = [
   { src: '/images/house/house-02.jpg', label: 'Panorama na ogród', tag: '04', span: 'col-span-12', aspect: '16/9' },
     { src: '/images/house/house-09.jpg', label: 'Zieleń dookoła', tag: '05', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
   { src: '/images/house/house-10.jpg', label: 'Przestronny taras', tag: '06', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/house/house-11.jpg', label: 'Panorama', tag: '07', span: 'col-span-12', aspect: '16/9' },
 ];
 
 export default function Gallery() {

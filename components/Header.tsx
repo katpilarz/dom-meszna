@@ -57,7 +57,7 @@ export default function Header() {
           <div className="leading-tight">
             <div className="display-serif text-lg md:text-xl">Dom w Mesznej</div>
             <div className="label-mono text-[0.55rem] opacity-60 hidden sm:block">
-              Bezpośrednio od właścicielki
+              Bez pośredników
             </div>
           </div>
         </a>
