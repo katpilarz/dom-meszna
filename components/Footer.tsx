@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="flex footer-mega display-serif text-[clamp(4rem,14vw,14rem)] justify-between tracking-tight overflow-hidden">
           <span className="italic leading-[0.85]">Dom Meszna · Beskidy</span>
         </div>
-          <div className='flex justify-between items-center mt-[6rem]'>
+          <div className='flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mt-[6rem]'>
             <a
               href="/polityka-prywatnosci"
               className="text-sm hover:text-[var(--accent)] inline-block transition-colors"
