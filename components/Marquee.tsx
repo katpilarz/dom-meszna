@@ -3,15 +3,16 @@
 export default function Marquee() {
   const items = [
     'Beskid Śląski',
-    'Bezpośrednio od właściciela',
+    '170 m² pow. użytkowej · 7 pokoi',
     '300 m do lasu',
-    '600 m do szlaków na Klimczok',
-    'Budowa 2018',
-    '402 m² · 7 pokoi',
+    'Oddany do użytku 2018',
     'Działka 1 600 m²',
     'Bielsko-Biała 10 km',
+    '600 m do szlaków na Klimczok',
     'Szczyrk 7 km',
     'Bez pośredników',
+    '402 m² pow. całkowitej',
+
   ];
 
   return (

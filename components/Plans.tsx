@@ -7,11 +7,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const plans = [
   { src: '/images/plans/plan-site.jpg',     title: 'Sytuacja',   subtitle: 'Plan zagospodarowania · Meszna' },
-    { src: '/images/plans/plan-przekroj.jpg', title: 'Przekrój',   subtitle: 'Przekroje A-A i C-C · spadek dachu 39°' },
+  { src: '/images/plans/plan-przekroj.jpg', title: 'Przekrój',   subtitle: 'Przekroje A-A i C-C · spadek dachu 39°' },
   { src: '/images/plans/plan-parter.jpg',   title: 'Parter',     subtitle: 'Otwarta przestrzeń' },
   { src: '/images/plans/plan-poddasze.jpg', title: 'Poddasze',   subtitle: 'Pokoje pod skosami · balkon · druga łazienka' },
-    { src: '/images/plans/plan-pietro.jpg',   title: 'Poziom 0',     subtitle: 'Garaż · pomieszczenia gospodarcze' },
-
+  { src: '/images/plans/plan-pietro.jpg',   title: 'Poziom 0',   subtitle: 'Garaż · pomieszczenia gospodarcze' },
 ];
 
 export default function Plans() {
@@ -61,13 +60,11 @@ export default function Plans() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {plans.map((p) => (
-            <div key={p.title} className="plan-item">
+            <div key={p.title} className="plan-item group cursor-zoom-in">
               <div
-                className="plan-paper rounded-sm relative flex items-center justify-center overflow-hidden"
+                className="plan-paper bg-[var(--bg-alt)] rounded-sm border border-[var(--line-strong)] relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-[var(--accent)]"
                 style={{
-                  background: '#f4f1ea',
                   padding: '1.5rem',
-                  border: '1px solid rgba(14, 14, 12, 0.15)',
                   aspectRatio: '5 / 7',
                 }}
               >
@@ -75,8 +72,8 @@ export default function Plans() {
                   src={p.src}
                   alt={p.title}
                   fill
-                  className="object-contain"
-                  style={{ filter: 'contrast(1.1)', padding: '1.5rem' }}
+                  className="object-contain transition-transform duration-700 ease-out group-hover:scale-125"                  
+                  style={{ filter: 'contrast(1.4)', padding: '1.5rem' }}
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
@@ -86,12 +83,12 @@ export default function Plans() {
               </div>
             </div>
           ))}
-                  <div className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-sm border border-[var(--line-strong)] max-w-3xl">
-          <div className="label-mono text-[var(--accent)] mb-3">✦ Pełna dokumentacja</div>
-          <p className="text-sm leading-relaxed opacity-80">
-            Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.
-          </p>
-        </div>
+          <div className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-sm border border-[var(--line-strong)] max-w-3xl">
+            <div className="label-mono text-[var(--accent)] mb-3">✦ Pełna dokumentacja</div>
+            <p className="text-sm leading-relaxed opacity-80">
+              Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.
+            </p>
+          </div>
         </div>
       </div>
     </section>
