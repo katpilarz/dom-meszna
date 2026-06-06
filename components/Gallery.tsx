@@ -6,9 +6,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const photos = [
-  { src: '/images/house/house-05.jpg', label: 'Elewacja południowa', tag: '01', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
-  { src: '/images/house/house-07.jpg', label: 'Kolumny i kamień', tag: '02', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
-  { src: '/images/house/house-02.jpg', label: 'Panorama od strony drogi', tag: '05', span: 'col-span-12', aspect: '16/9' },
+  { src: '/images/house/house-05.jpg', label: 'Panorama od strony drogi', tag: '01', span: 'col-span-12', aspect: '16/9' },
+  { src: '/images/house/house-04.jpg', label: 'Duża działka obok', tag: '02', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
+  { src: '/images/house/house-07.jpg', label: 'Kolumny i kamień', tag: '03', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
+  { src: '/images/house/house-02.jpg', label: 'Panorama na ogród', tag: '04', span: 'col-span-12', aspect: '16/9' },
+    { src: '/images/house/house-09.jpg', label: 'Zieleń dookoła', tag: '05', span: 'col-span-12 md:col-span-8', aspect: '4/3' },
+  { src: '/images/house/house-10.jpg', label: 'Przestronny taras', tag: '06', span: 'col-span-12 md:col-span-4', aspect: '3/4' },
+  { src: '/images/house/house-11.jpg', label: 'Panorama', tag: '07', span: 'col-span-12', aspect: '16/9' },
 ];
 
 export default function Gallery() {
@@ -47,8 +51,8 @@ export default function Gallery() {
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="gallery-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">03 — Galeria</div>
-            <div className="label-mono opacity-60 hidden md:block">Zdjęcia: luty 2024</div>
+            <div className="label-mono opacity-60">02 — Galeria</div>
+            <div className="label-mono opacity-60 hidden md:block">Persektywa</div>
           </div>
           <h2 className="display-serif" style={{ fontSize: 'clamp(2.5rem, 9vw, 9rem)', lineHeight: 0.85, letterSpacing: '-0.03em' }}>
             <span className="inline-block">Architektura</span>&nbsp;

@@ -66,8 +66,8 @@ export default function Interior() {
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="interior-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">04 — Wnętrza</div>
-            <div className="label-mono opacity-60 hidden md:block">Stan obecny · do odświeżenia pod siebie</div>
+            <div className="label-mono opacity-60">03 — Wnętrza</div>
+            <div className="label-mono opacity-60 hidden md:block">Stan obecny · do odświeżenia</div>
           </div>
           <h2 className="display-serif" style={{ fontSize: 'clamp(2.5rem, 9vw, 9rem)', lineHeight: 0.85, letterSpacing: '-0.03em' }}>
             <span className="inline-block">Wnętrza,</span>&nbsp;<span className="inline-block italic">które</span>

@@ -93,7 +93,7 @@ export default function Floorplan() {
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="floor-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">06 — Układ kondygnacji</div>
+            <div className="label-mono opacity-60">05 — Układ kondygnacji</div>
             <div className="label-mono opacity-60 hidden md:block">
               402,35 m² · 170,75 m² powierzchni użytkowej
             </div>

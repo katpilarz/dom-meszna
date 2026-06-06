@@ -10,7 +10,7 @@ const stats = [
   { label: 'Działka', value: '1600', unit: 'm²' },
   { label: 'Pokoje', value: '7', unit: '' },
   { label: 'Kondygnacje', value: '3', unit: '' },
-  { label: 'Rok budowy', value: '2018', unit: '' },
+  { label: 'Oddanie do użytku', value: '2018', unit: '' },
 ];
 
 export default function Stats() {

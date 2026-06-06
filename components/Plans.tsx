@@ -48,7 +48,7 @@ export default function Plans() {
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="plans-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">08 — Dokumentacja</div>
+            <div className="label-mono opacity-60">07 — Dokumentacja</div>
             <div className="label-mono opacity-60 hidden md:block">Studio Atrium · Bielsko-Biała</div>
           </div>
           <h2 className="display-serif" style={{ fontSize: 'clamp(2.5rem, 7vw, 7rem)', lineHeight: 0.9, letterSpacing: '-0.03em' }}>
