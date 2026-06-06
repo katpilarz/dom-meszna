@@ -63,7 +63,7 @@ export default function Pricing() {
         <div className="flex items-center justify-between mb-16">
           <div className="label-mono opacity-60">08 — Oferta</div>
           <div className="label-mono opacity-60 hidden md:block">
-            Sprzedaż bezpośrednio od właściciela
+            Sprzedaż bez pośredników
           </div>
         </div>
 
@@ -97,7 +97,7 @@ export default function Pricing() {
               <span className="display-serif italic" style={{ color: 'var(--accent)' }}>
                 2 250 000 zł
               </span>
-              . Sprzedaż bezpośrednia oznacza realną oszczędność na prowizji i marży
+              . Oferta bezpośrednia oznacza realną oszczędność na prowizji i marży
               pośrednika — różnica trafia do Ciebie.
             </p>
           </div>
@@ -122,7 +122,7 @@ export default function Pricing() {
           </div>
           <div className="pricing-detail">
             <div className="label-mono opacity-50 mb-3">Forma własności</div>
-            <div className="display-serif text-3xl">Pełna własność</div>
+            <div className="display-serif text-3xl">Współwłasność</div>
             <div className="text-xs opacity-60 mt-2">
               Działka 1600 m² · ogrodzona
             </div>
@@ -133,7 +133,7 @@ export default function Pricing() {
               Dostępne
             </div>
             <div className="text-xs opacity-60 mt-2">
-              Sprzedaż bezpośrednia · bez pośredników
+              Oferta bezpośrednia · bez pośredników
             </div>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function Pricing() {
         <div className="pricing-detail mt-20 max-w-4xl">
           <p className="display-serif text-6xl italic leading-snug opacity-95">
             Cena{' '}
-            <span className="text-[var(--accent)] not-italic">wprost od właścicielki</span>.<br></br>
+            <span className="text-[var(--accent)] not-italic">bez pośrednika</span>.<br></br>
             Bez prowizji, bez doliczonych marż.
           </p>
           <div className="mt-4 label-mono opacity-60">

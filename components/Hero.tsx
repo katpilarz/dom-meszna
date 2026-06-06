@@ -42,11 +42,23 @@ export default function Hero() {
             sizes="100vw"
           />
         </div>
+
+        {/* Warm color cast — light warm tone with multiply
+            tints the photo without darkening (white = no effect, only color shift). */}
         <div
           className="absolute inset-0"
           style={{
+            background: 'rgba(255, 220, 180, 1)',
+            mixBlendMode: 'multiply',
+          }}
+        />
+
+        {/* Darkening for text legibility — gradient on top, stronger at bottom. */}
+        <div
+          className="absolute inset-0"
+style={{
             background:
-              'linear-gradient(to bottom, rgba(14,14,12,0.55) 0%, rgba(14,14,12,0.3) 30%, rgba(14,14,12,0.7) 50%, rgba(14,14,12,0.78) 68%, rgba(14,14,12,0.8) 92%, rgba(14,14,12,0.88) 100%)',
+              'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.72) 85%, rgba(0,0,0,0.84) 100%)',
           }}
         />
       </div>
@@ -55,7 +67,7 @@ export default function Hero() {
         <div className="mx-auto max-w-[1880px] w-full px-6 md:px-12">
           <div className="flex items-center justify-start gap-14 mb-12">
             <div className="hero-label label-mono opacity-80">
-              <span style={{ color: '#d4a76a' }}>●</span> Sprzedaż bezpośrednia 
+              <span style={{ color: '#d4a76a' }}>●</span> Oferta bezpośrednia
             </div>
             <div className="hero-label label-mono opacity-80 hidden md:block">
               Meszna · Wilkowice · Śląskie
@@ -73,14 +85,8 @@ export default function Hero() {
             }}
           >
             <div className="overflow-hidden">
-              <span className="hero-word inline-block">Dom z&nbsp;</span>
-              <span
-                className="hero-word inline-block italic"
-                style={{ color: '#d4a76a' }}
-              >
-                widokiem
-              </span>
-            </div>
+              <span className="hero-word inline-block">Dom z widokiem</span>
+              </div>
             <div className="overflow-hidden">
               <span className="hero-word inline-block">na&nbsp;</span>
               <span className="hero-word inline-block italic">Beskidy.</span>

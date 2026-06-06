@@ -21,21 +21,22 @@ export default function PrivacyPolicy() {
           >
             Polityka <span className="italic" style={{ color: 'var(--accent)' }}>prywatności</span>
           </h1>
-          <p className="label-mono opacity-60 mb-16">Obowiązuje od 1 stycznia 2025 r.</p>
+          <p className="label-mono opacity-60 mb-16">Obowiązuje od 1 czerwca 2026 r.</p>
 
           <section className="prose-custom space-y-10">
             <p className="text-lg leading-relaxed opacity-90" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
               Niniejsza polityka prywatności opisuje, w jaki sposób przetwarzane są dane osobowe
-              osób korzystających ze strony internetowej dotyczącej oferty sprzedaży nieruchomości
+              osób korzystających ze strony internetowej prezentującej nieruchomość położoną
               w Mesznej. Dokument został przygotowany zgodnie z Rozporządzeniem Parlamentu
               Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. (RODO).
             </p>
 
             <Section number="01" title="Administrator danych osobowych">
               <p>
-                Administratorem Twoich danych osobowych jest osoba fizyczna sprzedająca
-                nieruchomość położoną w Mesznej (gmina Wilkowice, powiat bielski, województwo
-                śląskie), zwana dalej „Administratorem".
+                Administratorem Twoich danych osobowych jest osoba fizyczna udostępniająca
+                informacje o nieruchomości położonej w Mesznej (gmina Wilkowice, powiat
+                bielski, województwo śląskie) w ramach prywatnie prowadzonej oferty bezpośredniej,
+                zwana dalej „Administratorem".
               </p>
               <p>
                 W sprawach związanych z ochroną danych osobowych, w tym realizacji praw
@@ -44,7 +45,24 @@ export default function PrivacyPolicy() {
               </p>
             </Section>
 
-            <Section number="02" title="Jakie dane zbieramy">
+            <Section number="02" title="Status nieruchomości i charakter oferty">
+              <p>
+                Nieruchomość prezentowana na niniejszej stronie stanowi przedmiot współwłasności.
+                Strona oraz prowadzona za jej pośrednictwem korespondencja służą prezentacji
+                nieruchomości oraz wstępnej komunikacji z osobami zainteresowanymi nabyciem.
+              </p>
+              <p>
+                Zawarcie umowy zbycia nieruchomości wymaga zgody wszystkich współwłaścicieli
+                zgodnie z art. 199 ustawy z dnia 23 kwietnia 1964 r. — Kodeks cywilny. Informacje
+                udostępniane na stronie, korespondencja prowadzona przez Administratora oraz
+                ustalenia poczynione w trakcie prezentacji nieruchomości nie stanowią oferty
+                w rozumieniu art. 66 § 1 Kodeksu cywilnego i nie są wiążące do czasu zawarcia
+                umowy w formie wymaganej przepisami prawa, podpisanej przez wszystkie uprawnione
+                strony.
+              </p>
+            </Section>
+
+            <Section number="03" title="Jakie dane są gromadzone">
               <p>Przetwarzane są dane podawane dobrowolnie poprzez formularz kontaktowy:</p>
               <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
                 <li>— imię i nazwisko,</li>
@@ -59,33 +77,34 @@ export default function PrivacyPolicy() {
               </p>
             </Section>
 
-            <Section number="03" title="Cel i podstawa prawna przetwarzania">
+            <Section number="04" title="Cel i podstawa prawna przetwarzania">
               <p>Dane są przetwarzane w następujących celach:</p>
               <ul className="list-none space-y-3 pl-4 border-l border-[var(--line)] py-2">
                 <li>
                   <strong className="font-normal">a)</strong> w celu udzielenia odpowiedzi na zapytanie
-                  oraz podjęcia działań przed zawarciem ewentualnej umowy sprzedaży nieruchomości —
-                  na podstawie <em>art. 6 ust. 1 lit. b RODO</em> (działania na żądanie osoby, której
-                  dane dotyczą);
+                  oraz podjęcia działań przed zawarciem ewentualnej umowy — na podstawie
+                  {' '}<em>art. 6 ust. 1 lit. b RODO</em> (działania na żądanie osoby, której dane
+                  dotyczą);
                 </li>
                 <li>
                   <strong className="font-normal">b)</strong> w celu realizacji prawnie uzasadnionego
                   interesu Administratora, polegającego na prowadzeniu korespondencji i obsłudze
-                  zapytań — na podstawie <em>art. 6 ust. 1 lit. f RODO</em>;
+                  zapytań dotyczących nieruchomości — na podstawie <em>art. 6 ust. 1 lit. f
+                  RODO</em>;
                 </li>
                 <li>
                   <strong className="font-normal">c)</strong> w celu ewentualnego ustalenia,
                   dochodzenia lub obrony roszczeń — na podstawie <em>art. 6 ust. 1 lit. f RODO</em>.
                 </li>
               </ul>
-              <p className="bg-[var(--bg-alt)] border border-[var(--line)] p-5 text-sm leading-relaxed">
+              <p className="bg-[var(--bg-alt)] border border-[var(--line)] p-5 text-md leading-relaxed">
                 <strong className="font-normal">Wysyłając wiadomość przez formularz kontaktowy,</strong> potwierdzasz, że zapoznałaś/eś się
                 z niniejszą polityką prywatności i akceptujesz przetwarzanie podanych danych w
                 celu udzielenia odpowiedzi na Twoje zapytanie.
               </p>
             </Section>
 
-            <Section number="04" title="Okres przechowywania">
+            <Section number="05" title="Okres przechowywania">
               <p>
                 Dane są przechowywane przez okres niezbędny do realizacji celów, dla których
                 zostały zebrane, nie dłużej jednak niż:
@@ -98,7 +117,7 @@ export default function PrivacyPolicy() {
               </ul>
             </Section>
 
-            <Section number="05" title="Twoje prawa">
+            <Section number="06" title="Twoje prawa">
               <p>W związku z przetwarzaniem danych przysługują Ci następujące prawa:</p>
               <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
                 <li>— prawo dostępu do danych (art. 15 RODO),</li>
@@ -116,25 +135,26 @@ export default function PrivacyPolicy() {
               </p>
             </Section>
 
-            <Section number="06" title="Odbiorcy danych">
+            <Section number="07" title="Odbiorcy danych">
               <p>
                 Dane mogą być udostępniane podmiotom świadczącym usługi techniczne związane z
-                prowadzeniem strony i obsługą poczty elektronicznej, w szczególności:
+                prowadzeniem strony i obsługą poczty elektronicznej:
               </p>
               <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
-                <li>— dostawcy hostingu strony (np. Vercel Inc., Netlify Inc.),</li>
-                <li>— dostawcy usług poczty elektronicznej (Proton AG, Szwajcaria),</li>
-                <li>— dostawcy systemu obsługi formularzy (jeżeli zostanie zastosowany).</li>
+                <li>— dostawca hostingu strony i obsługi formularza kontaktowego (Netlify Inc., USA),</li>
+                <li>— dostawca usług poczty elektronicznej (Proton AG, Szwajcaria).</li>
               </ul>
               <p>
-                Dane nie są przekazywane do państw trzecich poza Europejskim Obszarem
-                Gospodarczym, z wyjątkiem przekazania do Szwajcarii (kraj uznany przez Komisję
-                Europejską za zapewniający odpowiedni poziom ochrony danych — decyzja
-                wykonawcza (UE) 2000/518) w związku z korzystaniem z usług Proton.
+                Przekazanie danych do Netlify Inc. (USA) odbywa się na podstawie standardowych
+                klauzul umownych zatwierdzonych przez Komisję Europejską oraz w oparciu o
+                decyzję wykonawczą (UE) 2023/1795 (Data Privacy Framework). Przekazanie danych
+                do Proton AG (Szwajcaria) odbywa się na podstawie decyzji Komisji Europejskiej
+                uznającej Szwajcarię za państwo zapewniające odpowiedni poziom ochrony danych
+                osobowych.
               </p>
             </Section>
 
-            <Section number="07" title="Pliki cookies i technologie podobne">
+            <Section number="08" title="Pliki cookies i technologie podobne">
               <p>
                 Strona nie wykorzystuje plików cookies do celów marketingowych, profilowania ani
                 analitycznych. Wykorzystywane są wyłącznie techniczne mechanizmy przeglądarki
@@ -143,21 +163,21 @@ export default function PrivacyPolicy() {
               </p>
             </Section>
 
-            <Section number="08" title="Automatyczne podejmowanie decyzji">
+            <Section number="09" title="Automatyczne podejmowanie decyzji">
               <p>
                 Podane dane nie są wykorzystywane do zautomatyzowanego podejmowania decyzji ani
                 profilowania w rozumieniu art. 22 RODO.
               </p>
             </Section>
 
-            <Section number="09" title="Dobrowolność podania danych">
+            <Section number="10" title="Dobrowolność podania danych">
               <p>
                 Podanie danych jest dobrowolne, jednak konieczne do udzielenia odpowiedzi na
                 zapytanie. Brak podania danych uniemożliwia kontakt zwrotny.
               </p>
             </Section>
 
-            <Section number="10" title="Zmiany polityki prywatności">
+            <Section number="11" title="Zmiany polityki prywatności">
               <p>
                 Niniejsza polityka prywatności może być aktualizowana. Aktualna wersja jest
                 zawsze dostępna pod tym adresem. Data wejścia w życie ostatniej wersji znajduje

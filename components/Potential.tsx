@@ -8,7 +8,7 @@ const opportunities = [
   {
     n: '01',
     title: 'Solidna baza',
-    body: 'Dom wybudowany w 2018 — keramzyt, wełna 20 cm, ceramiczna dachówka na pełnym deskowaniu. Konstrukcja, której nie da się dziś tanio odtworzyć.',
+    body: 'Dom oddany do użytku w 2018 — keramzyt, wełna 20 cm, ceramiczna dachówka na pełnym deskowaniu. Konstrukcja, której nie da się dziś tanio odtworzyć.',
   },
   {
     n: '02',

@@ -5,22 +5,22 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const floors = [
-  {
+ {
     level: '01',
-    title: 'Parter',
-    subtitle: 'Strefa techniczna i powitalna',
+    title: 'Poziom 0',
+    subtitle: 'Strefa techniczna i wejściowa',
     rooms: [
+      'Garaż',
       'Wiatrołap',
       'Przedpokój',
       'Pomieszczenie gospodarcze / Pokój',
       'Kotłownia',
       'Pomieszczenie gospodarcze',
-      'Garaż',
     ],
   },
   {
     level: '02',
-    title: 'Pierwsze piętro',
+    title: 'Parter',
     subtitle: 'Strefa dzienna z wyjściem na taras',
     rooms: [
       'Salon z otwartą kuchnią',
@@ -33,7 +33,7 @@ const floors = [
   },
   {
     level: '03',
-    title: 'Drugie piętro',
+    title: 'Poddasze',
     subtitle: 'Strefa nocna w panoramie gór',
     rooms: [
       'Trzy sypialnie',

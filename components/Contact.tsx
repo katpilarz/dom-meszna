@@ -80,7 +80,7 @@ export default function Contact() {
             </div>
           </h2>
           <p className="mt-8 max-w-xl opacity-75 text-lg leading-relaxed">
-            Sprzedaję dom osobiście — chętnie odpowiem na pytania
+            Dom oferowany jest bez pośredników — chętnie odpowiem na pytania
             i pokażę nieruchomość w dogodnym terminie. Zostaw kontakt,
             odpowiem w ciągu doby.
           </p>
@@ -143,7 +143,7 @@ export default function Contact() {
                   name="imie"
                   type="text"
                   required
-                  className="w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
+                  className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
                 />
               </div>
               <div>
@@ -154,7 +154,7 @@ export default function Contact() {
                   id="telefon"
                   name="telefon"
                   type="tel"
-                  className="w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
+                  className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
                 />
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function Contact() {
                 name="email"
                 type="email"
                 required
-                className="w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
+                className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
               />
             </div>
 
@@ -181,7 +181,7 @@ export default function Contact() {
                 name="termin"
                 type="text"
                 placeholder="np. najbliższa sobota, popołudnie"
-                className="w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors placeholder:opacity-40"
+                className="px-3 w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors placeholder:opacity-40"
               />
             </div>
 
@@ -193,7 +193,7 @@ export default function Contact() {
                 id="wiadomosc"
                 name="wiadomosc"
                 rows={4}
-                className="w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors resize-none"
+                className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors resize-none"
               />
             </div>
 
@@ -240,14 +240,14 @@ export default function Contact() {
                 </span>
                 <Arrow size={34} className="transition-transform duration-500 group-hover:translate-x-1.5" />
               </button>
-              <p className="text-xs opacity-60 mt-5 max-w-full leading-relaxed">
+              <p className="text-md opacity-60 mt-5 max-w-full leading-relaxed">
                 Wysyłając zapytanie, potwierdzasz zapoznanie się z{' '}
                 <a href="/polityka-prywatnosci" className="underline decoration-dotted underline-offset-2 hover:text-[var(--accent)]">
                   polityką prywatności
                 </a>{' '}
                 i akceptujesz przetwarzanie podanych danych w celu udzielenia odpowiedzi (RODO, art. 6 ust. 1 lit. b).
               </p>
-              <p className="text-xs opacity-50 mt-2">
+              <p className="text-md opacity-50 mt-2">
                 Zapytanie jest niezobowiązujące. Odpowiem w ciągu 24 godzin.
               </p>
             </div>
@@ -256,14 +256,14 @@ export default function Contact() {
           {/* Contact info */}
           <div className="contact-info col-span-12 lg:col-span-5 mt-12 lg:mt-0 pl-0 lg:pl-16 lg:border-l lg:border-[var(--line)]">
             <div className="contact-info-item mb-10">
-              <div className="label-mono opacity-50 mb-2">Sprzedająca</div>
-              <div className="display-serif text-2xl">
-                Właścicielka domu
-              </div>
-              <div className="text-sm opacity-70 mt-2">
-                Bez pośredników · bez prowizji · rozmowa wprost
-              </div>
-            </div>
+<div className="label-mono opacity-50 mb-2">Kontakt</div>
+<div className="display-serif text-2xl">
+  Strona sprzedająca
+</div>
+<div className="text-sm opacity-70 mt-2">
+  Bez pośredników · bez prowizji · rozmowa wprost
+</div>
+</div>
 
             <div className="contact-info-item mb-10">
               <div className="label-mono opacity-50 mb-2">E-mail</div>
