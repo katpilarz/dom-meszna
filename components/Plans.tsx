@@ -62,7 +62,7 @@ export default function Plans() {
           {plans.map((p) => (
             <div key={p.title} className="plan-item group cursor-zoom-in">
               <div
-                className="plan-paper bg-[var(--bg-alt)] rounded-sm border border-[var(--line-strong)] relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-[var(--accent)]"
+                className="rounded-sm border border-[var(--line-strong)] relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-[var(--accent)]"
                 style={{
                   padding: '1.5rem',
                   aspectRatio: '5 / 7',
