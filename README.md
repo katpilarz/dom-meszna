@@ -55,7 +55,7 @@ dom-meszna/
 - **Cena:** 1 899 000 zł (4 720 zł/m²) · bez pośredników
 - **Powierzchnia:** 402,35 m² (170,75 m² użytkowej) · działka 1 600 m²
 - **Pokoje:** 7 · kondygnacje: 3 · rok: 2018 · Architekt: Studio Atrium
-- **Adres:** ul. Energetyków 53A, Meszna, gmina Wilkowice
+- **Adres:** Meszna, gmina Wilkowice
 - **Kontakt:** dommeszna@proton.me
 
 ---

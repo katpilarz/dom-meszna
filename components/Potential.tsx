@@ -81,10 +81,10 @@ export default function Potential() {
         <div className="pot-heading mb-20">
           <div className="flex items-center justify-between mb-12">
             <div className="label-mono opacity-60">
-              05 — Możliwości
+              04 — Możliwości
             </div>
             <div className="label-mono opacity-60 hidden md:block">
-              Stan: dobry · do indywidualnego wykończenia
+              Stan: dobry · do indywidualnego dostosowania
             </div>
           </div>
           <h2 className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl">
