@@ -88,12 +88,12 @@ export default function Floorplan() {
     <section
       id="uklad"
       ref={root}
-      className="py-32 md:py-48 relative"
+      className="py-32 md:py-48 relative bg-[var(--bg-alt)] "
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="floor-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">05 — Układ kondygnacji</div>
+            <div className="label-mono opacity-60">04 — Układ kondygnacji</div>
             <div className="label-mono opacity-60 hidden md:block">
               402,35 m² · 170,75 m² powierzchni użytkowej
             </div>

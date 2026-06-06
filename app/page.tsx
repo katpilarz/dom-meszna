@@ -25,7 +25,6 @@ export default function Home() {
         <Stats />
         <Statement />
         <Gallery />
-        <Interior />
         <Potential />
         <Showcase
           src="/images/house/house-03.jpg"
@@ -46,6 +45,9 @@ export default function Home() {
         />
         <Floorplan />
         <Location />
+
+        <Interior />
+
         <Plans />
         <Pricing />
         <Contact />
