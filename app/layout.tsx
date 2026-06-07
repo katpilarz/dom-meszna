@@ -40,21 +40,12 @@ export const metadata: Metadata = {
     siteName: 'Dom w Mesznej',
     locale: 'pl_PL',
     type: 'website',
-    images: [
-      {
-        url: '/images/house/house-01.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Dom w Mesznej — widok od strony południowej z panoramą Beskidu Śląskiego',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Dom w Mesznej — sprzedaż bez pośredników',
     description:
       'Dom 402 m² u stóp Beskidu Śląskiego. Bez pośredników, bez prowizji.',
-    images: ['/images/house/house-01.jpg'],
   },
   robots: {
     index: true,
@@ -66,9 +57,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-icons: {
-  icon: '/favicon.ico',
-},
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
