@@ -185,7 +185,7 @@ export default function Location() {
                     fontFamily="var(--font-mono)"
                     letterSpacing="0.15em"
                   >
-                    VILLA MESZNA
+                    DOM MESZNA
                   </text>
                 </g>
 
