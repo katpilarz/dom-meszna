@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim, revealBatch } from './useSectionAnim';
 
 const plans = [
   { src: '/images/plans/plan-site.jpg',     title: 'Sytuacja',   subtitle: 'Plan zagospodarowania · Meszna' },
@@ -16,31 +16,14 @@ const plans = [
 export default function Plans() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, () => {
+    gsap.from('.plans-heading > *', {
+      opacity: 0, y: 40, stagger: 0.1, duration: 1,
+      scrollTrigger: { trigger: '.plans-heading', start: 'top 80%' },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from('.plans-heading > *', {
-        opacity: 0, y: 40, stagger: 0.1, duration: 1,
-        scrollTrigger: { trigger: '.plans-heading', start: 'top 80%' },
-      });
-
-      gsap.utils.toArray<HTMLElement>('.plan-item').forEach((item, i) => {
-        gsap.from(item, {
-          opacity: 0, y: 50, duration: 1, delay: (i % 3) * 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: item, start: 'top 85%' },
-        });
-      });
-
-      gsap.from('.plans-note', {
-        opacity: 0, y: 30, duration: 1,
-        scrollTrigger: { trigger: '.plans-note', start: 'top 90%' },
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    revealBatch('.plan-item', { y: 50 });
+  });
 
   return (
     <section ref={root} id="plany" className="py-32 md:py-48 relative">
@@ -51,7 +34,7 @@ export default function Plans() {
             <div className="label-mono opacity-60 hidden md:block">Studio Atrium · Bielsko-Biała</div>
           </div>
           <h2 className="display-serif" style={{ fontSize: 'clamp(2.5rem, 7vw, 7rem)', lineHeight: 0.9, letterSpacing: '-0.03em' }}>
-            Plany do <span className="italic text-[var(--accent)]">wglądu.</span>
+            Plany do <span className="italic text-(--accent)">wglądu.</span>
           </h2>
           <p className="mt-8 max-w-3xl text-lg md:text-xl opacity-75 leading-relaxed">
             Dom został zaprojektowany przez Studio Atrium z Bielska-Białej. Pełna dokumentacja architektoniczna dostępna do wglądu — poniżej skany planów i sytuacji geodezyjnej.
@@ -62,7 +45,7 @@ export default function Plans() {
           {plans.map((p) => (
             <div key={p.title} className="plan-item group cursor-zoom-in">
               <div
-                className="rounded-sm border border-[var(--line-strong)] relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-[var(--accent)]"
+                className="rounded-xs border border-(--line-strong) relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-(--accent)"
                 style={{
                   padding: '1.5rem',
                   aspectRatio: '5 / 7',
@@ -83,8 +66,8 @@ export default function Plans() {
               </div>
             </div>
           ))}
-          <div className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-sm border border-[var(--line-strong)] max-w-3xl">
-            <div className="label-mono text-[var(--accent)] mb-3">✦ Pełna dokumentacja</div>
+          <div className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-xs border border-(--line-strong) max-w-3xl">
+            <div className="label-mono text-(--accent) mb-3">✦ Pełna dokumentacja</div>
             <p className="text-sm leading-relaxed opacity-80">
               Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.
             </p>

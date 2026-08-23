@@ -1,64 +1,61 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim } from './useSectionAnim';
 
 export default function Pricing() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, (el) => {
+    gsap.from('.pricing-line', {
+      yPercent: 110,
+      stagger: 0.1,
+      duration: 1.2,
+      ease: 'expo.out',
+      scrollTrigger: { trigger: '.pricing-block', start: 'top 75%' },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from('.pricing-line', {
-        yPercent: 110,
-        stagger: 0.1,
-        duration: 1.2,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: '.pricing-block', start: 'top 75%' },
+    gsap.from('.pricing-detail', {
+      opacity: 0,
+      y: 30,
+      stagger: 0.1,
+      duration: 0.8,
+      scrollTrigger: { trigger: '.pricing-details', start: 'top 80%' },
+    });
+
+    // The markup ships the real asking price (1 899 000) so crawlers and no-JS
+    // visitors never see the anchor figure the counter starts from — it used to
+    // contradict the 1899000 in our JSON-LD. Rewind to the anchor only once we
+    // know the count-down is going to run.
+    const priceEl = el.querySelector<HTMLElement>('.big-price');
+    if (priceEl) {
+      priceEl.textContent = (2250000).toLocaleString('pl-PL');
+      const obj = { val: 2250000 };
+      gsap.to(obj, {
+        val: 1899000,
+        duration: 2.6,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: priceEl, start: 'top 80%' },
+        onUpdate: () => {
+          priceEl.textContent = Math.round(obj.val).toLocaleString('pl-PL');
+        },
       });
+    }
 
-      gsap.from('.pricing-detail', {
-        opacity: 0,
-        y: 30,
-        stagger: 0.1,
-        duration: 0.8,
-        scrollTrigger: { trigger: '.pricing-details', start: 'top 80%' },
-      });
-
-      const priceEl = document.querySelector<HTMLElement>('.big-price');
-      if (priceEl) {
-        priceEl.textContent = (2250000).toLocaleString('pl-PL');
-        const obj = { val: 2250000 };
-        gsap.to(obj, {
-          val: 1899000,
-          duration: 2.6,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: priceEl, start: 'top 80%' },
-          onUpdate: () => {
-            priceEl.textContent = Math.round(obj.val).toLocaleString('pl-PL');
-          },
-        });
-      }
-
-      // Reveal anchor label after price animation lands
-      gsap.from('.price-anchor-note', {
-        opacity: 0,
-        y: 12,
-        duration: 1.2,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: '.big-price', start: 'top 80%' },
-        delay: 2.4,
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    // Reveal anchor label after price animation lands
+    gsap.from('.price-anchor-note', {
+      opacity: 0,
+      y: 12,
+      duration: 1.2,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '.big-price', start: 'top 80%' },
+      delay: 2.4,
+    });
+  });
 
   return (
-    <section ref={root} className="py-32 md:py-48 relative bg-[var(--bg-alt)]">
+    <section ref={root} className="py-32 md:py-48 relative bg-(--bg-alt)">
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex items-center justify-between mb-16">
           <div className="label-mono opacity-60">08 — Oferta</div>
@@ -69,7 +66,7 @@ export default function Pricing() {
 
         <div className="pricing-block">
           <div className="overflow-hidden">
-            <div className="pricing-line label-mono text-[var(--accent)] mb-6">
+            <div className="pricing-line label-mono text-(--accent) mb-6">
               ✦ Bez pośredników · bez prowizji · bez ukrytych kosztów
             </div>
           </div>
@@ -77,8 +74,8 @@ export default function Pricing() {
           <h2 className="display-serif leading-[0.92]">
             <div className="overflow-hidden">
               <div className="pricing-line text-[clamp(3rem,9vw,8rem)]">
-                <span className="big-price">2 250 000</span>
-                <span className="text-[var(--accent)]"> zł</span>
+                <span className="big-price">1 899 000</span>
+                <span className="text-(--accent)"> zł</span>
               </div>
             </div>
             <div className="overflow-hidden">
@@ -94,7 +91,7 @@ export default function Pricing() {
             </div>
             <p className="text-sm md:text-base opacity-75 leading-relaxed">
               Nieruchomość była wystawiona w ofertach pośredników za{' '}
-              <span className="!text-lg display-serif italic" style={{ color: 'var(--accent)' }}>
+              <span className="text-lg! display-serif italic" style={{ color: 'var(--accent)' }}>
                 2 250 000 zł
               </span>
               . Oferta bezpośrednia oznacza realną oszczędność na prowizji i marży
@@ -124,12 +121,14 @@ export default function Pricing() {
             <div className="label-mono opacity-50 mb-3">Forma własności</div>
             <div className="display-serif text-3xl">Współwłasność</div>
             <div className="text-xs opacity-60 mt-2">
-              Działka 1600 m² · ogrodzona
+              Działka 1 600 m² · ogrodzona
+              <br />
+              1 800 m² łącznie z udziałem w drodze dojazdowej
             </div>
           </div>
           <div className="pricing-detail">
             <div className="label-mono opacity-50 mb-3">Status</div>
-            <div className="display-serif text-3xl text-[var(--accent)]">
+            <div className="display-serif text-3xl text-(--accent)">
               Dostępne
             </div>
             <div className="text-xs opacity-60 mt-2">
@@ -141,7 +140,7 @@ export default function Pricing() {
         <div className="pricing-detail mt-20 max-w-4xl">
           <p className="display-serif text-6xl italic leading-snug opacity-95">
             Cena{' '}
-            <span className="text-[var(--accent)] not-italic">bez pośrednika</span>.<br></br>
+            <span className="text-(--accent) not-italic">bez pośrednika</span>.<br></br>
             Bez prowizji, bez doliczonych marż.
           </p>
           <div className="mt-4 label-mono opacity-60">

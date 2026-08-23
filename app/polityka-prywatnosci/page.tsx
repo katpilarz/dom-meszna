@@ -36,12 +36,12 @@ export default function PrivacyPolicy() {
                 Administratorem Twoich danych osobowych jest osoba fizyczna udostępniająca
                 informacje o nieruchomości położonej w Mesznej (gmina Wilkowice, powiat
                 bielski, województwo śląskie) w ramach prywatnie prowadzonej oferty bezpośredniej,
-                zwana dalej „Administratorem".
+                zwana dalej „Administratorem”.
               </p>
               <p>
                 W sprawach związanych z ochroną danych osobowych, w tym realizacji praw
                 wynikających z RODO, kontakt z Administratorem możliwy jest pod adresem
-                e-mail: <a href="mailto:dommeszna@proton.me" className="text-[var(--accent)] hover:underline">dommeszna@proton.me</a>.
+                e-mail: <a href="mailto:dommeszna@proton.me" className="text-(--accent) hover:underline">dommeszna@proton.me</a>.
               </p>
             </Section>
 
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
 
             <Section number="03" title="Jakie dane są gromadzone">
               <p>Przetwarzane są dane podawane dobrowolnie poprzez formularz kontaktowy:</p>
-              <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
+              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
                 <li>— imię i nazwisko,</li>
                 <li>— adres e-mail,</li>
                 <li>— numer telefonu (jeśli zostanie podany),</li>
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
 
             <Section number="04" title="Cel i podstawa prawna przetwarzania">
               <p>Dane są przetwarzane w następujących celach:</p>
-              <ul className="list-none space-y-3 pl-4 border-l border-[var(--line)] py-2">
+              <ul className="list-none space-y-3 pl-4 border-l border-(--line) py-2">
                 <li>
                   <strong className="font-normal">a)</strong> w celu udzielenia odpowiedzi na zapytanie
                   oraz podjęcia działań przed zawarciem ewentualnej umowy — na podstawie
@@ -97,7 +97,7 @@ export default function PrivacyPolicy() {
                   dochodzenia lub obrony roszczeń — na podstawie <em>art. 6 ust. 1 lit. f RODO</em>.
                 </li>
               </ul>
-              <p className="bg-[var(--bg-alt)] border border-[var(--line)] p-5 text-md leading-relaxed">
+              <p className="bg-(--bg-alt) border border-(--line) p-5 text-md leading-relaxed">
                 <strong className="font-normal">Wysyłając wiadomość przez formularz kontaktowy,</strong> potwierdzasz, że zapoznałaś/eś się
                 z niniejszą polityką prywatności i akceptujesz przetwarzanie podanych danych w
                 celu udzielenia odpowiedzi na Twoje zapytanie.
@@ -109,7 +109,7 @@ export default function PrivacyPolicy() {
                 Dane są przechowywane przez okres niezbędny do realizacji celów, dla których
                 zostały zebrane, nie dłużej jednak niż:
               </p>
-              <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
+              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
                 <li>— 6 miesięcy od ostatniej korespondencji, jeśli nie doszło do dalszych ustaleń,</li>
                 <li>— do czasu zakończenia ewentualnej transakcji oraz przez okres wymagany
                   przepisami prawa, jeśli korespondencja doprowadzi do zawarcia umowy,</li>
@@ -119,10 +119,10 @@ export default function PrivacyPolicy() {
 
             <Section number="06" title="Twoje prawa">
               <p>W związku z przetwarzaniem danych przysługują Ci następujące prawa:</p>
-              <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
+              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
                 <li>— prawo dostępu do danych (art. 15 RODO),</li>
                 <li>— prawo do sprostowania danych (art. 16 RODO),</li>
-                <li>— prawo do usunięcia danych — „prawo do bycia zapomnianym" (art. 17 RODO),</li>
+                <li>— prawo do usunięcia danych — „prawo do bycia zapomnianym” (art. 17 RODO),</li>
                 <li>— prawo do ograniczenia przetwarzania (art. 18 RODO),</li>
                 <li>— prawo do przenoszenia danych (art. 20 RODO),</li>
                 <li>— prawo do sprzeciwu wobec przetwarzania (art. 21 RODO),</li>
@@ -131,7 +131,7 @@ export default function PrivacyPolicy() {
               </ul>
               <p>
                 Aby skorzystać z powyższych praw, wystarczy wysłać wiadomość na adres{' '}
-                <a href="mailto:dommeszna@proton.me" className="text-[var(--accent)] hover:underline">dommeszna@proton.me</a>.
+                <a href="mailto:dommeszna@proton.me" className="text-(--accent) hover:underline">dommeszna@proton.me</a>.
               </p>
             </Section>
 
@@ -140,7 +140,7 @@ export default function PrivacyPolicy() {
                 Dane mogą być udostępniane podmiotom świadczącym usługi techniczne związane z
                 prowadzeniem strony i obsługą poczty elektronicznej:
               </p>
-              <ul className="list-none space-y-2 pl-4 border-l border-[var(--line)] py-2">
+              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
                 <li>— dostawca hostingu strony i obsługi formularza kontaktowego (Netlify Inc., USA),</li>
                 <li>— dostawca usług poczty elektronicznej (Proton AG, Szwajcaria).</li>
               </ul>
@@ -152,14 +152,43 @@ export default function PrivacyPolicy() {
                 uznającej Szwajcarię za państwo zapewniające odpowiedni poziom ochrony danych
                 osobowych.
               </p>
+              <p>
+                Poza wskazanymi wyżej podmiotami dane nie są przekazywane nikomu innemu.
+                W szczególności strona nie korzysta z zewnętrznych bibliotek czcionek, map,
+                wtyczek mediów społecznościowych ani sieci CDN podmiotów trzecich — wszystkie
+                zasoby, w tym kroje pisma, serwowane są bezpośrednio z serwera strony. Dzięki
+                temu Twój adres IP nie jest ujawniany żadnemu dostawcy zewnętrznemu podczas
+                zwykłego przeglądania.
+              </p>
             </Section>
 
-            <Section number="08" title="Pliki cookies i technologie podobne">
+            <Section number="08" title="Pliki cookies, pamięć przeglądarki i zgody">
               <p>
-                Strona nie wykorzystuje plików cookies do celów marketingowych, profilowania ani
-                analitycznych. Wykorzystywane są wyłącznie techniczne mechanizmy przeglądarki
-                (np. zapamiętywanie preferencji motywu jasny/ciemny), które są niezbędne do
-                prawidłowego działania strony i nie wymagają odrębnej zgody.
+                Strona nie wykorzystuje plików cookies do celów marketingowych ani profilowania.
+                Wykorzystywane są wyłącznie techniczne mechanizmy pamięci przeglądarki, niezbędne
+                do prawidłowego działania strony, które zgodnie z art. 173 ust. 3 Prawa
+                telekomunikacyjnego nie wymagają odrębnej zgody:
+              </p>
+              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
+                <li>— zapamiętanie wybranego motywu (jasny / ciemny),</li>
+                <li>— informacja o tym, że animacja powitalna została już wyświetlona w tej sesji,</li>
+                <li>— zapis Twojej decyzji dotyczącej zgód wraz z datą jej udzielenia.</li>
+              </ul>
+              <p>
+                Dane te pozostają wyłącznie w pamięci Twojej przeglądarki i nie są nigdzie
+                przesyłane ani udostępniane.
+              </p>
+              <p>
+                Narzędzia analityczne uruchamiane są wyłącznie po uzyskaniu Twojej uprzedniej,
+                dobrowolnej zgody. Do czasu jej wyrażenia żaden skrypt analityczny nie jest
+                wczytywany i nie następuje żadne połączenie z serwerami podmiotów trzecich.
+                Odmowa zgody nie ogranicza dostępu do jakiejkolwiek części strony.
+              </p>
+              <p>
+                Zgodę możesz w każdej chwili wycofać, korzystając z odnośnika
+                „Ustawienia prywatności” w stopce strony. Wycofanie zgody jest równie proste
+                jak jej udzielenie i nie wpływa na zgodność z prawem przetwarzania, którego
+                dokonano na jej podstawie przed wycofaniem (art. 7 ust. 3 RODO).
               </p>
             </Section>
 
@@ -186,8 +215,8 @@ export default function PrivacyPolicy() {
             </Section>
           </section>
 
-          <div className="mt-20 pt-10 border-t border-[var(--line)]">
-            <Link href="/" className="display-serif italic text-xl hover:text-[var(--accent)] transition-colors inline-flex items-center gap-3 group">
+          <div className="mt-20 pt-10 border-t border-(--line)">
+            <Link href="/" className="display-serif italic text-xl hover:text-(--accent) transition-colors inline-flex items-center gap-3 group">
               <Arrow size={24} direction="left" className="transition-transform duration-500 group-hover:-translate-x-1" />
               Powrót do oferty
             </Link>

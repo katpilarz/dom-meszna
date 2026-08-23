@@ -14,11 +14,13 @@ import Pricing from '@/components/Pricing';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
+import Preloader from '@/components/Preloader';
 import StructuredData from '@/components/ StructuredData'; 
 
 export default function Home() {
   return (
     <SmoothScroll>
+      <Preloader />
       <Header />
        <StructuredData /> 
       <main>

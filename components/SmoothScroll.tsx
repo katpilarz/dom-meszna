@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import './useSectionAnim';
 
 export default function SmoothScroll({
   children,
@@ -10,8 +10,6 @@ export default function SmoothScroll({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     // Refresh ScrollTrigger after layout settles
     const t = setTimeout(() => ScrollTrigger.refresh(), 300);
 

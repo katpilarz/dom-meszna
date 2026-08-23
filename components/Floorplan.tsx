@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim, revealBatch } from './useSectionAnim';
 
 const floors = [
  {
@@ -47,48 +47,33 @@ const floors = [
 export default function Floorplan() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, () => {
+    gsap.from('.floor-heading > *', {
+      y: 50,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 1,
+      scrollTrigger: { trigger: '.floor-heading', start: 'top 80%' },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from('.floor-heading > *', {
-        y: 50,
+    revealBatch('.floor-card', { y: 80, duration: 1.2, stagger: 0.15 });
+
+    gsap.utils.toArray<HTMLElement>('.floor-card').forEach((card) => {
+      gsap.from(card.querySelectorAll('.floor-room'), {
         opacity: 0,
-        stagger: 0.1,
-        duration: 1,
-        scrollTrigger: { trigger: '.floor-heading', start: 'top 80%' },
+        x: -20,
+        stagger: 0.06,
+        duration: 0.6,
+        scrollTrigger: { trigger: card, start: 'top 75%' },
       });
-
-      gsap.utils.toArray<HTMLElement>('.floor-card').forEach((card, i) => {
-        gsap.from(card, {
-          y: 80,
-          opacity: 0,
-          duration: 1.2,
-          delay: i * 0.15,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: card, start: 'top 85%' },
-        });
-
-        const lines = card.querySelectorAll('.floor-room');
-        gsap.from(lines, {
-          opacity: 0,
-          x: -20,
-          stagger: 0.06,
-          duration: 0.6,
-          scrollTrigger: { trigger: card, start: 'top 75%' },
-        });
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    });
+  });
 
   return (
     <section
       id="uklad"
       ref={root}
-      className="py-32 md:py-48 relative bg-[var(--bg-alt)] "
+      className="py-32 md:py-48 relative bg-(--bg-alt) "
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="floor-heading mb-20">
@@ -102,20 +87,20 @@ export default function Floorplan() {
             Trzy poziomy.&nbsp;
             <br></br>
             <span>Jedno</span>
-            <span className="italic text-[var(--accent)]">&nbsp;przemyślane wnętrze.</span>
+            <span className="italic text-(--accent)">&nbsp;przemyślane wnętrze.</span>
             
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--line-strong)] rounded-sm border border-[var(--line-strong)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--line-strong) rounded-xs border border-(--line-strong)">
           {floors.map((floor) => (
             <div
               key={floor.level}
-              className="floor-card bg-[var(--bg-alt)] p-8 md:p-12 min-h-[480px] flex flex-col"
+              className="floor-card bg-(--bg-alt) p-8 md:p-12 min-h-[480px] flex flex-col"
             >
               <div className="flex items-start justify-between mb-12">
                 <div>
-                  <div className="label-mono text-[var(--accent)] mb-2">
+                  <div className="label-mono text-(--accent) mb-2">
                     Kondygnacja {floor.level}
                   </div>
                   <h3 className="display-serif text-3xl md:text-4xl">
@@ -134,9 +119,9 @@ export default function Floorplan() {
                 {floor.rooms.map((room) => (
                   <li
                     key={room}
-                    className="floor-room flex items-center gap-3 text-sm border-b border-[var(--line)] pb-2"
+                    className="floor-room flex items-center gap-3 text-sm border-b border-(--line) pb-2"
                   >
-                    <span className="text-[var(--accent)] text-xs">○</span>
+                    <span className="text-(--accent) text-xs">○</span>
                     <span>{room}</span>
                   </li>
                 ))}

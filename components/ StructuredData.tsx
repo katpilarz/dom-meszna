@@ -58,6 +58,14 @@ export default function StructuredData() {
       },
       {
         '@type': 'PropertyValue',
+        name: 'Powierzchnia działki z udziałem w drodze dojazdowej',
+        value: 1800,
+        unitCode: 'MTK',
+        description:
+          'Działka 1 600 m² wraz z udziałem we współwłasności drogi dojazdowej.',
+      },
+      {
+        '@type': 'PropertyValue',
         name: 'Liczba kondygnacji',
         value: 3,
       },
@@ -101,7 +109,6 @@ export default function StructuredData() {
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );

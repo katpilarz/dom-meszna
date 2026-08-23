@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim, revealBatch } from './useSectionAnim';
 
 const photos = [
   { src: '/images/house/house-05.jpg', label: 'Panorama od strony drogi', tag: '01', span: 'col-span-12', aspect: '16/9' },
@@ -17,33 +17,30 @@ const photos = [
 export default function Gallery() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
+  useSectionAnim(
+    root,
+    () => {
       gsap.from('.gallery-heading > *', {
         opacity: 0, y: 50, stagger: 0.1, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: '.gallery-heading', start: 'top 80%' },
       });
 
+      revealBatch('.gallery-item', { start: 'top 88%', duration: 1.2 });
+    },
+    // Scrubbed image parallax runs a transform write every frame per photo.
+    // Confined to large viewports — on a phone it is a jank source, not a
+    // detail anyone notices.
+    () => {
       gsap.utils.toArray<HTMLElement>('.gallery-item').forEach((item) => {
-        gsap.from(item, {
-          opacity: 0, y: 60, duration: 1.2, ease: 'power3.out',
-          scrollTrigger: { trigger: item, start: 'top 88%' },
-        });
         const img = item.querySelector('img');
-        if (img) {
-          gsap.from(img, {
-            scale: 1.15, ease: 'none',
-            scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: 1 },
-          });
-        }
+        if (!img) return;
+        gsap.from(img, {
+          scale: 1.15, ease: 'none',
+          scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: 1 },
+        });
       });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    },
+  );
 
   return (
     <section ref={root} id="galeria" className="py-32 md:py-48 relative">
@@ -57,7 +54,7 @@ export default function Gallery() {
             <span className="inline-block">Architektura</span>&nbsp;
             <br />
             <span className="inline-block">wpisana w</span>&nbsp;
-            <span className="inline-block italic text-[var(--accent)]">krajobraz.</span>
+            <span className="inline-block italic text-(--accent)">krajobraz.</span>
           </h2>
         </div>
 

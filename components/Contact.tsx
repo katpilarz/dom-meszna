@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim } from './useSectionAnim';
 import Arrow from './Arrow';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
@@ -19,38 +19,31 @@ export default function Contact() {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, () => {
+    gsap.from('.contact-line', {
+      yPercent: 110,
+      stagger: 0.08,
+      duration: 1.2,
+      ease: 'expo.out',
+      scrollTrigger: { trigger: '.contact-headline', start: 'top 75%' },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from('.contact-line', {
-        yPercent: 110,
-        stagger: 0.08,
-        duration: 1.2,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: '.contact-headline', start: 'top 75%' },
-      });
+    gsap.from('.contact-field', {
+      opacity: 0,
+      y: 30,
+      stagger: 0.08,
+      duration: 0.7,
+      scrollTrigger: { trigger: '.contact-form', start: 'top 80%' },
+    });
 
-      gsap.from('.contact-field', {
-        opacity: 0,
-        y: 30,
-        stagger: 0.08,
-        duration: 0.7,
-        scrollTrigger: { trigger: '.contact-form', start: 'top 80%' },
-      });
-
-      gsap.from('.contact-info-item', {
-        opacity: 0,
-        x: 30,
-        stagger: 0.1,
-        duration: 0.8,
-        scrollTrigger: { trigger: '.contact-info', start: 'top 80%' },
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    gsap.from('.contact-info-item', {
+      opacity: 0,
+      x: 30,
+      stagger: 0.1,
+      duration: 0.8,
+      scrollTrigger: { trigger: '.contact-info', start: 'top 80%' },
+    });
+  });
 
   return (
     <section
@@ -70,7 +63,7 @@ export default function Contact() {
           <h2 className="display-serif leading-[0.92]">
             <div className="overflow-hidden">
               <div className="contact-line text-[clamp(2.5rem,8vw,7rem)]">
-                Porozmawiajmy&nbsp;<span className="italic text-[var(--accent)]">wprost.</span>
+                Porozmawiajmy&nbsp;<span className="italic text-(--accent)">wprost.</span>
               </div>
             </div>
             <div className="overflow-hidden">
@@ -143,7 +136,7 @@ export default function Contact() {
                   name="imie"
                   type="text"
                   required
-                  className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
+                  className="w-full px-3 bg-transparent border-b border-(--line-strong) py-3 focus:border-(--accent) outline-hidden transition-colors"
                 />
               </div>
               <div>
@@ -154,7 +147,7 @@ export default function Contact() {
                   id="telefon"
                   name="telefon"
                   type="tel"
-                  className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
+                  className="w-full px-3 bg-transparent border-b border-(--line-strong) py-3 focus:border-(--accent) outline-hidden transition-colors"
                 />
               </div>
             </div>
@@ -168,7 +161,7 @@ export default function Contact() {
                 name="email"
                 type="email"
                 required
-                className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors"
+                className="w-full px-3 bg-transparent border-b border-(--line-strong) py-3 focus:border-(--accent) outline-hidden transition-colors"
               />
             </div>
 
@@ -181,7 +174,7 @@ export default function Contact() {
                 name="termin"
                 type="text"
                 placeholder="np. najbliższa sobota, popołudnie"
-                className="px-3 w-full bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors placeholder:opacity-40"
+                className="px-3 w-full bg-transparent border-b border-(--line-strong) py-3 focus:border-(--accent) outline-hidden transition-colors placeholder:opacity-40"
               />
             </div>
 
@@ -193,13 +186,13 @@ export default function Contact() {
                 id="wiadomosc"
                 name="wiadomosc"
                 rows={4}
-                className="w-full px-3 bg-transparent border-b border-[var(--line-strong)] py-3 focus:border-[var(--accent)] outline-none transition-colors resize-none"
+                className="w-full px-3 bg-transparent border-b border-(--line-strong) py-3 focus:border-(--accent) outline-hidden transition-colors resize-none"
               />
             </div>
 
             {/* Success message */}
             {status === 'success' && (
-              <div className="contact-field border-l-2 border-[var(--accent)] pl-5 py-3 bg-[var(--bg-alt)]">
+              <div className="contact-field border-l-2 border-(--accent) pl-5 py-3 bg-(--bg-alt)">
                 <div
                   className="display-serif italic text-xl mb-1"
                   style={{ color: 'var(--accent)' }}
@@ -233,7 +226,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="group inline-flex rounded-sm items-center justify-between gap-6 w-full lg:min-w-[400px] border border-[var(--fg)] px-6 md:px-8 py-6 lg:py-8 hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
+                className="group inline-flex rounded-xs items-center justify-between gap-6 w-full lg:min-w-[400px] border border-(--fg) px-6 md:px-8 py-6 lg:py-8 hover:bg-(--fg) hover:text-(--bg) transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
               >
                 <span className="display-serif italic text-4xl">
                   {status === 'submitting' ? 'Wysyłam…' : 'Wyślij zapytanie'}
@@ -242,7 +235,7 @@ export default function Contact() {
               </button>
               <p className="text-md opacity-60 mt-5 max-w-full leading-relaxed">
                 Wysyłając zapytanie, potwierdzasz zapoznanie się z{' '}
-                <a href="/polityka-prywatnosci" className="underline decoration-dotted underline-offset-2 hover:text-[var(--accent)]">
+                <a href="/polityka-prywatnosci" className="underline decoration-dotted underline-offset-2 hover:text-(--accent)">
                   polityką prywatności
                 </a>{' '}
                 i akceptujesz przetwarzanie podanych danych w celu udzielenia odpowiedzi (RODO, art. 6 ust. 1 lit. b).
@@ -254,7 +247,7 @@ export default function Contact() {
           </form>
 
           {/* Contact info */}
-          <div className="contact-info col-span-12 lg:col-span-5 mt-12 lg:mt-0 pl-0 lg:pl-16 lg:border-l lg:border-[var(--line)]">
+          <div className="contact-info col-span-12 lg:col-span-5 mt-12 lg:mt-0 pl-0 lg:pl-16 lg:border-l lg:border-(--line)">
             <div className="contact-info-item mb-10">
 <div className="label-mono opacity-50 mb-2">Kontakt</div>
 <div className="display-serif text-2xl">
@@ -269,7 +262,7 @@ export default function Contact() {
               <div className="label-mono opacity-50 mb-2">E-mail</div>
               <a
                 href="mailto:dommeszna@proton.me"
-                className="display-serif text-2xl hover:text-[var(--accent)] transition-colors break-all"
+                className="display-serif text-2xl hover:text-(--accent) transition-colors break-all"
               >
                 dommeszna@proton.me
               </a>
@@ -278,15 +271,15 @@ export default function Contact() {
             <div className="contact-info-item mb-10">
               <div className="label-mono opacity-50 mb-2">Lokalizacja</div>
               <div className="display-serif text-xl">
-                Meszna, gmina Wilkowice
+                ul. Energetyków, Meszna
               </div>
               <div className="text-sm opacity-70 mt-1">
-                powiat bielski · województwo śląskie
+                43-365 Wilkowice · powiat bielski · województwo śląskie
               </div>
             </div>
 
-            <div className="contact-info-item mt-12 p-6 rounded-sm border border-[var(--line-strong)]">
-              <div className="label-mono text-[var(--accent)] mb-3">
+            <div className="contact-info-item mt-12 p-6 rounded-xs border border-(--line-strong)">
+              <div className="label-mono text-(--accent) mb-3">
                 ✦ Dlaczego bezpośrednio
               </div>
               <div className="text-sm leading-relaxed">

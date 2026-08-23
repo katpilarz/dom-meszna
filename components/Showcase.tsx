@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim } from './useSectionAnim';
 
 interface ShowcaseProps {
   src: string;
@@ -25,11 +25,8 @@ export default function Showcase({
   const root = useRef<HTMLElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!root.current || !imgRef.current) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
+  useSectionAnim(root, () => {
+    {
       gsap.to(imgRef.current, {
         yPercent: 12,
         ease: 'none',
@@ -40,10 +37,8 @@ export default function Showcase({
           scrub: true,
         },
       });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    }
+  });
 
   return (
     <section ref={root} className="relative h-screen overflow-hidden">

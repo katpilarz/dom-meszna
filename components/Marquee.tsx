@@ -17,7 +17,7 @@ export default function Marquee() {
 
   return (
     <section
-      className="py-8 border-y border-[var(--line)] overflow-hidden no-select bg-[var(--bg-alt)]"
+      className="py-8 border-y border-(--line) overflow-hidden no-select bg-(--bg-alt)"
       aria-hidden="true"
     >
       <div className="marquee-track flex whitespace-nowrap">
@@ -27,7 +27,7 @@ export default function Marquee() {
             className="display-serif text-3xl md:text-5xl italic px-8 opacity-90"
           >
             {item}
-            <span className="text-[var(--accent)] mx-8 not-italic">✦</span>
+            <span className="text-(--accent) mx-8 not-italic">✦</span>
           </span>
         ))}
       </div>
