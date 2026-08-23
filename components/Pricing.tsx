@@ -118,15 +118,6 @@ export default function Pricing() {
             </div>
           </div>
           <div className="pricing-detail">
-            <div className="label-mono opacity-50 mb-3">Forma własności</div>
-            <div className="display-serif text-3xl">Współwłasność</div>
-            <div className="text-xs opacity-60 mt-2">
-              Działka 1 600 m² · ogrodzona
-              <br />
-              1 800 m² łącznie z udziałem w drodze dojazdowej
-            </div>
-          </div>
-          <div className="pricing-detail">
             <div className="label-mono opacity-50 mb-3">Status</div>
             <div className="display-serif text-3xl text-(--accent)">
               Dostępne
