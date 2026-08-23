@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+import { useSectionAnim } from './useSectionAnim';
 
 const nearby = [
   { name: 'Las', distance: '300 m', type: 'Bezpośrednie sąsiedztwo' },
@@ -19,56 +20,55 @@ const nearby = [
   { name: 'Wisła / Ustroń', distance: '25 km', type: 'Kurort' },
 ];
 
+// drawSVG below is a DrawSVGPlugin property — without this registration GSAP
+// logs "Invalid property drawSVG… Missing plugin?" and silently skips the tween.
+gsap.registerPlugin(DrawSVGPlugin);
+
 export default function Location() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, () => {
+    gsap.from('.location-heading > *', {
+      opacity: 0,
+      y: 40,
+      stagger: 0.1,
+      duration: 1,
+      scrollTrigger: { trigger: '.location-heading', start: 'top 80%' },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from('.location-heading > *', {
-        opacity: 0,
-        y: 40,
-        stagger: 0.1,
-        duration: 1,
-        scrollTrigger: { trigger: '.location-heading', start: 'top 80%' },
-      });
+    gsap.from('.location-img', {
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 1.6,
+      ease: 'expo.out',
+      scrollTrigger: { trigger: '.location-img', start: 'top 80%' },
+    });
 
-      gsap.from('.location-img', {
-        clipPath: 'inset(0 0 100% 0)',
-        duration: 1.6,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: '.location-img', start: 'top 80%' },
-      });
+    gsap.from('.nearby-row', {
+      opacity: 0,
+      x: -30,
+      stagger: 0.07,
+      duration: 0.7,
+      scrollTrigger: { trigger: '.nearby-list', start: 'top 80%' },
+    });
 
-      gsap.from('.nearby-row', {
-        opacity: 0,
-        x: -30,
-        stagger: 0.07,
-        duration: 0.7,
-        scrollTrigger: { trigger: '.nearby-list', start: 'top 80%' },
-      });
+    // Animate the SVG location markers
+    gsap.from('.map-pin', {
+      scale: 0,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.6,
+      ease: 'back.out(2)',
+      transformOrigin: 'center',
+      scrollTrigger: { trigger: '.map-illustration', start: 'top 70%' },
+    });
 
-      // Animate the SVG location markers
-      gsap.from('.map-pin', {
-        scale: 0,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: 'back.out(2)',
-        transformOrigin: 'center',
-        scrollTrigger: { trigger: '.map-illustration', start: 'top 70%' },
-      });
-
-      gsap.from('.map-line', {
-        drawSVG: 0,
-        scrollTrigger: { trigger: '.map-illustration', start: 'top 70%' },
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    gsap.from('.map-line', {
+      drawSVG: 0,
+      duration: 1.4,
+      ease: 'power2.inOut',
+      scrollTrigger: { trigger: '.map-illustration', start: 'top 70%' },
+    });
+  });
 
   return (
     <section
@@ -87,7 +87,7 @@ export default function Location() {
           <h2 className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl">
             Adres, który znają&nbsp;
             <br></br> prawdziwi&nbsp;
-            <span className="italic text-[var(--accent)]">miłośnicy gór.</span>&nbsp;
+            <span className="italic text-(--accent)">miłośnicy gór.</span>&nbsp;
           </h2>
           <p className="mt-8 max-w-2xl text-lg opacity-75 leading-relaxed">
             300 metrów do lasu. 600 metrów do Chaty na Groniu i szlaków
@@ -100,7 +100,7 @@ export default function Location() {
         </div>
 
         {/* Beskidy landscape banner */}
-        <div className="location-banner mb-12 md:mb-20 relative overflow-hidden border border-[var(--line-strong)]">
+        <div className="location-banner mb-12 md:mb-20 relative overflow-hidden border border-(--line-strong)">
           <div className="relative" style={{ aspectRatio: '16/9' }}>
             <Image
               src="/images/landscape/beskidy.jpg"
@@ -124,7 +124,7 @@ export default function Location() {
         <div className="grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 lg:col-span-7">
             {/* Map illustration */}
-            <div className="map-illustration relative rounded-sm border border-[var(--line-strong)] aspect-[16/9] bg-[var(--bg)] overflow-hidden">
+            <div className="map-illustration relative rounded-xs border border-(--line-strong) aspect-video bg-(--bg) overflow-hidden">
               <svg
                 viewBox="0 0 800 450"
                 className="absolute inset-0 w-full h-full"
@@ -224,14 +224,14 @@ export default function Location() {
               {nearby.map((item, i) => (
                 <div
                   key={item.name}
-                  className="nearby-row flex items-center justify-between py-5 border-b border-[var(--line)] group"
+                  className="nearby-row flex items-center justify-between py-5 border-b border-(--line) group"
                 >
                   <div className="flex items-baseline gap-4">
                     <span className="label-mono opacity-40 text-[0.65rem]">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div>
-                      <div className="display-serif text-xl group-hover:text-[var(--accent)] transition-colors">
+                      <div className="display-serif text-xl group-hover:text-(--accent) transition-colors">
                         {item.name}
                       </div>
                       <div className="text-xs opacity-50 mt-1">
@@ -239,7 +239,7 @@ export default function Location() {
                       </div>
                     </div>
                   </div>
-                  <div className="label-mono text-[var(--accent)]">
+                  <div className="label-mono text-(--accent)">
                     {item.distance}
                   </div>
                 </div>

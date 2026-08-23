@@ -1,6 +1,35 @@
 import type { Metadata } from 'next';
+import { Cormorant_Garamond, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+
+// Self-hosted at build time: no request ever leaves the visitor's browser for
+// Google, which removes the only third-party data transfer on the site and so
+// removes any need to ask consent for it (GDPR Art. 25, privacy by design).
+// 'latin-ext' is not optional here — it carries ą ć ę ł ń ó ś ź ż.
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-cormorant',
+});
+
+const interTight = Inter_Tight({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['200', '300', '400', '500', '600'],
+  display: 'swap',
+  variable: '--font-inter-tight',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['300', '400'],
+  display: 'swap',
+  variable: '--font-jetbrains',
+});
 import { ThemeProvider } from '@/components/ThemeProvider';
+import ConsentBanner from '@/components/consent/ConsentBanner';
+import Analytics from '@/components/consent/Analytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.dom-meszna.pl'),
@@ -65,10 +94,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl" suppressHydrationWarning>
+    <html
+      lang="pl"
+      suppressHydrationWarning
+      className={`${cormorant.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
+    >
       <body className="grain">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           {children}
+          <ConsentBanner />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

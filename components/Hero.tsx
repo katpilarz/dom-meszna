@@ -1,64 +1,61 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim } from './useSectionAnim';
+import { onIntroOpen } from './introGate';
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, (el) => {
+    // paused — the .from() tweens still render their start state on creation,
+    // so the hero stays masked until we decide to run the timeline.
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+    tl.from('.hero-label', { opacity: 0, y: 20, duration: 1, delay: 0.3 })
+      .from('.hero-word', { yPercent: 110, duration: 1.4, stagger: 0.1, ease: 'expo.out' }, '-=0.6')
+      .from('.hero-sub', { opacity: 0, y: 20, duration: 1 }, '-=0.8');
 
-    let releaseVisibility: (() => void) | undefined;
+    gsap.to('.hero-img-bg', {
+      yPercent: 15,
+      scale: 1.05,
+      ease: 'none',
+      scrollTrigger: { trigger: el, start: 'top top', end: 'bottom top', scrub: true },
+    });
 
-    const ctx = gsap.context(() => {
-      // paused — the .from() tweens still render their start state on creation,
-      // so the hero stays masked until we decide to run the timeline.
-      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
-      tl.from('.hero-label', { opacity: 0, y: 20, duration: 1, delay: 0.3 })
-        .from('.hero-word', { yPercent: 110, duration: 1.4, stagger: 0.1, ease: 'expo.out' }, '-=0.6')
-        .from('.hero-sub', { opacity: 0, y: 20, duration: 1 }, '-=0.8');
+    // Two gates, both of which must be open before the entrance is worth
+    // spending: the preloader curtain has to be lifting (otherwise the whole
+    // animation plays behind it), and the tab has to be on screen —
+    // requestAnimationFrame is suspended while hidden, so a timeline started in
+    // a background tab never really plays; GSAP catches up on the first frame
+    // after focus and the hero snaps in fully formed.
+    let offVisible: (() => void) | undefined;
 
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (reduced) {
-        // No entry motion — land straight on the final state.
-        tl.progress(1);
-      } else if (document.visibilityState === 'visible') {
+    const start = () => {
+      if (document.visibilityState === 'visible') {
         tl.play(0);
-      } else {
-        // requestAnimationFrame is suspended in a background tab, so a timeline
-        // started on mount while hidden never actually plays — GSAP catches up
-        // on the first frame after focus and the hero snaps in fully formed.
-        // Hold it and run it from the top once the page is really on screen.
-        const onVisible = () => {
-          if (document.visibilityState !== 'visible') return;
-          releaseVisibility?.();
-          tl.play(0);
-        };
-        document.addEventListener('visibilitychange', onVisible);
-        releaseVisibility = () => {
-          document.removeEventListener('visibilitychange', onVisible);
-          releaseVisibility = undefined;
-        };
+        return;
       }
+      const onVisible = () => {
+        if (document.visibilityState !== 'visible') return;
+        offVisible?.();
+        tl.play(0);
+      };
+      document.addEventListener('visibilitychange', onVisible);
+      offVisible = () => {
+        document.removeEventListener('visibilitychange', onVisible);
+        offVisible = undefined;
+      };
+    };
 
-      gsap.to('.hero-img-bg', {
-        yPercent: 15,
-        scale: 1.05,
-        ease: 'none',
-        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
-    }, root);
+    const offIntro = onIntroOpen(start);
 
     return () => {
-      releaseVisibility?.();
-      ctx.revert();
+      offIntro();
+      offVisible?.();
     };
-  }, []);
+  });
 
   return (
     <section ref={root} id="hero" className="relative min-h-screen overflow-hidden">

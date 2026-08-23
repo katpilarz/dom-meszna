@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
@@ -20,6 +21,11 @@ export default function Header() {
   const isOpaque = !isLight; // opaque = glass + foreground text
 
   useEffect(() => {
+    // Hydration guard: the theme toggle renders a different icon once
+    // next-themes knows the resolved theme, so the first client render must
+    // still match the server output. This is the one legitimate synchronous
+    // setState in an effect here, not a cascading-render mistake.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
@@ -37,7 +43,7 @@ export default function Header() {
       }}
     >
       <div className="mx-auto max-w-[1880px] px-5 md:px-10 flex items-center justify-between gap-4">
-        <a href="/" className="flex items-center gap-3 group flex-shrink-0">
+        <Link href="/" className="flex items-center gap-3 group shrink-0">
           <svg
             width="32"
             height="32"
@@ -60,12 +66,12 @@ export default function Header() {
               Bez pośredników
             </div>
           </div>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-3">
-          <a
+          <Link
             href="/#kontakt"
-            className="group rounded-sm inline-flex items-center gap-3 display-serif italic text-xl h-11 px-5 md:px-6 py-2  transition-colors duration-500 whitespace-nowrap"
+            className="group rounded-xs inline-flex items-center gap-3 display-serif italic text-xl h-11 px-5 md:px-6 py-2  transition-colors duration-500 whitespace-nowrap"
             style={{
               border: `1px solid ${isOpaque ? 'var(--fg)' : 'rgba(255,255,255,0.65)'}`,
             }}
@@ -85,11 +91,11 @@ export default function Header() {
           >
             Umów oglądanie
             <Arrow size={24} className="transition-transform duration-500 group-hover:translate-x-1" />
-          </a>
+          </Link>
                     {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="w-11 h-11 rounded-sm flex items-center justify-center transition-colors flex-shrink-0 hover:opacity-70"
+              className="w-11 h-11 rounded-xs flex items-center justify-center transition-colors shrink-0 hover:opacity-70"
               style={{
                 border: `1px solid ${isOpaque ? 'var(--line-strong)' : 'rgba(255,255,255,0.55)'}`,
               }}

@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim, revealBatch } from './useSectionAnim';
 
 const opportunities = [
   {
@@ -40,43 +40,27 @@ const opportunities = [
 export default function Potential() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
+  useSectionAnim(root, () => {
+    gsap.from('.pot-heading > *', {
+      y: 50,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 1,
+      scrollTrigger: { trigger: '.pot-heading', start: 'top 80%' },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from('.pot-heading > *', {
-        y: 50,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 1,
-        scrollTrigger: { trigger: '.pot-heading', start: 'top 80%' },
-      });
+    revealBatch('.pot-card');
 
-      gsap.utils.toArray<HTMLElement>('.pot-card').forEach((card, i) => {
-        gsap.from(card, {
-          y: 60,
-          opacity: 0,
-          duration: 1,
-          delay: i * 0.1,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: card, start: 'top 85%' },
-        });
-      });
-
-      gsap.from('.pot-quote', {
-        opacity: 0,
-        y: 40,
-        duration: 1.2,
-        scrollTrigger: { trigger: '.pot-quote', start: 'top 80%' },
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+    gsap.from('.pot-quote', {
+      opacity: 0,
+      y: 40,
+      duration: 1.2,
+      scrollTrigger: { trigger: '.pot-quote', start: 'top 80%' },
+    });
+  });
 
   return (
-    <section ref={root} id="mozliwosci" className="py-32 md:py-48 relative bg-[var(--bg-alt)]">
+    <section ref={root} id="mozliwosci" className="py-32 md:py-48 relative bg-(--bg-alt)">
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="pot-heading mb-20">
           <div className="flex items-center justify-between mb-12">
@@ -92,7 +76,7 @@ export default function Potential() {
         
             <br />
         Otwarty na
-                <span className="italic text-[var(--accent)]">Twoje zmiany</span>
+                <span className="italic text-(--accent)">Twoje zmiany</span>
           </h2>
           <p className="mt-8 max-w-2xl text-lg opacity-75 leading-relaxed">
             Dom umeblowany, w dobrym stanie technicznym — można wprowadzić
@@ -102,11 +86,11 @@ export default function Potential() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--line-strong)] rounded-sm border border-[var(--line-strong)] mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-strong) rounded-xs border border-(--line-strong) mb-24">
           {opportunities.map((opp) => (
             <div
               key={opp.n}
-              className="pot-card bg-[var(--bg-alt)] p-8 md:p-12 min-h-[280px] flex flex-col"
+              className="pot-card bg-(--bg-alt) p-8 md:p-12 min-h-[280px] flex flex-col"
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="display-serif text-xl">{opp.title}</div>
@@ -122,7 +106,7 @@ export default function Potential() {
         </div>
 
         <div className="pot-quote max-w-4xl">
-          <div className="label-mono text-[var(--accent)] mb-6">
+          <div className="label-mono text-(--accent) mb-6">
             ✦ Dla kogo jest ten dom
           </div>
           <p className="display-serif text-2xl md:text-4xl italic leading-snug opacity-95">

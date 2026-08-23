@@ -1,14 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter+Tight:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap');
+@import 'tailwindcss';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* next/font sets --font-cormorant / --font-inter-tight / --font-jetbrains on
+     <html>; these wrap them so both Tailwind's font-* utilities and the
+     var(--font-*) rules below keep reading one value. */
+  --font-display: var(--font-cormorant), 'Times New Roman', Times, serif;
+  --font-sans: var(--font-inter-tight), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-bone: #f4f1ea;
+  --color-ink: #0e0e0c;
+  --color-sage: #6b7a5a;
+  --color-gold: #b8935a;
+  --color-mist: #e8e4dc;
+  --color-coal: #1a1a18;
+
+  --tracking-widest2: 0.3em;
+  --tracking-widest3: 0.45em;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
-  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-sans: 'Inter Tight', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
+  /* Font stacks live in @theme above so Tailwind's font-* utilities and the
+     var(--font-*) rules in this file cannot drift apart. */
   --bg: #f4f1ea;
   --bg-alt: #e8e4dc;
   --fg: #0e0e0c;
@@ -143,4 +176,50 @@ a, button { cursor: pointer; }
 :focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* ── Preloader ──────────────────────────────────────────────────────────────
+   The panel is server-rendered so the hero never flashes before the curtain
+   is in place. That means it must also be able to get out of the way with no
+   JavaScript at all: this keyframe is the failsafe, and Preloader.tsx strips
+   the class the moment it takes over. Without it, a bundle that fails to load
+   would leave a visitor staring at a blank panel forever. */
+.preloader--failsafe {
+  animation: preloader-failsafe 0.5s ease 6s forwards;
+}
+
+@keyframes preloader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.preloader-bar-fill {
+  transform: scaleX(0);
+}
+
+/* The panel is on screen precisely while the webfonts are still in flight, so
+   it styles itself from system stacks instead of var(--font-*). Depending on
+   the fonts we are waiting for is how a loader ends up rendering tofu. */
+.preloader-word {
+  font-family: 'Cormorant Garamond', 'Times New Roman', Times, Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.preloader-caption {
+  font-family: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.preloader-pct {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono',
+    monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
 }

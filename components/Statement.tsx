@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSectionAnim } from './useSectionAnim';
 
 const text =
   '402 m² powierzchni całkowitej. 170 m² powierzchni użytkowej. 1600 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
@@ -10,33 +10,26 @@ const text =
 export default function Statement() {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.stmt-word',
-        { opacity: 0.12 },
-        {
-          opacity: 1,
-          stagger: 0.03,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.statement-text',
-            start: 'top 75%',
-            end: 'bottom 60%',
-            scrub: 1,
-          },
-        }
-      );
-    }, root);
-
-    return () => ctx.revert();
-  }, []);
+  useSectionAnim(root, () => {
+    gsap.fromTo(
+      '.stmt-word',
+      { opacity: 0.12 },
+      {
+        opacity: 1,
+        stagger: 0.03,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.statement-text',
+          start: 'top 75%',
+          end: 'bottom 60%',
+          scrub: 1,
+        },
+      }
+    );
+  });
 
   return (
-    <section ref={root} className="pt-32 pb-40 lg:pb-60 relative bg-[var(--bg-alt)]">
+    <section ref={root} className="pt-32 pb-40 lg:pb-60 relative bg-(--bg-alt)">
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
 
         <h2
@@ -49,7 +42,7 @@ export default function Statement() {
           }}
         >
           {text.split(' ').map((word, i) => (
-            <span key={i} className="stmt-word inline-block" style={{ marginRight: '0.18em' }}>
+            <span key={i} className="stmt-word inline-block" style={{ marginRight: '0.18em', willChange: 'opacity' }}>
               {word}
             </span>
           ))}
