@@ -12,11 +12,39 @@ export default function Hero() {
     if (!root.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    let releaseVisibility: (() => void) | undefined;
+
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      // paused — the .from() tweens still render their start state on creation,
+      // so the hero stays masked until we decide to run the timeline.
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
       tl.from('.hero-label', { opacity: 0, y: 20, duration: 1, delay: 0.3 })
         .from('.hero-word', { yPercent: 110, duration: 1.4, stagger: 0.1, ease: 'expo.out' }, '-=0.6')
         .from('.hero-sub', { opacity: 0, y: 20, duration: 1 }, '-=0.8');
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduced) {
+        // No entry motion — land straight on the final state.
+        tl.progress(1);
+      } else if (document.visibilityState === 'visible') {
+        tl.play(0);
+      } else {
+        // requestAnimationFrame is suspended in a background tab, so a timeline
+        // started on mount while hidden never actually plays — GSAP catches up
+        // on the first frame after focus and the hero snaps in fully formed.
+        // Hold it and run it from the top once the page is really on screen.
+        const onVisible = () => {
+          if (document.visibilityState !== 'visible') return;
+          releaseVisibility?.();
+          tl.play(0);
+        };
+        document.addEventListener('visibilitychange', onVisible);
+        releaseVisibility = () => {
+          document.removeEventListener('visibilitychange', onVisible);
+          releaseVisibility = undefined;
+        };
+      }
 
       gsap.to('.hero-img-bg', {
         yPercent: 15,
@@ -26,7 +54,10 @@ export default function Hero() {
       });
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      releaseVisibility?.();
+      ctx.revert();
+    };
   }, []);
 
   return (
