@@ -93,8 +93,8 @@ export default function Potential() {
               className="pot-card bg-(--bg-alt) p-8 md:p-12 min-h-[280px] flex flex-col"
             >
               <div className="flex items-start justify-between mb-6">
-                <div className="display-serif text-xl">{opp.title}</div>
-                <div className="display-serif text-5xl opacity-15">
+                <div className="display-serif text-5xl">{opp.title}</div>
+                <div className="display-serif text-3xl opacity-15">
                   {opp.n}
                 </div>
               </div>
