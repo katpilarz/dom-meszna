@@ -3,7 +3,7 @@
 Editorial marketing site for a 402 m² property in Meszna, Beskid Śląski, Poland.
 **Direct sale from owner** — no agency, no broker fees.
 
-![Dom w Mesznej — sekcja hero](public/images/house/house-01.jpg)
+![Dom w Mesznej — hero section](docs/hero.jpg)
 
 **Stack:** Next.js 16 (App Router) · React 19 · TypeScript 5.9 · Tailwind CSS v4 · GSAP 3 · next-themes · lucide-react
 **Fonts:** `next/font/google` — Cormorant Garamond (display), Inter Tight (sans), JetBrains Mono (mono)
@@ -16,7 +16,7 @@ Editorial marketing site for a 402 m² property in Meszna, Beskid Śląski, Pola
 
 ---
 
-## Struktura projektu
+## Project structure
 
 ```
 dom-meszna/
@@ -67,6 +67,8 @@ dom-meszna/
 │       ├── interior/
 │       ├── plans/
 │       └── landscape/beskidy.jpg
+├── docs/
+│   └── hero.jpg
 ├── netlify.toml
 ├── next.config.js
 ├── postcss.config.js
@@ -79,45 +81,45 @@ dom-meszna/
 
 ## Property data
 
-- **Cena:** 1 899 000 zł (4 720 zł/m²) · bez pośredników
-- **Powierzchnia:** 402,35 m² (170,75 m² użytkowej) · działka 1 600 m²
-- **Pokoje:** 7 · kondygnacje: 3 · rok: 2018 · Architekt: Studio Atrium
-- **Adres:** Meszna, gmina Wilkowice
-- **Kontakt:** dommeszna@proton.me
+- **Price:** 1 899 000 zł (4 720 zł/m²) · no agent commission
+- **Area:** 402.35 m² total (170.75 m² living space) · 1 600 m² plot
+- **Rooms:** 7 · floors: 3 · built: 2018 · architect: Studio Atrium
+- **Address:** Meszna, Wilkowice municipality
+- **Contact:** dommeszna@proton.me
 
 ---
 
-## Analytics i zgody
+## Analytics and consent
 
-Analityka jest **domyślnie wyłączona**. Bez `NEXT_PUBLIC_GA_ID` strona nie wysyła
-żadnych żądań do zewnętrznych serwisów, a baner zgody się nie pokazuje — nie ma
-na co wyrażać zgody.
+Analytics is **off by default**. Without `NEXT_PUBLIC_GA_ID` the site makes no
+third-party requests at all and the consent banner stays hidden — there is
+nothing to consent to.
 
 ```bash
 cp .env.example .env.local
-# NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  → włącza baner i (po zgodzie) GA4
+# NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  → enables the banner and, once accepted, GA4
 ```
 
-Skrypt Google ładuje się dopiero po aktywnej zgodzie ([components/consent/Analytics.tsx](components/consent/Analytics.tsx)).
+The Google script is loaded only after active consent ([components/consent/Analytics.tsx](components/consent/Analytics.tsx)).
 
 ---
 
-## Formularz kontaktowy
+## Contact form
 
-Formularz obsługuje **Netlify Forms**. Schemat formularza musi istnieć jako statyczny
-HTML — dlatego [public/__forms.html](public/__forms.html) (wymagane przez
-`@netlify/plugin-nextjs` v5+). Formularz użytkownika w
-[components/Contact.tsx](components/Contact.tsx) wysyła `POST` na `/__forms.html`
-przez `fetch`. Zmiana pól formularza wymaga aktualizacji **obu** plików.
+The form is handled by **Netlify Forms**, which needs the form schema to exist as
+static HTML — hence [public/__forms.html](public/__forms.html) (required by
+`@netlify/plugin-nextjs` v5+). The user-facing form in
+[components/Contact.tsx](components/Contact.tsx) `POST`s to `/__forms.html` via
+`fetch`. Changing the form fields means updating **both** files.
 
 ---
 
-## Komendy
+## Commands
 
 ```bash
 npm install
-npm run dev          # Server deweloperski
+npm run dev          # Development server
 npm run build        # Production build
-npm start            # Uruchom production build lokalnie
+npm start            # Run the production build locally
 npm run lint         # ESLint (flat config)
 ```
