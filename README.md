@@ -21,54 +21,54 @@ Editorial marketing site for a 402 m² property in Meszna, Beskid Śląski, Pola
 ```
 dom-meszna/
 ├── app/
-│   ├── layout.tsx                       # Root layout, next/font, metadata + OG/Twitter
-│   ├── page.tsx                         # Strona główna (kolejność sekcji)
-│   ├── globals.css                      # Tailwind v4 @theme (kolory, fonty, tracking)
-│   ├── icon.svg                         # Favicon
-│   ├── opengraph-image.tsx              # Dynamiczny obraz OG (generowany w runtime)
-│   ├── robots.ts                        # robots.txt
-│   ├── sitemap.ts                       # sitemap.xml
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── globals.css
+│   ├── icon.svg
+│   ├── opengraph-image.tsx
+│   ├── robots.ts
+│   ├── sitemap.ts
 │   └── polityka-prywatnosci/
-│       └── page.tsx                     # Polityka RODO
+│       └── page.tsx
 ├── components/
-│   ├── Header.tsx                       # Logo + theme toggle + CTA
-│   ├── Preloader.tsx                    # Intro animacja (bramkowana przez introGate)
-│   ├── introGate.ts                     # Stan intro — reszta sekcji czeka na koniec
-│   ├── Hero.tsx                         # Full-bleed panorama (house-01.jpg)
+│   ├── Header.tsx
+│   ├── Preloader.tsx
+│   ├── introGate.ts
+│   ├── Hero.tsx
 │   ├── Marquee.tsx
-│   ├── Stats.tsx                        # Animowane liczniki
+│   ├── Stats.tsx
 │   ├── Statement.tsx
-│   ├── Gallery.tsx                      # Galeria zewnętrzna (6 zdjęć)
+│   ├── Gallery.tsx
 │   ├── Potential.tsx
-│   ├── Showcase.tsx                     # Reusable full-screen photo
+│   ├── Showcase.tsx
 │   ├── Floorplan.tsx
-│   ├── Location.tsx                     # Banner Beskidów + SVG mapa
-│   ├── Interior.tsx                     # Galeria wnętrz (15 zdjęć)
-│   ├── Plans.tsx                        # 6 planów w jednolitej wysokości
-│   ├── Pricing.tsx                      # 1 899 000 zł (cena w HTML, licznik od kotwicy)
-│   ├── Contact.tsx                      # Netlify Forms (POST → /__forms.html) + RODO
+│   ├── Location.tsx
+│   ├── Interior.tsx
+│   ├── Plans.tsx
+│   ├── Pricing.tsx
+│   ├── Contact.tsx
 │   ├── Footer.tsx
 │   ├── SmoothScroll.tsx
-│   ├── ThemeProvider.tsx                # next-themes (klasa .dark)
+│   ├── ThemeProvider.tsx
 │   ├── Arrow.tsx
-│   ├── useSectionAnim.ts                # Wspólny hook GSAP dla sekcji
-│   ├── " StructuredData.tsx"            # JSON-LD (uwaga: spacja w nazwie pliku)
+│   ├── useSectionAnim.ts
+│   ├── " StructuredData.tsx"
 │   └── consent/
-│       ├── ConsentBanner.tsx            # Baner cookies (tylko gdy jest GA_ID)
-│       ├── ConsentLink.tsx              # Ponowne otwarcie ustawień zgody
-│       ├── Analytics.tsx                # GA4 ładowane dopiero po zgodzie
+│       ├── ConsentBanner.tsx
+│       ├── ConsentLink.tsx
+│       ├── Analytics.tsx
 │       ├── consentStore.ts
 │       └── useConsent.ts
 ├── public/
-│   ├── __forms.html                     # Schemat formularza do detekcji Netlify Forms
-│   ├── google03d00cf0bb91c15c.html      # Weryfikacja Google Search Console
+│   ├── __forms.html
+│   ├── google03d00cf0bb91c15c.html
 │   └── images/
-│       ├── house/                       # 11 zdjęć zewnętrznych (galeria używa 6)
-│       ├── interior/                    # 33 zdjęcia wnętrz (galeria używa 15)
-│       ├── plans/                       # 6 planów architektonicznych
+│       ├── house/
+│       ├── interior/
+│       ├── plans/
 │       └── landscape/beskidy.jpg
-├── netlify.toml                         # Build + cache headers + security headers
-├── next.config.js                       # strict mode, formaty AVIF/WebP
+├── netlify.toml
+├── next.config.js
 ├── postcss.config.js
 ├── eslint.config.mjs
 ├── .env.example
