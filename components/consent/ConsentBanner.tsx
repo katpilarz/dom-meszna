@@ -127,12 +127,16 @@ export default function ConsentBanner() {
           {copy.kicker}
         </div>
 
-        <h2
+        {/* 2.4.6 — deliberately not a heading. This panel is mounted ahead of
+            {children} in app/layout.tsx to fix its place in the tab order, so a
+            heading here would precede the page's own <h1> in the outline.
+            role="dialog" + aria-labelledby names the panel either way. */}
+        <p
           id="consent-title"
           className="display-serif text-2xl md:text-3xl italic mb-3"
         >
           {copy.title}
-        </h2>
+        </p>
 
         <p id="consent-body" className="text-sm leading-relaxed opacity-80">
           {copy.body}
@@ -142,12 +146,13 @@ export default function ConsentBanner() {
           <ul className="mt-6 space-y-4 border-t border-(--line) pt-6">
             <li className="flex items-start justify-between gap-6">
               <div>
-                <div className="display-serif text-lg">
+                {/* Not a heading, for the same reason as the panel title above. */}
+                <p className="display-serif text-lg">
                   {copy.categories.essential.title}
-                </div>
-                <div className="text-xs opacity-60 mt-1 leading-relaxed">
+                </p>
+                <p className="text-xs opacity-60 mt-1 leading-relaxed">
                   {copy.categories.essential.body}
-                </div>
+                </p>
               </div>
               <span className="label-mono text-[0.6rem] text-(--fg-muted) whitespace-nowrap pt-2">
                 {copy.categories.essential.state}
@@ -155,19 +160,29 @@ export default function ConsentBanner() {
             </li>
 
             <li className="flex items-start justify-between gap-6">
-              <label htmlFor="consent-analytics" className="cursor-pointer">
-                <div className="display-serif text-lg">
+              <div>
+                <label
+                  htmlFor="consent-analytics"
+                  className="display-serif text-lg cursor-pointer"
+                >
                   {copy.categories.analytics.title}
-                </div>
-                <div className="text-xs opacity-60 mt-1 leading-relaxed">
+                </label>
+                {/* Described, not named: inside the <label> this paragraph became
+                    part of the checkbox's accessible name and was read out in
+                    full on every focus. */}
+                <p
+                  id="consent-analytics-desc"
+                  className="text-xs opacity-60 mt-1 leading-relaxed"
+                >
                   {copy.categories.analytics.body}
-                </div>
-              </label>
+                </p>
+              </div>
               <input
                 id="consent-analytics"
                 type="checkbox"
                 checked={draft.analytics}
                 onChange={(e) => setDraft({ ...draft, analytics: e.target.checked })}
+                aria-describedby="consent-analytics-desc"
                 className="mt-2 size-5 shrink-0 cursor-pointer accent-(--accent)"
               />
             </li>

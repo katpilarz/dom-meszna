@@ -54,36 +54,43 @@ export default function Plans() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* 1.3.1 — a list of documentation tiles. The closing note is the last
+            tile in the same grid, so it stays inside the list rather than
+            breaking the layout to sit outside it. */}
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {plans.sheets.map((p) => (
-            <div key={p.title} className="plan-item group cursor-zoom-in">
-              <div
-                className="rounded-xs border border-(--line-strong) relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-(--accent)"
-                style={{
-                  padding: '1.5rem',
-                  aspectRatio: '5 / 7',
-                }}
-              >
-                <Image
-                  src={p.src}
-                  alt={`${p.title} — ${p.subtitle}`}
-                  fill
-                  className="object-contain transition-transform duration-700 ease-out group-hover:scale-125"
-                  style={{ filter: 'contrast(1.4)', padding: '1.5rem' }}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="mt-4 flex gap-2 flex-col sm:flex-row items-baseline justify-between">
-                <div className="display-serif text-xl italic">{p.title}</div>
-                <div className="label-mono text-(--fg-muted)">{p.subtitle}</div>
-              </div>
-            </div>
+            <li key={p.title} className="plan-item group cursor-zoom-in">
+              <figure>
+                <div
+                  className="rounded-xs border border-(--line-strong) relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-(--accent)"
+                  style={{
+                    padding: '1.5rem',
+                    aspectRatio: '5 / 7',
+                  }}
+                >
+                  {/* 1.1.1 — alt says what the drawing shows; the caption below
+                      names the sheet. The two used to be the same string. */}
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    className="object-contain transition-transform duration-700 ease-out group-hover:scale-125"
+                    style={{ filter: 'contrast(1.4)', padding: '1.5rem' }}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+                <figcaption className="mt-4 flex gap-2 flex-col sm:flex-row items-baseline justify-between">
+                  <h3 className="display-serif text-xl italic">{p.title}</h3>
+                  <span className="label-mono text-(--fg-muted)">{p.subtitle}</span>
+                </figcaption>
+              </figure>
+            </li>
           ))}
-          <div className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-xs border border-(--line-strong) max-w-3xl">
-            <div className="label-mono text-(--accent) mb-3">{plans.note.label}</div>
+          <li className="plans-note plan-item h-[96%] p-6 md:p-8 rounded-xs border border-(--line-strong) max-w-3xl">
+            <h3 className="label-mono text-(--accent) mb-3">{plans.note.label}</h3>
             <p className="text-sm leading-relaxed opacity-80">{plans.note.body}</p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
   );

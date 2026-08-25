@@ -106,7 +106,8 @@ export const header = {
 export const footer = {
   mega: 'Dom Meszna · Beskidy',
   privacyLink: { label: 'Polityka prywatności · RODO', href: '/polityka-prywatnosci' },
-  copyright: '© 2026 Wszelkie prawa zastrzeżone',
+  /** Split so the year can be wrapped in <time dateTime>. */
+  copyright: { year: '2026', rest: 'Wszelkie prawa zastrzeżone' },
 } as const;
 
 export const skipLink = { label: 'Przejdź do treści', href: '#tresc' } as const;
@@ -136,7 +137,6 @@ export const hero = {
 /* ── Marquee ──────────────────────────────────────────────────────────────── */
 
 export const marquee = {
-  label: 'Najważniejsze informacje o nieruchomości',
   pauseLabel: 'Zatrzymaj przewijanie informacji',
   resumeLabel: 'Wznów przewijanie informacji',
   items: [
@@ -158,7 +158,6 @@ export const marquee = {
 export type Stat = { label: string; value: string; unit: string; note?: string };
 
 export const stats = {
-  label: 'Najważniejsze fakty o nieruchomości',
   eyebrow: '01 — Najważniejsze fakty',
   eyebrowAside: 'Projekt Studio Atrium · oddany do użytku 2018',
   items: [
@@ -184,7 +183,7 @@ export const statement = {
 
 /* ── 02 · Gallery ─────────────────────────────────────────────────────────── */
 
-export type Photo = { src: string; label: string; tag: string; span: string; aspect: string };
+export type Photo = { src: string; alt: string; label: string; tag: string; span: string; aspect: string };
 
 export const gallery = {
   eyebrow: '02 — Galeria',
@@ -193,6 +192,7 @@ export const gallery = {
   photos: [
     {
       src: '/images/house/house-05.jpg',
+      alt: 'Bryła domu z czerwonym dachem i balkonami, widziana zza metalowego ogrodzenia od strony podjazdu z kostki brukowej.',
       label: 'Panorama od strony drogi',
       tag: '01',
       span: 'col-span-12',
@@ -200,6 +200,7 @@ export const gallery = {
     },
     {
       src: '/images/house/house-04.jpg',
+      alt: 'Trawiasta działka za kamiennym murem i ogrodzeniem, w tle drewniane domy i drzewa na zboczu.',
       label: 'Duża działka obok',
       tag: '02',
       span: 'col-span-12 md:col-span-8',
@@ -207,6 +208,7 @@ export const gallery = {
     },
     {
       src: '/images/house/house-07.jpg',
+      alt: 'Narożnik domu z białymi kolumnami podtrzymującymi balkony i elewacją z okładziną kamienną, obok iglaki i podjazd z kostki.',
       label: 'Kolumny i kamień',
       tag: '03',
       span: 'col-span-12 md:col-span-4',
@@ -214,6 +216,7 @@ export const gallery = {
     },
     {
       src: '/images/house/house-02.jpg',
+      alt: 'Widok z góry na podjazd, skalniak z iglakami i sąsiednie zabudowania u podnóża zalesionego zbocza.',
       label: 'Panorama na ogród',
       tag: '04',
       span: 'col-span-12',
@@ -221,6 +224,7 @@ export const gallery = {
     },
     {
       src: '/images/house/house-09.jpg',
+      alt: 'Zielona dolina latem — brzozy, ogrody i droga dojazdowa, w tle pasmo gór za mgłą.',
       label: 'Zieleń dookoła',
       tag: '05',
       span: 'col-span-12 md:col-span-8',
@@ -228,6 +232,7 @@ export const gallery = {
     },
     {
       src: '/images/house/house-10.jpg',
+      alt: 'Drewniany taras z metalową balustradą oplecioną winoroślą, z widokiem na dolinę i odległe wzgórza.',
       label: 'Przestronny taras',
       tag: '06',
       span: 'col-span-12 md:col-span-4',
@@ -383,7 +388,7 @@ export const location = {
 
 /* ── 06 · Interior ────────────────────────────────────────────────────────── */
 
-export type Interior = { src: string; label: string; span: string; aspect: string };
+export type Interior = { src: string; alt: string; label: string; span: string; aspect: string };
 
 export const interior = {
   eyebrow: '06 — Wnętrza',
@@ -397,48 +402,56 @@ export const interior = {
     // Strefa dzienna — parter
     {
       src: '/images/interior/interior-30.jpg',
+      alt: 'Otwarte pomieszczenie dzienne z owalnym podwieszanym sufitem, telewizorem na ścianie i przeszklonymi drzwiami tarasowymi za firaną.',
       label: 'Strefa wypoczynkowa',
       span: 'col-span-12',
       aspect: '16/9',
     },
     {
       src: '/images/interior/interior-42.jpg',
+      alt: 'Skórzane fotele i sofa przy ścianie z kamiennej okładziny, obok przejście do korytarza i murowany kominek z drewnianym gzymsem.',
       label: 'Otwarta strefa dzienna z kominkiem',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-31.jpg',
+      alt: 'Wolnostojący kominek z białym okapem, za nim otwarta kuchnia w ciemnym drewnie i długi dębowy stół z krzesłami.',
       label: 'Salon z kominkiem',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-07.jpg',
+      alt: 'Kuchnia w ciemnym drewnie z płytą gazową, piekarnikiem i stalową lodówką, obok wyspa z drewnianym blatem i duża roślina doniczkowa.',
       label: 'Otwarta kuchnia',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-41.jpg',
+      alt: 'Kominek z wkładem żeliwnym i białym okapem na tle kamiennej okładziny, z ramkami i roślinami na drewnianej półce.',
       label: 'Kominek z bliska',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-46.jpg',
+      alt: 'Jasny salon z dwoma skórzanymi fotelami i sofą, firaną w oknie tarasowym i owalnym podwieszanym sufitem.',
       label: 'Strefa wypoczynkowa dzienna',
       span: 'col-span-12',
       aspect: '16/9',
     },
     {
       src: '/images/interior/interior-47.jpg',
+      alt: 'Dębowy stół na sześć osób pod podwieszanym sufitem, między dwoma oknami z firanami, na ścianie obraz z kwiatami.',
       label: 'Jadalnia',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-48.jpg',
+      alt: 'Widok znad stołu jadalnego na część wypoczynkową z fotelami, kominek i przejście do kuchni.',
       label: 'Otwarty salon',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
@@ -446,42 +459,49 @@ export const interior = {
     // Poddasze
     {
       src: '/images/interior/interior-51.jpg',
+      alt: 'Sypialnia ze skórzanym łóżkiem kontynentalnym, naklejkami z motylami i kwiatami na ścianie i wysokim oknem tarasowym z granatowymi zasłonami.',
       label: 'Główna sypialnia',
       span: 'col-span-12',
       aspect: '16/9',
     },
     {
       src: '/images/interior/interior-17.jpg',
+      alt: 'Pokój na poddaszu z dwoma oknami połaciowymi, turkusową sofą narożną i grzejnikiem pod skosem.',
       label: 'Pokój dziecięcy — widok od okna',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-18.jpg',
+      alt: 'Biurko z krzesłem i tablicą korkową pod oknem dachowym, obok regał z książkami, zabawkami i pluszakami.',
       label: 'Pokój dziecięcy — strefa nauki',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
       src: '/images/interior/interior-24.jpg',
+      alt: 'Granatowa sofa narożna pod skosem poddasza, dwa okna dachowe z widokiem na las i biurko w rogu.',
       label: 'Pokój nastolatki',
       span: 'col-span-12',
       aspect: '16/9',
     },
     {
       src: '/images/interior/interior-27.jpg',
-      label: 'Łazienka główna — strefa wanny',
-      span: 'col-span-12 md:col-span-6',
-      aspect: '4/3',
-    },
-    {
-      src: '/images/interior/interior-28.jpg',
+      alt: 'Szafka z umywalką i lustrem pod skosem poddasza, obok okno dachowe, wisząca szafka i bidet; jasne płytki w drewnopodobnym wzorze.',
       label: 'Łazienka główna — umywalka i lustro',
       span: 'col-span-12 md:col-span-6',
       aspect: '4/3',
     },
     {
+      src: '/images/interior/interior-28.jpg',
+      alt: 'Narożna wanna z hydromasażem pod skosem dachu, obok przeszklona kabina prysznicowa, grzejnik drabinkowy i duża roślina doniczkowa.',
+      label: 'Łazienka główna — strefa wanny',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
       src: '/images/interior/interior-29.jpg',
+      alt: 'Umywalka z lustrem w drewnianej ramie, bidet i wisząca toaleta, na półce storczyki; ściany w płytkach z motywem liści.',
       label: 'Łazienka główna — widok całości',
       span: 'col-span-12',
       aspect: '16/9',
@@ -500,26 +520,31 @@ export const plans = {
   sheets: [
     {
       src: '/images/plans/plan-site.jpg',
+      alt: 'Mapa sytuacyjna: obrys budynku wrysowany w granice działki przy ul. Energetyków, z wymiarami, sąsiednimi parcelami i drogą dojazdową.',
       title: 'Sytuacja',
       subtitle: 'Plan zagospodarowania · Meszna',
     },
     {
       src: '/images/plans/plan-przekroj.jpg',
+      alt: 'Rysunek techniczny: pionowe przekroje A-A i C-C przez wszystkie kondygnacje, z rzędnymi wysokości, konstrukcją dachu i biegami schodów.',
       title: 'Przekrój',
       subtitle: 'Przekroje A-A i C-C · spadek dachu 39°',
     },
     {
       src: '/images/plans/plan-parter.jpg',
+      alt: 'Rzut parteru z wymiarami, ścianami nośnymi, oznaczeniami pomieszczeń i stolarki oraz zmianami naniesionymi na czerwono.',
       title: 'Parter',
       subtitle: 'Otwarta przestrzeń',
     },
     {
       src: '/images/plans/plan-poddasze.jpg',
+      alt: 'Rzut poddasza z wymiarami, pomieszczeniami pod skosami, dwoma balkonami i oznaczeniami więźby dachowej.',
       title: 'Poddasze',
       subtitle: 'Pokoje pod skosami · balkon · druga łazienka',
     },
     {
       src: '/images/plans/plan-pietro.jpg',
+      alt: 'Rzut najniższej kondygnacji z wymiarami, ścianami fundamentowymi, przewodem nawiewnym do kominka i zmianami naniesionymi na czerwono.',
       title: 'Poziom 0',
       subtitle: 'Garaż · pomieszczenia gospodarcze',
     },

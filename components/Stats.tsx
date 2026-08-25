@@ -46,45 +46,54 @@ export default function Stats() {
   });
 
   return (
+    // 2.4.6 — labelled by the eyebrow that is already on screen, rather than by
+    // an aria-label naming the section with words no sighted visitor ever sees.
+    // Promoting it to <h2> also puts the property's headline figures within
+    // reach of heading navigation, which they were not before.
     <section
-      aria-label={stats.label}
+      aria-labelledby="dom-title"
       ref={root}
       id="dom"
       className="py-24 md:py-32 relative bg-(--bg-alt)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-16">
-          <div className="label-mono opacity-60">{stats.eyebrow}</div>
+          <h2 id="dom-title" className="label-mono opacity-60">
+            {stats.eyebrow}
+          </h2>
           <div className="label-mono opacity-60 hidden md:block">
             {stats.eyebrowAside}
           </div>
         </div>
 
-        <div
+        {/* 1.3.1 — six name/value pairs, which is what <dl> is for. As nested
+            divs the pairing existed only in the visual layout. The wrapper div
+            around each dt/dd group is valid inside <dl> and keeps the grid. */}
+        <dl
           className="stats-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px border-y border-(--line-strong) bg-(--bg-alt)"
           style={{ background: 'var(--line-strong)' }}
         >
           {stats.items.map((s) => (
             <div key={s.label} className="stat-item bg-(--bg-alt) p-6 md:p-10">
-              <div className="label-mono text-(--fg-muted) mb-3 text-[0.6rem]">
+              <dt className="label-mono text-(--fg-muted) mb-3 text-[0.6rem]">
                 {s.label}
-              </div>
-              <div className="display-serif text-3xl md:text-5xl">
+              </dt>
+              <dd className="display-serif text-3xl md:text-5xl">
                 <span className="spec-number" data-value={s.value}>
                   {s.value}
                 </span>
                 {s.unit && (
                   <span className="text-base text-(--fg-muted) ml-1">{s.unit}</span>
                 )}
-              </div>
+              </dd>
               {s.note && (
-                <div className="label-mono text-(--fg-muted) mt-2 text-[0.55rem] leading-snug">
+                <dd className="label-mono text-(--fg-muted) mt-2 text-[0.55rem] leading-snug">
                   {s.note}
-                </div>
+                </dd>
               )}
             </div>
           ))}
-        </div>
+        </dl>
       </div>
     </section>
   );

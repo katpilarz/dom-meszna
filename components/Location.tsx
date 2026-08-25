@@ -203,15 +203,21 @@ export default function Location() {
           </div>
 
           <div className="col-span-12 lg:col-span-5 lg:pl-10">
-            <div className="label-mono opacity-60 mb-4">{location.nearbyLabel}</div>
-            <div className="nearby-list">
+            <h3 className="label-mono opacity-60 mb-4">{location.nearbyLabel}</h3>
+            {/* 1.3.1 — twelve destinations numbered 01…12 on screen: an ordered
+                list, so the numbering and the count come from the element
+                rather than from a hand-formatted string. */}
+            <ol className="nearby-list">
               {location.nearby.map((item, i) => (
-                <div
+                <li
                   key={item.name}
                   className="nearby-row flex items-center justify-between py-5 border-b border-(--line) group"
                 >
                   <div className="flex items-baseline gap-4">
-                    <span className="label-mono text-(--fg-muted) text-[0.65rem]">
+                    <span
+                      className="label-mono text-(--fg-muted) text-[0.65rem]"
+                      aria-hidden="true"
+                    >
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div>
@@ -222,9 +228,9 @@ export default function Location() {
                     </div>
                   </div>
                   <div className="label-mono text-(--accent)">{item.distance}</div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </div>
       </div>

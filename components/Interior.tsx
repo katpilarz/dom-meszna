@@ -89,31 +89,35 @@ export default function Interior() {
           </p>
         </div>
 
-        <div className="grid grid-cols-12 gap-4 md:gap-6">
+        {/* 1.3.1 — fifteen equivalent items; see Gallery.tsx. */}
+        <ul className="grid grid-cols-12 gap-4 md:gap-6">
           {interior.photos.map((p, i) => (
-            <figure key={p.src} className={`interior-item ${p.span}`}>
-              <div
-                className="relative overflow-hidden"
-                style={{ aspectRatio: p.aspect }}
-              >
-                <Image
-                  src={p.src}
-                  alt={p.label}
-                  fill
-                  className="object-cover img-warm"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <figcaption className="mt-3 flex items-baseline justify-between">
-                <div className="display-serif text-xl italic">{p.label}</div>
-                <div className="label-mono text-(--fg-muted)">
-                  {String(i + 1).padStart(2, '0')} /{' '}
-                  {String(interior.photos.length).padStart(2, '0')}
+            <li key={p.src} className={`interior-item ${p.span}`}>
+              <figure>
+                <div
+                  className="relative overflow-hidden"
+                  style={{ aspectRatio: p.aspect }}
+                >
+                  {/* 1.1.1 — alt describes, caption names. */}
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    className="object-cover img-warm"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
-              </figcaption>
-            </figure>
+                <figcaption className="mt-3 flex items-baseline justify-between">
+                  <span className="display-serif text-xl italic">{p.label}</span>
+                  <span className="label-mono text-(--fg-muted)" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')} /{' '}
+                    {String(interior.photos.length).padStart(2, '0')}
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
