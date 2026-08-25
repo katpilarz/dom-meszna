@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * One-way latch between the preloader and the hero entry animation.

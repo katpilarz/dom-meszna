@@ -13,7 +13,7 @@
   --color-bone: #f4f1ea;
   --color-ink: #0e0e0c;
   --color-sage: #6b7a5a;
-  --color-gold: #b8935a;
+  --color-gold: #8a5722;
   --color-mist: #e8e4dc;
   --color-coal: #1a1a18;
 
@@ -46,10 +46,20 @@
   --bg-alt: #e8e4dc;
   --fg: #0e0e0c;
   --fg-muted: #5a5a52;
-  --accent: #b8935a;
+  /* Warm burnished gold. Same contrast headroom as the flat brown it replaces
+     (5.37:1 on --bg, 4.78:1 on --bg-alt — AA for body text at any size, and
+     above the 3:1 that 1.4.11 asks of the focus ring), but half again as
+     saturated and sitting in the same hue family as the dark-theme gold, so
+     the two themes read as one palette. */
+  --accent: #8a5722;
   --sage: #6b7a5a;
   --line: rgba(14, 14, 12, 0.12);
   --line-strong: rgba(14, 14, 12, 0.2);
+  /* Hero and Showcase set their type over a darkened photograph, so their
+     surface is dark in both themes. They need the light-on-dark gold, not the
+     theme accent — in light theme --accent is deliberately dark and would
+     disappear into the image. Identical in both blocks on purpose. */
+  --accent-on-dark: #d4a76a;
 }
 
 .dark {
@@ -61,6 +71,7 @@
   --sage: #8a9978;
   --line: rgba(244, 241, 234, 0.12);
   --line-strong: rgba(244, 241, 234, 0.22);
+  --accent-on-dark: #d4a76a;
 }
 
 * {
@@ -123,6 +134,10 @@ body {
   font-weight: 300;
   letter-spacing: -0.02em;
   line-height: 0.95;
+  /* 1.4.12 Text Spacing. Display type is set in vw units, so a visitor's
+     spacing stylesheet can make a single long Polish word wider than a 320 px
+     viewport. Breaking inside the word is far better than clipping it. */
+  overflow-wrap: break-word;
 }
 
 .label-mono {
@@ -140,6 +155,29 @@ body {
 }
 .marquee-track {
   animation: marquee 40s linear infinite;
+}
+
+/* 2.2.2 Pause, Stop, Hide — driven by the toggle in Marquee.tsx. */
+.marquee-track[data-paused='true'] {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 2.2.2 / 2.3.3 — a 40s infinite scroll is exactly the motion this query is
+     asking us to drop. */
+  .marquee-track {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Reveal classes used by GSAP */
@@ -174,8 +212,43 @@ a, button { cursor: pointer; }
 
 /* Focus styles */
 :focus-visible {
-  outline: 1px solid var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* C-1 — 2.4.11 Focus Not Obscured. The consent banner is fixed to the bottom of
+   the viewport, so without reserved space it covers whatever has focus down
+   there — including the contact form's submit button. ConsentBanner publishes
+   its own measured height here while it is on screen. */
+body {
+  padding-bottom: var(--consent-inset, 0px);
+}
+
+html {
+  scroll-padding-bottom: calc(var(--consent-inset, 0px) + 1rem);
+  /* The header is fixed, so anchor targets would otherwise land underneath it. */
+  scroll-padding-top: 6rem;
+}
+
+/* M-8 — 2.4.1 Bypass Blocks. Visible only while focused. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--fg);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
 }
 
 /* ── Preloader ──────────────────────────────────────────────────────────────

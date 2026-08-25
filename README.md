@@ -30,10 +30,19 @@ dom-meszna/
 │   ├── sitemap.ts
 │   └── polityka-prywatnosci/
 │       └── page.tsx
+├── data/
+│   └── site.ts               # All site copy, figures, image lists, JSON-LD
+├── hooks/
+│   ├── useSectionAnim.ts     # Motion-gated GSAP scope + useIsomorphicEffect
+│   └── useConsent.ts
+├── utils/
+│   ├── motion.ts             # MOTION media queries, revealBatch, ScrollTrigger
+│   ├── introGate.ts          # Preloader → hero latch
+│   ├── consentStore.ts       # useSyncExternalStore-backed consent record
+│   └── analytics.ts          # GA id + CONSENT_REQUIRED
 ├── components/
 │   ├── Header.tsx
 │   ├── Preloader.tsx
-│   ├── introGate.ts
 │   ├── Hero.tsx
 │   ├── Marquee.tsx
 │   ├── Stats.tsx
@@ -51,14 +60,15 @@ dom-meszna/
 │   ├── SmoothScroll.tsx
 │   ├── ThemeProvider.tsx
 │   ├── Arrow.tsx
-│   ├── useSectionAnim.ts
-│   ├── " StructuredData.tsx"
+│   ├── StructuredData.tsx
 │   └── consent/
 │       ├── ConsentBanner.tsx
 │       ├── ConsentLink.tsx
-│       ├── Analytics.tsx
-│       ├── consentStore.ts
-│       └── useConsent.ts
+│       └── Analytics.tsx
+├── tests/
+│   ├── playwright.config.ts
+│   ├── specs/                # Accessibility & quality suite (WCAG 2.2 AA)
+│   └── test-2026-08-25.md    # Dated audit report
 ├── public/
 │   ├── __forms.html
 │   ├── google03d00cf0bb91c15c.html
@@ -79,6 +89,46 @@ dom-meszna/
 
 ---
 
+## Where content lives
+
+Every user-facing string, figure, image path and list is in
+[data/site.ts](data/site.ts). Components hold layout, motion and accessibility
+plumbing only — to change copy or a photo caption, edit the data file and
+nothing else. Figures quoted in more than one place (area, price, room count)
+come from the `facts` object, so the hero, the stats grid, the JSON-LD and the
+OG image cannot drift apart.
+
+Headings that mix roman and italic are stored as parts (`lead` / `mid` /
+`accent`), because the words belong to the data file and the markup belongs to
+the component.
+
+---
+
+## Accessibility
+
+The site targets **WCAG 2.2 Level AA**. The suite in [tests/](tests/) covers
+both routes, both themes, five viewports, both `prefers-reduced-motion` states
+and a no-JavaScript pass.
+
+```bash
+npx playwright test --config tests/playwright.config.ts
+```
+
+The consent banner only renders when `NEXT_PUBLIC_GA_ID` is set, so to exercise
+those specs start the dev server as
+`NEXT_PUBLIC_GA_ID=G-TEST1234567 npm run dev` first.
+
+Two theme tokens carry accessibility intent worth knowing about before editing
+[app/globals.css](app/globals.css):
+
+- `--accent` must keep **4.5:1** against both `--bg` and `--bg-alt`. It is also
+  the focus-ring colour, which 1.4.11 holds to 3:1.
+- `--accent-on-dark` is for type set over the darkened hero and showcase
+  photographs. That surface is dark in both themes, so it does **not** flip with
+  the theme.
+
+---
+
 ## Property data
 
 - **Price:** 1 899 000 zł (4 720 zł/m²) · no agent commission
@@ -89,25 +139,10 @@ dom-meszna/
 
 ---
 
-## Analytics and consent
-
-Analytics is **off by default**. Without `NEXT_PUBLIC_GA_ID` the site makes no
-third-party requests at all and the consent banner stays hidden — there is
-nothing to consent to.
-
-```bash
-cp .env.example .env.local
-# NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  → enables the banner and, once accepted, GA4
-```
-
-The Google script is loaded only after active consent ([components/consent/Analytics.tsx](components/consent/Analytics.tsx)).
-
----
-
 ## Contact form
 
 The form is handled by **Netlify Forms**, which needs the form schema to exist as
-static HTML — hence [public/__forms.html](public/__forms.html) (required by
+static HTML — hence [public/\_\_forms.html](public/__forms.html) (required by
 `@netlify/plugin-nextjs` v5+). The user-facing form in
 [components/Contact.tsx](components/Contact.tsx) `POST`s to `/__forms.html` via
 `fetch`. Changing the form fields means updating **both** files.
@@ -122,4 +157,7 @@ npm run dev          # Development server
 npm run build        # Production build
 npm start            # Run the production build locally
 npm run lint         # ESLint (flat config)
+npx tsc --noEmit     # Type check
+
+npx playwright test --config tests/playwright.config.ts   # Accessibility suite
 ```

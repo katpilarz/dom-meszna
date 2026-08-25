@@ -1,6 +1,6 @@
 interface ArrowProps {
   size?: number;
-  direction?: 'right' | 'left';
+  direction?: "right" | "left";
   className?: string;
 }
 
@@ -8,10 +8,15 @@ interface ArrowProps {
  * Hand-drawn editorial arrow.
  * Native direction: right. For 'left', mirrors horizontally via CSS scaleX.
  */
-export default function Arrow({ size = 28, direction = 'right', className = '' }: ArrowProps) {
+export default function Arrow({
+  size = 28,
+  direction = "right",
+  className = "",
+}: ArrowProps) {
   const width = size;
   const height = Math.round(size * (41 / 49));
-  const mirrorStyle = direction === 'left' ? { transform: 'scaleX(-1)' } : undefined;
+  const mirrorStyle =
+    direction === "left" ? { transform: "scaleX(-1)" } : undefined;
 
   return (
     <svg

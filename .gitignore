@@ -9,3 +9,6 @@ out/
 
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
+
+tests/.artifacts/
+tests/screenshots/

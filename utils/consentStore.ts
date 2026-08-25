@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Consent state lives outside React so it can be read by non-component code
@@ -7,7 +7,7 @@
  * server cannot know a visitor's choice, so it renders as "undecided".
  */
 
-export type OptionalCategory = 'analytics';
+export type OptionalCategory = "analytics";
 export type ConsentChoices = Record<OptionalCategory, boolean>;
 
 export type ConsentRecord = {
@@ -19,7 +19,7 @@ export type ConsentRecord = {
 };
 
 export const CONSENT_VERSION = 1;
-const STORAGE_KEY = 'dm:consent';
+const STORAGE_KEY = "dm:consent";
 
 /** Nothing optional is on until the visitor turns it on. No pre-ticked boxes. */
 export const DEFAULT_CHOICES: ConsentChoices = { analytics: false };
@@ -34,7 +34,7 @@ function read(): ConsentRecord | null {
     const parsed = JSON.parse(raw) as ConsentRecord;
     // A record written against older purposes is not consent for the new ones.
     if (parsed?.version !== CONSENT_VERSION) return null;
-    if (typeof parsed.choices?.analytics !== 'boolean') return null;
+    if (typeof parsed.choices?.analytics !== "boolean") return null;
     return parsed;
   } catch {
     return null;
@@ -46,14 +46,14 @@ function emit() {
 }
 
 export function subscribe(onChange: () => void) {
-  if (listeners.size === 0 && typeof window !== 'undefined') {
-    window.addEventListener('storage', onStorage);
+  if (listeners.size === 0 && typeof window !== "undefined") {
+    window.addEventListener("storage", onStorage);
   }
   listeners.add(onChange);
   return () => {
     listeners.delete(onChange);
-    if (listeners.size === 0 && typeof window !== 'undefined') {
-      window.removeEventListener('storage', onStorage);
+    if (listeners.size === 0 && typeof window !== "undefined") {
+      window.removeEventListener("storage", onStorage);
     }
   };
 }

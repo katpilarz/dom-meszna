@@ -1,7 +1,8 @@
 'use client';
 
 import Script from 'next/script';
-import { GA_MEASUREMENT_ID, useConsent } from './useConsent';
+import { useConsent } from '@/hooks/useConsent';
+import { GA_MEASUREMENT_ID } from '@/utils/analytics';
 
 /**
  * Analytics is mounted only once consent exists, so nothing is fetched from

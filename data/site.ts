@@ -1,0 +1,745 @@
+/**
+ * Single source of truth for everything the visitor reads.
+ *
+ * Components in this project are layout and motion only — every string, figure,
+ * image path and list lives here. That keeps copy edits (which happen often on a
+ * listing page) out of files that carry GSAP timelines and accessibility
+ * plumbing, and it means the same figure cannot drift between the hero, the
+ * stats grid, the JSON-LD and the OG image.
+ *
+ * Headings that mix roman and italic are stored as parts rather than as a single
+ * string: the words belong here, the markup belongs in the component.
+ */
+
+/* ── Identity ─────────────────────────────────────────────────────────────── */
+
+export const site = {
+  name: 'Dom w Mesznej',
+  tagline: 'Bez pośredników',
+  url: 'https://www.dom-meszna.pl',
+  locale: 'pl_PL',
+  lang: 'pl',
+  email: 'dommeszna@proton.me',
+  author: 'PAISAK4U',
+  architect: 'Studio Atrium, Bielsko-Biała',
+  address: {
+    street: 'ul. Energetyków',
+    locality: 'Meszna',
+    region: 'śląskie',
+    postalCode: '43-365',
+    country: 'PL',
+    /** Rendered under the street line in the contact block. */
+    detail: '43-365 Wilkowice · powiat bielski · województwo śląskie',
+  },
+  geo: { latitude: 49.7393, longitude: 19.0473, label: '49°48′N · 19°02′E' },
+} as const;
+
+/** Every figure quoted on the site. Nothing re-types these numbers by hand. */
+export const facts = {
+  totalArea: 402.35,
+  usableArea: 170.75,
+  plotArea: 1600,
+  plotAreaWithRoad: 1800,
+  rooms: 7,
+  bathrooms: 2,
+  floors: 3,
+  yearBuilt: 2018,
+  price: 1899000,
+  /** What agencies previously listed it for — the anchor the counter starts from. */
+  priceAnchor: 2250000,
+  pricePerSqm: 4720,
+  currency: 'PLN',
+} as const;
+
+/* ── Metadata ─────────────────────────────────────────────────────────────── */
+
+export const meta = {
+  titleDefault: 'Dom w Mesznej — sprzedaż bez pośredników',
+  titleTemplate: '%s — Dom w Mesznej',
+  description:
+    'Dom 402 m² w Mesznej u stóp Beskidu Śląskiego. 170,75 m² powierzchni użytkowej, działka 1 600 m², 7 pokoi, trzy kondygnacje. Oddany do użytku w 2018 r. Projekt Studio Atrium. Sprzedaż bez pośredników.',
+  keywords: [
+    'dom na sprzedaż',
+    'Meszna',
+    'Wilkowice',
+    'Beskid Śląski',
+    'Bielsko-Biała',
+    'Szczyrk',
+    'nieruchomość Beskidy',
+    'dom bez pośredników',
+    'sprzedaż bezpośrednia',
+  ],
+  openGraph: {
+    title: 'Dom w Mesznej — sprzedaż bez pośredników',
+    description:
+      'Dom 402 m² u stóp Beskidu Śląskiego. Trzy kondygnacje, działka 1 600 m², projekt Studio Atrium 2018. Sprzedaż bez pośredników, bez prowizji.',
+  },
+  twitter: {
+    title: 'Dom w Mesznej — sprzedaż bez pośredników',
+    description: 'Dom 402 m² u stóp Beskidu Śląskiego. Bez pośredników, bez prowizji.',
+  },
+} as const;
+
+/** Copy baked into the generated OG image. */
+export const ogImage = {
+  alt: 'Dom w Mesznej — sprzedaż bez pośredników',
+  headlineLeft: 'Dom z',
+  headlineItalicAccent: 'widokiem',
+  headlineRightPrefix: 'na',
+  headlineItalicEnd: 'Beskidy.',
+  location: 'MESZNA · BESKID ŚLĄSKI',
+  facts: '402 m² · 1 600 m² działki · 1 899 000 zł',
+  url: 'www.dom-meszna.pl',
+} as const;
+
+/* ── Chrome ───────────────────────────────────────────────────────────────── */
+
+export const header = {
+  logoLabel: 'Dom w Mesznej — strona główna',
+  navLabel: 'Nawigacja główna',
+  wordmark: 'Dom w Mesznej',
+  wordmarkSub: 'Bez pośredników',
+  cta: { label: 'Umów oglądanie', href: '/#kontakt' },
+  themeToggleLabel: 'Przełącz motyw',
+} as const;
+
+export const footer = {
+  mega: 'Dom Meszna · Beskidy',
+  privacyLink: { label: 'Polityka prywatności · RODO', href: '/polityka-prywatnosci' },
+  copyright: '© 2026 Wszelkie prawa zastrzeżone',
+} as const;
+
+export const skipLink = { label: 'Przejdź do treści', href: '#tresc' } as const;
+
+export const preloader = {
+  word: 'Dom w Mesznej',
+  caption: 'Meszna · Beskid Śląski',
+} as const;
+
+/* ── 00 · Hero ────────────────────────────────────────────────────────────── */
+
+export const hero = {
+  image: {
+    src: '/images/house/house-01.jpg',
+    alt: 'Dom w Mesznej — elewacja południowa',
+  },
+  labelPrimary: 'Oferta bezpośrednia',
+  labelSecondary: 'Meszna · Wilkowice · Śląskie',
+  /** Each entry is one masked line of the <h1>. */
+  headline: [
+    [{ text: 'Dom z widokiem' }],
+    [{ text: 'na ' }, { text: 'Beskidy.', italic: true }],
+  ] as ReadonlyArray<ReadonlyArray<{ text: string; italic?: boolean }>>,
+  sub: '402 m² · 1 600 m² działki · trzy kondygnacje · widok na Beskid Śląski. 300 m do lasu, 600 m do szlaków na Klimczok.',
+} as const;
+
+/* ── Marquee ──────────────────────────────────────────────────────────────── */
+
+export const marquee = {
+  label: 'Najważniejsze informacje o nieruchomości',
+  pauseLabel: 'Zatrzymaj przewijanie informacji',
+  resumeLabel: 'Wznów przewijanie informacji',
+  items: [
+    'Beskid Śląski',
+    '170 m² pow. użytkowej · 7 pokoi',
+    '300 m do lasu',
+    'Oddany do użytku 2018',
+    'Działka 1 600 m²',
+    'Bielsko-Biała 10 km',
+    '600 m do szlaków na Klimczok',
+    'Szczyrk 7 km',
+    'Bez pośredników',
+    '402 m² pow. całkowitej',
+  ],
+} as const;
+
+/* ── 01 · Stats ───────────────────────────────────────────────────────────── */
+
+export type Stat = { label: string; value: string; unit: string; note?: string };
+
+export const stats = {
+  label: 'Najważniejsze fakty o nieruchomości',
+  eyebrow: '01 — Najważniejsze fakty',
+  eyebrowAside: 'Projekt Studio Atrium · oddany do użytku 2018',
+  items: [
+    { label: 'Powierzchnia całkowita', value: '402,35', unit: 'm²' },
+    { label: 'Powierzchnia użytkowa', value: '170,75', unit: 'm²' },
+    {
+      label: 'Działka',
+      value: '1600',
+      unit: 'm²',
+      note: '1 800 m² z udziałem w drodze dojazdowej',
+    },
+    { label: 'Pokoje', value: '7', unit: '' },
+    { label: 'Kondygnacje', value: '3', unit: '' },
+    { label: 'Oddanie do użytku', value: '2018', unit: '' },
+  ] satisfies Stat[],
+} as const;
+
+/* ── Statement ────────────────────────────────────────────────────────────── */
+
+export const statement = {
+  text: '402 m² powierzchni całkowitej. 170 m² powierzchni użytkowej. 1600 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.',
+} as const;
+
+/* ── 02 · Gallery ─────────────────────────────────────────────────────────── */
+
+export type Photo = { src: string; label: string; tag: string; span: string; aspect: string };
+
+export const gallery = {
+  eyebrow: '02 — Galeria',
+  eyebrowAside: 'Perspektywa',
+  headline: { lead: 'Architektura', mid: 'wpisana w', accent: 'krajobraz.' },
+  photos: [
+    {
+      src: '/images/house/house-05.jpg',
+      label: 'Panorama od strony drogi',
+      tag: '01',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/house/house-04.jpg',
+      label: 'Duża działka obok',
+      tag: '02',
+      span: 'col-span-12 md:col-span-8',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/house/house-07.jpg',
+      label: 'Kolumny i kamień',
+      tag: '03',
+      span: 'col-span-12 md:col-span-4',
+      aspect: '3/4',
+    },
+    {
+      src: '/images/house/house-02.jpg',
+      label: 'Panorama na ogród',
+      tag: '04',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/house/house-09.jpg',
+      label: 'Zieleń dookoła',
+      tag: '05',
+      span: 'col-span-12 md:col-span-8',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/house/house-10.jpg',
+      label: 'Przestronny taras',
+      tag: '06',
+      span: 'col-span-12 md:col-span-4',
+      aspect: '3/4',
+    },
+  ] satisfies Photo[],
+} as const;
+
+/* ── 03 · Potential ───────────────────────────────────────────────────────── */
+
+export const potential = {
+  eyebrow: '03 — Możliwości',
+  eyebrowAside: 'Stan: dobry · do indywidualnego dostosowania',
+  headline: { lead: 'Gotowy do życia.', mid: 'Otwarty na', accent: 'Twoje zmiany' },
+  intro:
+    'Dom umeblowany, w dobrym stanie technicznym — można wprowadzić się od razu. Wymaga remontu instalacji ogrzewania i odświeżenia wnętrz, co daje szeroką możliwość przemodelowania go pod własne potrzeby, bez konieczności budowania od zera.',
+  opportunities: [
+    {
+      n: '01',
+      title: 'Solidna baza',
+      body: 'Dom oddany do użytku w 2018 — keramzyt, wełna 20 cm, ceramiczna dachówka na pełnym deskowaniu. Konstrukcja, której nie da się dziś tanio odtworzyć.',
+    },
+    {
+      n: '02',
+      title: 'Mieszkalny od razu',
+      body: 'Dom umeblowany, w dobrym stanie technicznym, gotowy do wprowadzenia. Remont i odświeżenie możesz zaplanować na własnych warunkach, w swoim tempie.',
+    },
+    {
+      n: '03',
+      title: 'Zakres remontu',
+      body: 'Wymiana instalacji ogrzewania (obecnie węglowe) i odświeżenie wnętrz — pozostałe elementy są w porządku. Zakres jasny, kosztorys przewidywalny.',
+    },
+    {
+      n: '04',
+      title: 'Wnętrze pod Ciebie',
+      body: 'Odświeżenie to szansa, by układ funkcjonalny, kolory i materiały dopasować dokładnie do swojego stylu życia — bez kompromisów na cudze gusta.',
+    },
+    {
+      n: '05',
+      title: 'Cena z marginesem',
+      body: '1 899 000 zł za 402 m² i 1 600 m² działki. Cena uwzględnia zakres prac — zostawia realny budżet na ich przeprowadzenie.',
+    },
+    {
+      n: '06',
+      title: 'Lokalizacja premium',
+      body: 'Działki w Mesznej i okolicach Szczyrku zyskują na wartości od lat. Po remoncie — naturalny wzrost rynkowy.',
+    },
+  ],
+  quote: {
+    label: '✦ Dla kogo jest ten dom',
+    body: 'Dla kogoś, kto szuka prawdziwego domu na lata — z miejscem dla rodziny, ogrodem i widokiem na góry. Z perspektywą remontu, który sprawi, że wnętrze stanie się naprawdę Twoje.',
+  },
+} as const;
+
+/* ── Showcase (full-bleed interlude on the home page) ─────────────────────── */
+
+export const showcase = {
+  src: '/images/house/house-03.jpg',
+  alt: 'Bryła domu — detal architektoniczny',
+  caption: 'Architektura',
+  position: 'top',
+  headline: { lead: 'Kolumny, kamień.', accent: 'Klasyka', tail: 'która się broni' },
+  accent:
+    'Projekt: Studio Atrium, Bielsko-Biała. Keramzyt, wełna 20 cm, ceramiczna dachówka.',
+} as const;
+
+/* ── 04 · Floorplan ───────────────────────────────────────────────────────── */
+
+export type Floor = { level: string; title: string; subtitle: string; rooms: string[] };
+
+export const floorplan = {
+  eyebrow: '04 — Układ kondygnacji',
+  eyebrowAside: '402,35 m² · 170,75 m² powierzchni użytkowej',
+  headline: { lead: 'Trzy poziomy.', mid: 'Jedno', accent: 'przemyślane wnętrze.' },
+  levelLabel: 'Kondygnacja',
+  floors: [
+    {
+      level: '01',
+      title: 'Poziom 0',
+      subtitle: 'Strefa techniczna i wejściowa',
+      rooms: [
+        'Garaż',
+        'Wiatrołap',
+        'Przedpokój',
+        'Pomieszczenie gospodarcze / Pokój',
+        'Kotłownia',
+        'Pomieszczenie gospodarcze',
+      ],
+    },
+    {
+      level: '02',
+      title: 'Parter',
+      subtitle: 'Strefa dzienna z wyjściem na taras',
+      rooms: [
+        'Salon z otwartą kuchnią',
+        'Wyjście na ogród i taras',
+        'Spiżarnia',
+        'Dwa pokoje',
+        'Łazienka',
+        'Korytarz',
+      ],
+    },
+    {
+      level: '03',
+      title: 'Poddasze',
+      subtitle: 'Strefa nocna w panoramie gór',
+      rooms: [
+        'Trzy sypialnie',
+        'Garderoba przy sypialni głównej',
+        'Łazienka z prysznicem i wanną',
+        'Pralnia',
+      ],
+    },
+  ] satisfies Floor[],
+} as const;
+
+/* ── 05 · Location ────────────────────────────────────────────────────────── */
+
+export const location = {
+  eyebrow: '05 — Lokalizacja',
+  headline: { lead: 'Adres, który znają', mid: 'prawdziwi', accent: 'miłośnicy gór.' },
+  intro:
+    '300 metrów do lasu. 600 metrów do Chaty na Groniu i szlaków górskich na Klimczok. Meszna leży na pograniczu Beskidu Śląskiego i Małego — z dala od zgiełku, ale w zasięgu najlepszych atrakcji Podbeskidzia: Szczyrk, Ustroń, Wisła. Niezliczone szlaki górskie i trasy rowerowe zaczynają się za rogiem.',
+  banner: {
+    src: '/images/landscape/beskidy.jpg',
+    alt: 'Beskid Śląski — krajobraz w okolicy',
+  },
+  map: {
+    caption: 'Schemat poglądowy · Podbeskidzie',
+    centreLabel: 'DOM MESZNA',
+    pins: [
+      { x: 200, y: 350, label: 'BIELSKO-BIAŁA' },
+      { x: 520, y: 280, label: 'SZCZYRK' },
+      { x: 640, y: 200, label: 'WISŁA' },
+      { x: 720, y: 250, label: 'USTROŃ' },
+    ],
+  },
+  nearbyLabel: '↳ W zasięgu ręki',
+  nearby: [
+    { name: 'Las', distance: '300 m', type: 'Bezpośrednie sąsiedztwo' },
+    { name: 'Chata na Groniu', distance: '600 m', type: 'Schronisko górskie' },
+    { name: 'Szlak na Klimczok', distance: '600 m', type: 'Szlaki górskie' },
+    { name: 'Bielsko-Biała', distance: '10 km', type: 'Miasto' },
+    { name: 'Szczyrk', distance: '7 km', type: 'Kurort narciarski' },
+    { name: 'Obwodnica S52', distance: '4 km', type: 'Komunikacja' },
+    { name: 'Szczyrk Mountain Resort', distance: '8 km', type: 'Narty' },
+    { name: 'Skocznia Skalite', distance: '7 km', type: 'Atrakcja' },
+    { name: 'Aquapark Aries', distance: '7 km', type: 'Rekreacja' },
+    { name: 'Jezioro Żywieckie', distance: '15 km', type: 'Natura' },
+    { name: 'Wisła / Ustroń', distance: '25 km', type: 'Kurort' },
+  ],
+} as const;
+
+/* ── 06 · Interior ────────────────────────────────────────────────────────── */
+
+export type Interior = { src: string; label: string; span: string; aspect: string };
+
+export const interior = {
+  eyebrow: '06 — Wnętrza',
+  eyebrowAside: 'Stan obecny · do odświeżenia',
+  headline: { lead: 'Wnętrza,', leadItalic: 'które', mid: 'żyły', accent: 'codziennością.' },
+  intro:
+    'Salon z kominkiem, otwarta kuchnia, sypialnia z łukowym oknem na poddaszu, łazienka z wanną z hydromasażem, domowe biuro i widok na las z okien dachowych. Zdjęcia pokazują dom takim, jakim jest dziś — z charakterem, ale też z miejscem na Twoją wizję.',
+  // Alt text is deliberately unique per photo: five images previously shared two
+  // strings, which tells a screen-reader user nothing about what changed.
+  photos: [
+    // Strefa dzienna — parter
+    {
+      src: '/images/interior/interior-30.jpg',
+      label: 'Strefa wypoczynkowa',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/interior/interior-42.jpg',
+      label: 'Otwarta strefa dzienna z kominkiem',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-31.jpg',
+      label: 'Salon z kominkiem',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-07.jpg',
+      label: 'Otwarta kuchnia',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-41.jpg',
+      label: 'Kominek z bliska',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-46.jpg',
+      label: 'Strefa wypoczynkowa dzienna',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/interior/interior-47.jpg',
+      label: 'Jadalnia',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-48.jpg',
+      label: 'Otwarty salon',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    // Poddasze
+    {
+      src: '/images/interior/interior-51.jpg',
+      label: 'Główna sypialnia',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/interior/interior-17.jpg',
+      label: 'Pokój dziecięcy — widok od okna',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-18.jpg',
+      label: 'Pokój dziecięcy — strefa nauki',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-24.jpg',
+      label: 'Pokój nastolatki',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/interior/interior-27.jpg',
+      label: 'Łazienka główna — strefa wanny',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-28.jpg',
+      label: 'Łazienka główna — umywalka i lustro',
+      span: 'col-span-12 md:col-span-6',
+      aspect: '4/3',
+    },
+    {
+      src: '/images/interior/interior-29.jpg',
+      label: 'Łazienka główna — widok całości',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+  ] satisfies Interior[],
+} as const;
+
+/* ── 07 · Plans ───────────────────────────────────────────────────────────── */
+
+export const plans = {
+  eyebrow: '07 — Dokumentacja',
+  eyebrowAside: 'Studio Atrium · Bielsko-Biała',
+  headline: { lead: 'Plany do', accent: 'wglądu.' },
+  intro:
+    'Dom został zaprojektowany przez Studio Atrium z Bielska-Białej. Pełna dokumentacja architektoniczna dostępna do wglądu — poniżej skany planów i sytuacji geodezyjnej.',
+  sheets: [
+    {
+      src: '/images/plans/plan-site.jpg',
+      title: 'Sytuacja',
+      subtitle: 'Plan zagospodarowania · Meszna',
+    },
+    {
+      src: '/images/plans/plan-przekroj.jpg',
+      title: 'Przekrój',
+      subtitle: 'Przekroje A-A i C-C · spadek dachu 39°',
+    },
+    {
+      src: '/images/plans/plan-parter.jpg',
+      title: 'Parter',
+      subtitle: 'Otwarta przestrzeń',
+    },
+    {
+      src: '/images/plans/plan-poddasze.jpg',
+      title: 'Poddasze',
+      subtitle: 'Pokoje pod skosami · balkon · druga łazienka',
+    },
+    {
+      src: '/images/plans/plan-pietro.jpg',
+      title: 'Poziom 0',
+      subtitle: 'Garaż · pomieszczenia gospodarcze',
+    },
+  ],
+  note: {
+    label: '✦ Pełna dokumentacja',
+    body: 'Komplet dokumentów (projekt budowlany, pomiar geodezyjny, dziennik budowy, pozwolenia, świadectwo charakterystyki energetycznej) dostępny do wglądu przy oglądaniu nieruchomości lub na żądanie.',
+  },
+} as const;
+
+/* ── 08 · Pricing ─────────────────────────────────────────────────────────── */
+
+export const pricing = {
+  eyebrow: '08 — Oferta',
+  eyebrowAside: 'Sprzedaż bez pośredników',
+  kicker: '✦ Bez pośredników · bez prowizji · bez ukrytych kosztów',
+  /** Rendered as the count-down target; the anchor it starts from is facts.priceAnchor. */
+  priceLabel: '1 899 000',
+  currencySuffix: ' zł',
+  perSqm: '4 720 zł / m² za 402 m² i 1 600 m² działki.',
+  anchor: {
+    label: '↳ Wcześniej w ofertach agencyjnych',
+    before: 'Nieruchomość była wystawiona w ofertach pośredników za ',
+    amount: '2 250 000 zł',
+    after:
+      '. Oferta bezpośrednia oznacza realną oszczędność na prowizji i marży pośrednika — różnica trafia do Ciebie.',
+  },
+  details: [
+    {
+      label: 'Cena za m²',
+      value: '4 720 zł',
+      note: 'Atrakcyjna stawka jak na lokalizację',
+      accent: false,
+    },
+    {
+      label: 'Stan',
+      value: 'Dobry',
+      note: 'Do indywidualnego wykończenia',
+      accent: false,
+    },
+    {
+      label: 'Status',
+      value: 'Dostępne',
+      note: 'Oferta bezpośrednia · bez pośredników',
+      accent: true,
+    },
+  ] as ReadonlyArray<{ label: string; value: string; note: string; accent: boolean }>,
+  closing: {
+    lead: 'Cena ',
+    accent: 'bez pośrednika',
+    tail: 'Bez prowizji, bez doliczonych marż.',
+    note: '↳ Sprzedaż prywatna',
+  },
+} as const;
+
+/* ── 09 · Contact ─────────────────────────────────────────────────────────── */
+
+export const contact = {
+  eyebrow: '09 — Kontakt',
+  eyebrowAside: 'Prywatna prezentacja oferty',
+  headline: { lead: 'Porozmawiajmy', accent: 'wprost.', second: 'Bez pośredników.' },
+  intro:
+    'Dom oferowany jest bez pośredników — chętnie odpowiem na pytania i pokażę nieruchomość w dogodnym terminie. Zostaw kontakt, odpowiem w ciągu doby.',
+  form: {
+    netlifyName: 'kontakt',
+    honeypotLabel: 'Nie wypełniaj tego pola:',
+    fields: {
+      imie: { label: 'Imię i nazwisko', autoComplete: 'name' },
+      telefon: { label: 'Telefon', autoComplete: 'tel' },
+      email: { label: 'Adres e-mail', autoComplete: 'email' },
+      termin: {
+        label: 'Preferowany termin prezentacji',
+        placeholder: 'np. najbliższa sobota, popołudnie',
+      },
+      wiadomosc: { label: 'Dodatkowe pytania' },
+    },
+    submit: 'Wyślij zapytanie',
+    submitting: 'Wysyłam…',
+    success: {
+      title: 'Dziękuję za wiadomość.',
+      body: 'Odezwę się w ciągu 24 godzin na podany adres e-mail.',
+    },
+    error: {
+      title: 'Nie udało się wysłać wiadomości.',
+      bodyBefore: 'Spróbuj ponownie lub napisz bezpośrednio na ',
+    },
+    consentBefore: 'Wysyłając zapytanie, potwierdzasz zapoznanie się z ',
+    consentLinkLabel: 'polityką prywatności',
+    consentAfter:
+      ' i akceptujesz przetwarzanie podanych danych w celu udzielenia odpowiedzi (RODO, art. 6 ust. 1 lit. b).',
+    reassurance: 'Zapytanie jest niezobowiązujące. Odpowiem w ciągu 24 godzin.',
+  },
+  info: {
+    contact: {
+      label: 'Kontakt',
+      value: 'Strona sprzedająca',
+      note: 'Bez pośredników · bez prowizji · rozmowa wprost',
+    },
+    emailLabel: 'E-mail',
+    locationLabel: 'Lokalizacja',
+    why: {
+      label: '✦ Dlaczego bezpośrednio',
+      body: 'Brak pośredników oznacza realną cenę bez doliczonych prowizji i bezpośrednią rozmowę o szczegółach, terminie i ewentualnych ustaleniach.',
+    },
+  },
+} as const;
+
+/* ── Consent ──────────────────────────────────────────────────────────────── */
+
+export const consent = {
+  kicker: '✦ Prywatność',
+  title: 'Zgoda na analitykę',
+  body: 'Ta strona działa bez plików cookies śledzących. Czcionki i wszystkie materiały serwowane są z naszego serwera — żadne dane nie trafiają do podmiotów trzecich. Chcielibyśmy jedynie zbierać anonimowe statystyki odwiedzin, aby wiedzieć, które treści są przydatne. Zgoda jest dobrowolna i możesz ją wycofać w każdej chwili.',
+  categories: {
+    essential: {
+      title: 'Niezbędne',
+      body: 'Zapamiętanie motywu i tego, że animacja powitalna już się wyświetliła. Dane nie opuszczają Twojej przeglądarki.',
+      state: 'Zawsze aktywne',
+    },
+    analytics: {
+      title: 'Analityka',
+      body: 'Anonimowe statystyki odwiedzin. Bez tej zgody żaden skrypt analityczny nie jest wczytywany.',
+    },
+  },
+  reject: 'Odrzuć',
+  accept: 'Akceptuj',
+  save: 'Zapisz wybór',
+  customise: 'Dostosuj ustawienia',
+  reopen: 'Ustawienia prywatności',
+} as const;
+
+/* ── Structured data ──────────────────────────────────────────────────────── */
+
+/** schema.org SingleFamilyResidence, built from the figures above. */
+export function buildStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SingleFamilyResidence',
+    name: site.name,
+    description:
+      'Dom o powierzchni całkowitej 402 m² (170,75 m² powierzchni użytkowej) w Mesznej u stóp Beskidu Śląskiego. Trzy kondygnacje, działka 1 600 m². Projekt Studio Atrium, oddany do użytku w 2018 r. 300 m do lasu, 600 m do szlaków górskich na Klimczok.',
+    url: site.url,
+    image: [
+      `${site.url}/images/house/house-01.jpg`,
+      `${site.url}/images/house/house-02.jpg`,
+      `${site.url}/images/house/house-03.jpg`,
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: site.address.street,
+      addressLocality: site.address.locality,
+      addressRegion: site.address.region,
+      postalCode: site.address.postalCode,
+      addressCountry: site.address.country,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: site.geo.latitude,
+      longitude: site.geo.longitude,
+    },
+    // Schema.org floorSize = powierzchnia użytkowa (konwencja polskiego rynku
+    // dla porównań cenowych — tak liczą Otodom, Sprzedajemy, akty notarialne)
+    floorSize: {
+      '@type': 'QuantitativeValue',
+      value: facts.usableArea,
+      unitCode: 'MTK',
+      name: 'Powierzchnia użytkowa',
+    },
+    // additionalProperty — drugorzędne ale równie istotne dane mierzalne
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: 'Powierzchnia całkowita',
+        value: facts.totalArea,
+        unitCode: 'MTK',
+        description:
+          'Całkowita powierzchnia budynku łącznie z piwnicą, garażem i pomieszczeniami gospodarczymi.',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Powierzchnia działki',
+        value: facts.plotArea,
+        unitCode: 'MTK',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Powierzchnia działki z udziałem w drodze dojazdowej',
+        value: facts.plotAreaWithRoad,
+        unitCode: 'MTK',
+        description: 'Działka 1 600 m² wraz z udziałem we współwłasności drogi dojazdowej.',
+      },
+      { '@type': 'PropertyValue', name: 'Liczba kondygnacji', value: facts.floors },
+    ],
+    numberOfRooms: facts.rooms,
+    numberOfBathroomsTotal: facts.bathrooms,
+    yearBuilt: facts.yearBuilt,
+    amenityFeature: [
+      {
+        '@type': 'LocationFeatureSpecification',
+        name: 'Architekt',
+        value: site.architect,
+      },
+      {
+        '@type': 'LocationFeatureSpecification',
+        name: 'Materiały konstrukcyjne',
+        value: 'Keramzyt, wełna mineralna 20 cm, ceramiczna dachówka',
+      },
+      {
+        '@type': 'LocationFeatureSpecification',
+        name: 'Forma własności',
+        value: 'Współwłasność',
+      },
+    ],
+    offers: {
+      '@type': 'Offer',
+      price: String(facts.price),
+      priceCurrency: facts.currency,
+      availability: 'https://schema.org/InStock',
+      url: site.url,
+      seller: { '@type': 'Person', name: 'Sprzedaż bezpośrednia' },
+    },
+  };
+}

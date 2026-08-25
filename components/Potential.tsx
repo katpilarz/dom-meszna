@@ -1,102 +1,78 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { useSectionAnim, revealBatch } from './useSectionAnim';
-
-const opportunities = [
-  {
-    n: '01',
-    title: 'Solidna baza',
-    body: 'Dom oddany do użytku w 2018 — keramzyt, wełna 20 cm, ceramiczna dachówka na pełnym deskowaniu. Konstrukcja, której nie da się dziś tanio odtworzyć.',
-  },
-  {
-    n: '02',
-    title: 'Mieszkalny od razu',
-    body: 'Dom umeblowany, w dobrym stanie technicznym, gotowy do wprowadzenia. Remont i odświeżenie możesz zaplanować na własnych warunkach, w swoim tempie.',
-  },
-  {
-    n: '03',
-    title: 'Zakres remontu',
-    body: 'Wymiana instalacji ogrzewania (obecnie węglowe) i odświeżenie wnętrz — pozostałe elementy są w porządku. Zakres jasny, kosztorys przewidywalny.',
-  },
-  {
-    n: '04',
-    title: 'Wnętrze pod Ciebie',
-    body: 'Odświeżenie to szansa, by układ funkcjonalny, kolory i materiały dopasować dokładnie do swojego stylu życia — bez kompromisów na cudze gusta.',
-  },
-  {
-    n: '05',
-    title: 'Cena z marginesem',
-    body: '1 899 000 zł za 402 m² i 1 600 m² działki. Cena uwzględnia zakres prac — zostawia realny budżet na ich przeprowadzenie.',
-  },
-  {
-    n: '06',
-    title: 'Lokalizacja premium',
-    body: 'Działki w Mesznej i okolicach Szczyrku zyskują na wartości od lat. Po remoncie — naturalny wzrost rynkowy.',
-  },
-];
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { useSectionAnim } from "@/hooks/useSectionAnim";
+import { revealBatch } from "@/utils/motion";
+import { potential } from "@/data/site";
 
 export default function Potential() {
   const root = useRef<HTMLElement>(null);
 
   useSectionAnim(root, () => {
-    gsap.from('.pot-heading > *', {
+    gsap.from(".pot-heading > *", {
       y: 50,
       opacity: 0,
       stagger: 0.1,
       duration: 1,
-      scrollTrigger: { trigger: '.pot-heading', start: 'top 80%' },
+      scrollTrigger: { trigger: ".pot-heading", start: "top 80%" },
     });
 
-    revealBatch('.pot-card');
+    revealBatch(".pot-card");
 
-    gsap.from('.pot-quote', {
+    gsap.from(".pot-quote", {
       opacity: 0,
       y: 40,
       duration: 1.2,
-      scrollTrigger: { trigger: '.pot-quote', start: 'top 80%' },
+      scrollTrigger: { trigger: ".pot-quote", start: "top 80%" },
     });
   });
 
   return (
-    <section ref={root} id="mozliwosci" className="py-32 md:py-48 relative bg-(--bg-alt)">
+    <section
+      aria-labelledby="mozliwosci-title"
+      ref={root}
+      id="mozliwosci"
+      className="py-32 md:py-48 relative bg-(--bg-alt)"
+    >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="pot-heading mb-20">
           <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">
-              03 — Możliwości
-            </div>
+            <div className="label-mono opacity-60">{potential.eyebrow}</div>
             <div className="label-mono opacity-60 hidden md:block">
-              Stan: dobry · do indywidualnego dostosowania
+              {potential.eyebrowAside}
             </div>
           </div>
-          <h2 className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl">
-            Gotowy do życia.&nbsp;
-        
+          <h2
+            id="mozliwosci-title"
+            className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl"
+          >
+            {potential.headline.lead}
             <br />
-        Otwarty na
-                <span className="italic text-(--accent)">Twoje zmiany</span>
+            {potential.headline.mid}{" "}
+            <span className="italic text-(--accent)">
+              {potential.headline.accent}
+            </span>
           </h2>
           <p className="mt-8 max-w-2xl text-lg opacity-75 leading-relaxed">
-            Dom umeblowany, w dobrym stanie technicznym — można wprowadzić
-            się od razu. Wymaga remontu instalacji ogrzewania i odświeżenia
-            wnętrz, co daje szeroką możliwość przemodelowania go pod własne
-            potrzeby, bez konieczności budowania od zera.
+            {potential.intro}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-strong) rounded-xs border border-(--line-strong) mb-24">
-          {opportunities.map((opp) => (
+          {potential.opportunities.map((opp) => (
             <div
               key={opp.n}
               className="pot-card bg-(--bg-alt) p-8 md:p-12 min-h-[280px] flex flex-col"
             >
-              <div className="flex items-start justify-between mb-6">
-                <div className="display-serif text-5xl">{opp.title}</div>
-                <div className="display-serif text-3xl opacity-15">
+              {/* 1.4.12 Text Spacing — min-w-0 lets the title wrap instead of
+                  holding the row open at its longest word's width, which under a
+                  spacing stylesheet pushed the number clean off the page. */}
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="display-serif text-5xl min-w-0">{opp.title}</div>
+                <span className="display-serif text-[3rem] opacity-15 shrink-0">
                   {opp.n}
-                </div>
+                </span>
               </div>
               <p className="text-sm opacity-75 leading-relaxed mt-auto">
                 {opp.body}
@@ -107,12 +83,10 @@ export default function Potential() {
 
         <div className="pot-quote max-w-4xl">
           <div className="label-mono text-(--accent) mb-6">
-            ✦ Dla kogo jest ten dom
+            {potential.quote.label}
           </div>
           <p className="display-serif text-2xl md:text-4xl italic leading-snug opacity-95">
-            Dla kogoś, kto szuka prawdziwego domu na lata — z miejscem dla
-            rodziny, ogrodem i widokiem na góry. Z perspektywą remontu, który
-            sprawi, że wnętrze stanie się naprawdę Twoje.
+            {potential.quote.body}
           </p>
         </div>
       </div>

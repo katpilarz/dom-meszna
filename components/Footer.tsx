@@ -2,8 +2,9 @@
 
 import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { useSectionAnim } from './useSectionAnim';
+import { useSectionAnim } from '@/hooks/useSectionAnim';
 import ConsentLink from './consent/ConsentLink';
+import { footer } from '@/data/site';
 
 export default function Footer() {
   const ref = useRef<HTMLElement>(null);
@@ -25,21 +26,21 @@ export default function Footer() {
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex footer-mega display-serif text-[clamp(4rem,14vw,14rem)] justify-between tracking-tight overflow-hidden">
-          <span className="italic leading-[0.85]">Dom Meszna · Beskidy</span>
+          <span className="italic leading-[0.85]">{footer.mega}</span>
         </div>
-          <div className='flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mt-24'>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <a
-                href="/polityka-prywatnosci"
-                className="text-sm hover:text-(--accent) inline-block transition-colors"
-              >
-                Polityka prywatności · RODO
-              </a>
-              <ConsentLink />
-            </div>
-          <p className="opacity-50 text-sm">
-            © 2026 Wszelkie prawa zastrzeżone
-          </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mt-24">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {/* py-1 takes these two standalone links to a 28 px target height.
+                SC 2.5.8 asks for 24; at text-sm they measured 20. */}
+            <a
+              href={footer.privacyLink.href}
+              className="text-sm hover:text-(--accent) inline-block py-1 transition-colors"
+            >
+              {footer.privacyLink.label}
+            </a>
+            <ConsentLink />
+          </div>
+          <p className="text-(--fg-muted) text-sm">{footer.copyright}</p>
         </div>
       </div>
     </footer>
