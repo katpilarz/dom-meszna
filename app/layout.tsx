@@ -27,54 +27,43 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
   variable: '--font-jetbrains',
 });
+
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ConsentBanner from '@/components/consent/ConsentBanner';
 import Analytics from '@/components/consent/Analytics';
+import { meta, site, skipLink } from '@/data/site';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.dom-meszna.pl'),
+  metadataBase: new URL(site.url),
   title: {
-    default: 'Dom w Mesznej — sprzedaż bez pośredników',
-    template: '%s — Dom w Mesznej',
+    default: meta.titleDefault,
+    template: meta.titleTemplate,
   },
-  description:
-    'Dom 402 m² w Mesznej u stóp Beskidu Śląskiego. 170,75 m² powierzchni użytkowej, działka 1 600 m², 7 pokoi, trzy kondygnacje. Oddany do użytku w 2018 r. Projekt Studio Atrium. Sprzedaż bez pośredników.',
-  keywords: [
-    'dom na sprzedaż',
-    'Meszna',
-    'Wilkowice',
-    'Beskid Śląski',
-    'Bielsko-Biała',
-    'Szczyrk',
-    'nieruchomość Beskidy',
-    'dom bez pośredników',
-    'sprzedaż bezpośrednia',
-  ],
-  authors: [{ name: 'PAISAK4U' }],
-  creator: 'PAISAK4U',
-  publisher: 'Dom w Mesznej',
+  description: meta.description,
+  keywords: [...meta.keywords],
+  authors: [{ name: site.author }],
+  creator: site.author,
+  publisher: site.name,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   alternates: {
-    canonical: 'https://www.dom-meszna.pl',
+    canonical: site.url,
   },
   openGraph: {
-    title: 'Dom w Mesznej — sprzedaż bez pośredników',
-    description:
-      'Dom 402 m² u stóp Beskidu Śląskiego. Trzy kondygnacje, działka 1 600 m², projekt Studio Atrium 2018. Sprzedaż bez pośredników, bez prowizji.',
-    url: 'https://www.dom-meszna.pl',
-    siteName: 'Dom w Mesznej',
-    locale: 'pl_PL',
+    title: meta.openGraph.title,
+    description: meta.openGraph.description,
+    url: site.url,
+    siteName: site.name,
+    locale: site.locale,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dom w Mesznej — sprzedaż bez pośredników',
-    description:
-      'Dom 402 m² u stóp Beskidu Śląskiego. Bez pośredników, bez prowizji.',
+    title: meta.twitter.title,
+    description: meta.twitter.description,
   },
   robots: {
     index: true,
@@ -95,14 +84,24 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="pl"
+      lang={site.lang}
       suppressHydrationWarning
       className={`${cormorant.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
     >
       <body className="grain">
+        <a href={skipLink.href} className="skip-link">
+          {skipLink.label}
+        </a>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {children}
+          {/* SC 2.4.3 Focus Order. The banner is fixed to the bottom of the
+              viewport but is not part of the page content, so its position in
+              the DOM is what decides where a keyboard visitor meets it. Mounted
+              after {children} it was the *last* tab stop — a dialog asking for a
+              decision, reachable only after the entire page including the form
+              it sits on top of. Mounted here it is the second stop, right after
+              the skip link, which is where a consent prompt belongs. */}
           <ConsentBanner />
+          {children}
           <Analytics />
         </ThemeProvider>
       </body>

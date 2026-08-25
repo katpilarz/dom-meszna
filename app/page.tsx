@@ -15,15 +15,16 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
 import Preloader from '@/components/Preloader';
-import StructuredData from '@/components/ StructuredData'; 
+import StructuredData from '@/components/StructuredData';
+import { showcase } from '@/data/site';
 
 export default function Home() {
   return (
     <SmoothScroll>
       <Preloader />
       <Header />
-       <StructuredData /> 
-      <main>
+      <StructuredData />
+      <main id="tresc">
         <Hero />
         <Marquee />
         <Stats />
@@ -31,27 +32,27 @@ export default function Home() {
         <Gallery />
         <Potential />
         <Showcase
-          src="/images/house/house-03.jpg"
-          alt="Bryła domu — detal architektoniczny"
-          caption="Architektura"
-          position="top"
+          src={showcase.src}
+          alt={showcase.alt}
+          caption={showcase.caption}
+          position={showcase.position}
           headline={
             <span>
-              Kolumny, kamień.
+              {showcase.headline.lead}
               <br />
-              <span className="italic" style={{ color: '#d4a76a' }}>
-                Klasyka&nbsp;
+              {/* Set over a darkened photograph, so this uses the on-dark gold
+                  rather than the theme accent. */}
+              <span className="italic text-(--accent-on-dark)">
+                {showcase.headline.accent}&nbsp;
               </span>
-              która się broni
+              {showcase.headline.tail}
             </span>
           }
-          accent="Projekt: Studio Atrium, Bielsko-Biała. Keramzyt, wełna 20 cm, ceramiczna dachówka."
+          accent={showcase.accent}
         />
         <Floorplan />
         <Location />
-
         <Interior />
-
         <Plans />
         <Pricing />
         <Contact />

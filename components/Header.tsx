@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
 import Arrow from './Arrow';
+import { header } from '@/data/site';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -42,13 +43,18 @@ export default function Header() {
         color: isOpaque ? 'var(--fg)' : '#ffffff',
       }}
     >
-      <div className="mx-auto max-w-[1880px] px-5 md:px-10 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-3 group shrink-0">
+      <div className="mx-auto max-w-[1880px] px-3 sm:px-5 md:px-10 flex items-center justify-between gap-2 sm:gap-4">
+        <Link
+          href="/"
+          aria-label={header.logoLabel}
+          className="flex items-center gap-3 group shrink-0"
+        >
           <svg
             width="32"
             height="32"
             viewBox="0 0 32 32"
             fill="none"
+            aria-hidden="true"
             className="transition-transform group-hover:rotate-90 duration-700"
           >
             <path
@@ -61,50 +67,61 @@ export default function Header() {
             <circle cx="16" cy="20" r="1.5" fill="currentColor" />
           </svg>
           <div className="leading-tight">
-            <div className="display-serif text-lg md:text-xl hidden sm:block">Dom w Mesznej</div>
+            <div className="display-serif text-lg md:text-xl hidden sm:block">
+              {header.wordmark}
+            </div>
             <div className="label-mono text-[0.55rem] opacity-60 hidden sm:block">
-              Bez pośredników
+              {header.wordmarkSub}
             </div>
           </div>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/#kontakt"
-            className="group rounded-xs inline-flex items-center gap-3 display-serif italic text-xl h-11 px-5 md:px-6 py-2  transition-colors duration-500 whitespace-nowrap"
-            style={{
-              border: `1px solid ${isOpaque ? 'var(--fg)' : 'rgba(255,255,255,0.65)'}`,
-            }}
-            onMouseEnter={(e) => {
-              if (isOpaque) {
-                e.currentTarget.style.backgroundColor = 'var(--fg)';
-                e.currentTarget.style.color = 'var(--bg)';
-              } else {
-                e.currentTarget.style.backgroundColor = '#ffffff';
-                e.currentTarget.style.color = '#000000';
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '';
-            }}
-          >
-            Umów oglądanie
-            <Arrow size={24} className="transition-transform duration-500 group-hover:translate-x-1" />
-          </Link>
-                    {mounted && (
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* 1.3.1 — the single call to action is the site's navigation. Wrapping
+              it in a <nav> is what turns it into a landmark a screen-reader user
+              can jump to; the theme toggle stays outside, because a preference
+              control is not a way of getting somewhere. */}
+          <nav aria-label={header.navLabel}>
+            <Link
+              href={header.cta.href}
+              className="group rounded-xs inline-flex items-center gap-2 sm:gap-3 display-serif italic text-lg sm:text-xl h-11 px-3 sm:px-5 md:px-6 py-2 transition-colors duration-500 whitespace-nowrap"
+              style={{
+                border: `1px solid ${isOpaque ? 'var(--fg)' : 'rgba(255,255,255,0.65)'}`,
+              }}
+              onMouseEnter={(e) => {
+                if (isOpaque) {
+                  e.currentTarget.style.backgroundColor = 'var(--fg)';
+                  e.currentTarget.style.color = 'var(--bg)';
+                } else {
+                  e.currentTarget.style.backgroundColor = '#ffffff';
+                  e.currentTarget.style.color = '#000000';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '';
+              }}
+            >
+              {header.cta.label}
+              <Arrow
+                size={24}
+                className="transition-transform duration-500 group-hover:translate-x-1"
+              />
+            </Link>
+          </nav>
+          {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="w-11 h-11 rounded-xs flex items-center justify-center transition-colors shrink-0 hover:opacity-70"
               style={{
                 border: `1px solid ${isOpaque ? 'var(--line-strong)' : 'rgba(255,255,255,0.55)'}`,
               }}
-              aria-label="Przełącz motyw"
+              aria-label={header.themeToggleLabel}
             >
               {theme === 'dark' ? (
-                <Sun size={22} strokeWidth={1.2} />
+                <Sun size={22} strokeWidth={1.2} aria-hidden="true" />
               ) : (
-                <Moon size={22} strokeWidth={1.2} />
+                <Moon size={22} strokeWidth={1.2} aria-hidden="true" />
               )}
             </button>
           )}

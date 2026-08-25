@@ -8,3 +8,11 @@ out/
 
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
+
+.claude/
+
+tests/.artifacts/
+tests/screenshots/
+
+CLAUDE
+AGENTS

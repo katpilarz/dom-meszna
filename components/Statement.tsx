@@ -2,10 +2,8 @@
 
 import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { useSectionAnim } from './useSectionAnim';
-
-const text =
-  '402 m² powierzchni całkowitej. 170 m² powierzchni użytkowej. 1600 metrów działki. Trzy kondygnacje. Solidny dom z 2018 roku, w pełni mieszkalny, w dobrym stanie. Z perspektywą remontu, który pozwoli dostosować go pod siebie.';
+import { useSectionAnim } from '@/hooks/useSectionAnim';
+import { statement } from '@/data/site';
 
 export default function Statement() {
   const root = useRef<HTMLElement>(null);
@@ -13,7 +11,7 @@ export default function Statement() {
   useSectionAnim(root, () => {
     gsap.fromTo(
       '.stmt-word',
-      { opacity: 0.12 },
+      { opacity: 0.5 },
       {
         opacity: 1,
         stagger: 0.03,
@@ -24,15 +22,19 @@ export default function Statement() {
           end: 'bottom 60%',
           scrub: 1,
         },
-      }
+      },
     );
   });
 
   return (
-    <section ref={root} className="pt-32 pb-40 lg:pb-60 relative bg-(--bg-alt)">
+    <section
+      ref={root}
+      aria-labelledby="statement-title"
+      className="pt-32 pb-40 lg:pb-60 relative bg-(--bg-alt)"
+    >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
-
         <h2
+          id="statement-title"
           className="statement-text display-serif"
           style={{
             fontSize: 'clamp(2.5rem, 5.9vw, 4.9rem)',
@@ -41,8 +43,12 @@ export default function Statement() {
             maxWidth: '1550px',
           }}
         >
-          {text.split(' ').map((word, i) => (
-            <span key={i} className="stmt-word inline-block" style={{ marginRight: '0.18em', willChange: 'opacity' }}>
+          {statement.text.split(' ').map((word, i) => (
+            <span
+              key={i}
+              className="stmt-word inline-block"
+              style={{ marginRight: '0.18em', willChange: 'opacity' }}
+            >
               {word}
             </span>
           ))}

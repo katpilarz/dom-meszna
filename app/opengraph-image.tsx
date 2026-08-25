@@ -1,20 +1,21 @@
-
 import { ImageResponse } from 'next/og';
+import { ogImage } from '@/data/site';
 
-export const runtime = 'edge';
-export const alt = 'Dom w Mesznej — sprzedaż bez pośredników';
+// The Edge Runtime is deprecated in Next.js 16; this route builds a PNG with
+// next/og, which the Node runtime handles just as well.
+export const runtime = 'nodejs';
+export const alt = ogImage.alt;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-// ─── DANE DO ZMIANY ────────────────────────────────────────────────
-const HEADLINE_LEFT = 'Dom z';
-const HEADLINE_ITALIC_ACCENT = 'widokiem';
-const HEADLINE_RIGHT_PREFIX = 'na';
-const HEADLINE_ITALIC_END = 'Beskidy.';
-const LOCATION = 'MESZNA · BESKID ŚLĄSKI';
-const FACTS = '402 m² · 1 600 m² działki · 1 899 000 zł';
-const URL = 'www.dom-meszna.pl';
-// ───────────────────────────────────────────────────────────────────
+// Copy lives in data/site.ts — see `ogImage`.
+const HEADLINE_LEFT = ogImage.headlineLeft;
+const HEADLINE_ITALIC_ACCENT = ogImage.headlineItalicAccent;
+const HEADLINE_RIGHT_PREFIX = ogImage.headlineRightPrefix;
+const HEADLINE_ITALIC_END = ogImage.headlineItalicEnd;
+const LOCATION = ogImage.location;
+const FACTS = ogImage.facts;
+const URL = ogImage.url;
 
 // Helper — ładuje czcionkę z Google Fonts z subsetem do podanego tekstu
 async function loadGoogleFont(family: string, text: string): Promise<ArrayBuffer> {
@@ -75,7 +76,17 @@ export default async function OG() {
             opacity: 0.88,
           }}
         >
-          <span style={{ color: '#d4a76a', fontSize: 30 }}>●</span>
+          {/* Drawn, not typed. As a "●" glyph this needed a font neither of the
+              two subsets above carries, so Satori went looking for one at build
+              time and logged a failed download for a 12 px dot. */}
+          <div
+            style={{
+              width: 14,
+              height: 14,
+              borderRadius: 7,
+              background: '#d4a76a',
+            }}
+          />
           <span>{LOCATION}</span>
         </div>
 

@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
+import { site } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.dom-meszna.pl';
+  const baseUrl = site.url;
 
   return [
     {

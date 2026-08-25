@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Arrow from '@/components/Arrow';
 import Link from 'next/link';
+import { site } from '@/data/site';
 
 export const metadata = {
   title: 'Polityka prywatności — Dom w Mesznej',
@@ -12,7 +13,7 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Header />
-      <main className="pt-32 md:pt-44 pb-24 md:pb-32">
+      <main id="tresc" className="pt-32 md:pt-44 pb-24 md:pb-32">
         <article className="mx-auto max-w-3xl px-6 md:px-10">
           <div className="label-mono opacity-60 mb-6">Dokument prawny</div>
           <h1
@@ -23,8 +24,8 @@ export default function PrivacyPolicy() {
           </h1>
           <p className="label-mono opacity-60 mb-16">Obowiązuje od 1 czerwca 2026 r.</p>
 
-          <section className="prose-custom space-y-10">
-            <p className="text-lg leading-relaxed opacity-90" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
+          <div className="prose-custom space-y-10">
+            <p className="text-lg leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
               Niniejsza polityka prywatności opisuje, w jaki sposób przetwarzane są dane osobowe
               osób korzystających ze strony internetowej prezentującej nieruchomość położoną
               w Mesznej. Dokument został przygotowany zgodnie z Rozporządzeniem Parlamentu
@@ -41,7 +42,7 @@ export default function PrivacyPolicy() {
               <p>
                 W sprawach związanych z ochroną danych osobowych, w tym realizacji praw
                 wynikających z RODO, kontakt z Administratorem możliwy jest pod adresem
-                e-mail: <a href="mailto:dommeszna@proton.me" className="text-(--accent) hover:underline">dommeszna@proton.me</a>.
+                e-mail: <a href={`mailto:${site.email}`} className="text-(--accent) underline underline-offset-2 decoration-from-font py-1">{site.email}</a>.
               </p>
             </Section>
 
@@ -131,7 +132,7 @@ export default function PrivacyPolicy() {
               </ul>
               <p>
                 Aby skorzystać z powyższych praw, wystarczy wysłać wiadomość na adres{' '}
-                <a href="mailto:dommeszna@proton.me" className="text-(--accent) hover:underline">dommeszna@proton.me</a>.
+                <a href={`mailto:${site.email}`} className="text-(--accent) underline underline-offset-2 decoration-from-font py-1">{site.email}</a>.
               </p>
             </Section>
 
@@ -213,7 +214,7 @@ export default function PrivacyPolicy() {
                 się na początku dokumentu.
               </p>
             </Section>
-          </section>
+          </div>
 
           <div className="mt-20 pt-10 border-t border-(--line)">
             <Link href="/" className="display-serif italic text-xl hover:text-(--accent) transition-colors inline-flex items-center gap-3 group">
@@ -229,13 +230,14 @@ export default function PrivacyPolicy() {
 }
 
 function Section({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
+  const headingId = `polityka-${number}`;
   return (
-    <section className="space-y-4">
+    <section className="space-y-4" aria-labelledby={headingId}>
       <div className="flex items-baseline gap-4 pt-2">
-        <span className="label-mono opacity-50 text-xs">{number}</span>
-        <h2 className="display-serif text-2xl md:text-3xl">{title}</h2>
+        <span className="label-mono text-(--fg-muted) text-xs">{number}</span>
+        <h2 id={headingId} className="display-serif text-2xl md:text-3xl">{title}</h2>
       </div>
-      <div className="space-y-4 text-base md:text-lg leading-relaxed opacity-90"
+      <div className="space-y-4 text-base md:text-lg leading-relaxed"
            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
         {children}
       </div>

@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { useIsomorphicEffect } from './useSectionAnim';
-import { openIntroGate } from './introGate';
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { useIsomorphicEffect } from '@/hooks/useSectionAnim';
+import { openIntroGate } from '@/utils/introGate';
+import { preloader } from '@/data/site';
 
 /** Never hold the curtain longer than this, whatever is still in flight. */
 const HARD_TIMEOUT_MS = 5000;
 /** Below this the panel reads as a flash of colour rather than an intro. */
 const MIN_VISIBLE_MS = 900;
-const SEEN_KEY = 'dm:intro-seen';
+const SEEN_KEY = "dm:intro-seen";
 
 export default function Preloader() {
   const root = useRef<HTMLDivElement>(null);
@@ -19,20 +20,22 @@ export default function Preloader() {
     if (!el) return;
 
     // JS is alive, so drop the CSS-only failsafe fade and drive the panel here.
-    el.classList.remove('preloader--failsafe');
+    el.classList.remove("preloader--failsafe");
 
     const finish = () => {
       openIntroGate();
-      el.style.display = 'none';
+      el.style.display = "none";
     };
 
     let seen = false;
     try {
-      seen = sessionStorage.getItem(SEEN_KEY) === '1';
+      seen = sessionStorage.getItem(SEEN_KEY) === "1";
     } catch {
       // Private mode / storage disabled — treat as a first visit.
     }
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     // Repeat visit in this tab, or the visitor asked for less motion: the
     // curtain is decoration, so skip straight to the page.
@@ -41,36 +44,40 @@ export default function Preloader() {
       return;
     }
     try {
-      sessionStorage.setItem(SEEN_KEY, '1');
+      sessionStorage.setItem(SEEN_KEY, "1");
     } catch {
       /* nothing to do */
     }
 
-    const bar = el.querySelector<HTMLElement>('.preloader-bar-fill');
-    const pct = el.querySelector<HTMLElement>('.preloader-pct');
+    const bar = el.querySelector<HTMLElement>(".preloader-bar-fill");
+    const pct = el.querySelector<HTMLElement>(".preloader-pct");
     const startedAt = performance.now();
 
     // Real work, not a fake timer: the hero photo is the thing worth waiting
     // for, fonts decide whether the headline reflows, and window load catches
     // whatever else the browser still considers pending.
-    const settled = (p: Promise<unknown>) => p.then(() => void 0, () => void 0);
-    const heroImg = document.querySelector<HTMLImageElement>('#hero img');
+    const settled = (p: Promise<unknown>) =>
+      p.then(
+        () => void 0,
+        () => void 0,
+      );
+    const heroImg = document.querySelector<HTMLImageElement>("#hero img");
 
     const jobs: Promise<void>[] = [
       settled(document.fonts ? document.fonts.ready : Promise.resolve()),
       settled(
         heroImg && !heroImg.complete
           ? new Promise<void>((res) => {
-              heroImg.addEventListener('load', () => res(), { once: true });
-              heroImg.addEventListener('error', () => res(), { once: true });
+              heroImg.addEventListener("load", () => res(), { once: true });
+              heroImg.addEventListener("error", () => res(), { once: true });
             })
           : Promise.resolve(),
       ),
       settled(
-        document.readyState === 'complete'
+        document.readyState === "complete"
           ? Promise.resolve()
           : new Promise<void>((res) => {
-              window.addEventListener('load', () => res(), { once: true });
+              window.addEventListener("load", () => res(), { once: true });
             }),
       ),
     ];
@@ -82,7 +89,11 @@ export default function Preloader() {
 
     const paint = () => {
       if (bar) bar.style.transform = `scaleX(${state.shown})`;
-      if (pct) pct.textContent = String(Math.round(state.shown * 100)).padStart(3, '0');
+      if (pct)
+        pct.textContent = String(Math.round(state.shown * 100)).padStart(
+          3,
+          "0",
+        );
     };
     paint();
 
@@ -122,18 +133,26 @@ export default function Preloader() {
       tl.to(state, {
         shown: 1,
         duration: 0.45,
-        ease: 'power2.out',
+        ease: "power2.out",
         onUpdate: paint,
       })
-        .to('.preloader-inner', { opacity: 0, y: -12, duration: 0.4, ease: 'power2.in' }, '-=0.1')
+        .to(
+          ".preloader-inner",
+          { opacity: 0, y: -12, duration: 0.4, ease: "power2.in" },
+          "-=0.1",
+        )
         // The hero is underneath; open the latch as the panel starts to lift so
         // the two movements read as one.
-        .to(el, {
-          yPercent: -100,
-          duration: 1.1,
-          ease: 'expo.inOut',
-          onStart: openIntroGate,
-        }, '-=0.15');
+        .to(
+          el,
+          {
+            yPercent: -100,
+            duration: 1.1,
+            ease: "expo.inOut",
+            onStart: openIntroGate,
+          },
+          "-=0.15",
+        );
     };
 
     Promise.all(jobs).then(exit);
@@ -157,7 +176,13 @@ export default function Preloader() {
       className="preloader preloader--failsafe fixed inset-0 z-100 flex items-center justify-center bg-(--bg)"
     >
       <div className="preloader-inner flex flex-col items-center gap-8 px-6">
-        <svg width="44" height="44" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <svg
+          width="44"
+          height="44"
+          viewBox="0 0 32 32"
+          fill="none"
+          aria-hidden="true"
+        >
           <path
             d="M16 2 L28 14 L28 30 L4 30 L4 14 Z"
             stroke="var(--accent)"
@@ -170,10 +195,10 @@ export default function Preloader() {
 
         <div className="flex flex-col items-center gap-3">
           <div className="preloader-word text-3xl md:text-4xl text-center">
-            Dom w Mesznej
+            {preloader.word}
           </div>
-          <div className="preloader-caption opacity-45 text-center">
-            Meszna · Beskid Śląski
+          <div className="preloader-caption text-(--fg-muted) text-center">
+            {preloader.caption}
           </div>
         </div>
 
@@ -181,7 +206,7 @@ export default function Preloader() {
           <div className="preloader-bar relative h-px w-44 md:w-64 overflow-hidden bg-(--line-strong)">
             <div className="preloader-bar-fill absolute inset-0 origin-left bg-(--accent)" />
           </div>
-          <div className="preloader-pct opacity-50">000</div>
+          <div className="preloader-pct text-(--fg-muted)">000</div>
         </div>
       </div>
     </div>

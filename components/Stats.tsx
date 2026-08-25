@@ -2,26 +2,8 @@
 
 import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { useSectionAnim } from './useSectionAnim';
-
-const stats: {
-  label: string;
-  value: string;
-  unit: string;
-  note?: string;
-}[] = [
-  { label: 'Powierzchnia całkowita', value: '402,35', unit: 'm²' },
-  { label: 'Powierzchnia użytkowa', value: '170,75', unit: 'm²' },
-  {
-    label: 'Działka',
-    value: '1600',
-    unit: 'm²',
-    note: '1 800 m² z udziałem w drodze dojazdowej',
-  },
-  { label: 'Pokoje', value: '7', unit: '' },
-  { label: 'Kondygnacje', value: '3', unit: '' },
-  { label: 'Oddanie do użytku', value: '2018', unit: '' },
-];
+import { useSectionAnim } from '@/hooks/useSectionAnim';
+import { stats } from '@/data/site';
 
 export default function Stats() {
   const root = useRef<HTMLElement>(null);
@@ -64,26 +46,39 @@ export default function Stats() {
   });
 
   return (
-    <section ref={root} id="dom" className="py-24 md:py-32 relative bg-(--bg-alt)">
+    <section
+      aria-label={stats.label}
+      ref={root}
+      id="dom"
+      className="py-24 md:py-32 relative bg-(--bg-alt)"
+    >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-16">
-          <div className="label-mono opacity-60">01 — Najważniejsze fakty</div>
-          <div className="label-mono opacity-60 hidden md:block">Projekt Studio Atrium · oddany do użytku 2018</div>
+          <div className="label-mono opacity-60">{stats.eyebrow}</div>
+          <div className="label-mono opacity-60 hidden md:block">
+            {stats.eyebrowAside}
+          </div>
         </div>
 
         <div
           className="stats-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px border-y border-(--line-strong) bg-(--bg-alt)"
           style={{ background: 'var(--line-strong)' }}
         >
-          {stats.map((s) => (
+          {stats.items.map((s) => (
             <div key={s.label} className="stat-item bg-(--bg-alt) p-6 md:p-10">
-              <div className="label-mono opacity-50 mb-3 text-[0.6rem]">{s.label}</div>
+              <div className="label-mono text-(--fg-muted) mb-3 text-[0.6rem]">
+                {s.label}
+              </div>
               <div className="display-serif text-3xl md:text-5xl">
-                <span className="spec-number" data-value={s.value}>{s.value}</span>
-                {s.unit && <span className="text-base opacity-50 ml-1">{s.unit}</span>}
+                <span className="spec-number" data-value={s.value}>
+                  {s.value}
+                </span>
+                {s.unit && (
+                  <span className="text-base text-(--fg-muted) ml-1">{s.unit}</span>
+                )}
               </div>
               {s.note && (
-                <div className="label-mono opacity-40 mt-2 text-[0.55rem] leading-snug">
+                <div className="label-mono text-(--fg-muted) mt-2 text-[0.55rem] leading-snug">
                   {s.note}
                 </div>
               )}
