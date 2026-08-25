@@ -76,18 +76,21 @@ export default function Pricing() {
             </div>
           </div>
 
+          {/* 4.1.1 — a heading's content model is phrasing content, so these
+              overflow masks are <span className="block">, not <div>. Renders
+              identically and keeps the line break in the accessible name. */}
           <h2 id="cena-title" className="display-serif leading-[0.92]">
-            <div className="overflow-hidden">
-              <div className="pricing-line text-[clamp(3rem,9vw,8rem)]">
+            <span className="block overflow-hidden">
+              <span className="pricing-line block text-[clamp(3rem,9vw,8rem)]">
                 <span className="big-price">{pricing.priceLabel}</span>
                 <span className="text-(--accent)">{pricing.currencySuffix}</span>
-              </div>
-            </div>
-            <div className="overflow-hidden">
-              <div className="pricing-line text-[clamp(1.3rem,3vw,2.4rem)] italic opacity-70 mt-4">
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span className="pricing-line block text-[clamp(1.3rem,3vw,2.4rem)] italic opacity-70 mt-4">
                 {pricing.perSqm}
-              </div>
-            </div>
+              </span>
+            </span>
           </h2>
 
           <div className="price-anchor-note mt-8 max-w-xl">
@@ -106,27 +109,30 @@ export default function Pricing() {
 
         <div className="hairline my-16" />
 
-        <div className="pricing-details grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-16">
+        {/* 1.3.1 — name/value pairs; see Stats.tsx. */}
+        <dl className="pricing-details grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-16">
           {pricing.details.map((d) => (
             <div key={d.label} className="pricing-detail">
-              <div className="label-mono text-(--fg-muted) mb-3">{d.label}</div>
-              <div
+              <dt className="label-mono text-(--fg-muted) mb-3">{d.label}</dt>
+              <dd
                 className={`display-serif text-3xl${d.accent ? ' text-(--accent)' : ''}`}
               >
                 {d.value}
-              </div>
-              <div className="text-xs opacity-60 mt-2">{d.note}</div>
+              </dd>
+              <dd className="text-xs opacity-60 mt-2">{d.note}</dd>
             </div>
           ))}
-        </div>
+        </dl>
 
         <div className="pricing-detail mt-20 max-w-4xl">
-          <p className="display-serif text-6xl italic leading-snug opacity-95">
+          {/* 2.4.10 — set at text-6xl and read as this section's closing
+              statement, so it is a heading rather than a paragraph. */}
+          <h3 className="display-serif text-6xl italic leading-snug opacity-95">
             {pricing.closing.lead}
             <span className="text-(--accent) not-italic">{pricing.closing.accent}</span>.
             <br />
             {pricing.closing.tail}
-          </p>
+          </h3>
           <div className="mt-4 label-mono opacity-60">{pricing.closing.note}</div>
         </div>
       </div>

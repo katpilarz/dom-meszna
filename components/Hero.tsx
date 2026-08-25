@@ -132,7 +132,7 @@ export default function Hero() {
             }}
           >
             {hero.headline.map((line, i) => (
-              <div key={i} className="overflow-hidden">
+              <span key={i} className="block overflow-hidden">
                 {line.map((part, j) => (
                   <span
                     key={j}
@@ -148,7 +148,7 @@ export default function Hero() {
                     )}
                   </span>
                 ))}
-              </div>
+              </span>
             ))}
           </h1>
         </div>

@@ -40,7 +40,10 @@ export default function Footer() {
             </a>
             <ConsentLink />
           </div>
-          <p className="text-(--fg-muted) text-sm">{footer.copyright}</p>
+          <p className="text-(--fg-muted) text-sm">
+            © <time dateTime={footer.copyright.year}>{footer.copyright.year}</time>{' '}
+            {footer.copyright.rest}
+          </p>
         </div>
       </div>
     </footer>

@@ -22,7 +22,10 @@ export default function PrivacyPolicy() {
           >
             Polityka <span className="italic" style={{ color: 'var(--accent)' }}>prywatności</span>
           </h1>
-          <p className="label-mono opacity-60 mb-16">Obowiązuje od 1 czerwca 2026 r.</p>
+          <p className="label-mono opacity-60 mb-16">
+            Obowiązuje od{' '}
+            <time dateTime="2026-06-01">1 czerwca 2026 r.</time>
+          </p>
 
           <div className="prose-custom space-y-10">
             <p className="text-lg leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
@@ -65,12 +68,12 @@ export default function PrivacyPolicy() {
 
             <Section number="03" title="Jakie dane są gromadzone">
               <p>Przetwarzane są dane podawane dobrowolnie poprzez formularz kontaktowy:</p>
-              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
-                <li>— imię i nazwisko,</li>
-                <li>— adres e-mail,</li>
-                <li>— numer telefonu (jeśli zostanie podany),</li>
-                <li>— treść wiadomości i informacje w niej zawarte,</li>
-                <li>— adres IP urządzenia oraz dane techniczne związane z wysłaniem formularza.</li>
+              <ul className="dash-list space-y-2 pl-8 border-l border-(--line) py-2">
+                <li>imię i nazwisko,</li>
+                <li>adres e-mail,</li>
+                <li>numer telefonu (jeśli zostanie podany),</li>
+                <li>treść wiadomości i informacje w niej zawarte,</li>
+                <li>adres IP urządzenia oraz dane techniczne związane z wysłaniem formularza.</li>
               </ul>
               <p>
                 Nie zbieramy danych szczególnych kategorii (art. 9 RODO) ani danych dotyczących
@@ -80,24 +83,29 @@ export default function PrivacyPolicy() {
 
             <Section number="04" title="Cel i podstawa prawna przetwarzania">
               <p>Dane są przetwarzane w następujących celach:</p>
-              <ul className="list-none space-y-3 pl-4 border-l border-(--line) py-2">
+              {/* 1.3.1 — the a) b) c) enumerators were <strong> elements with
+                  their weight cancelled by a class, which is a list marker
+                  wearing an importance element. The marker belongs to the list.
+                  The statutory references are <i>, not <em>: a technical
+                  reference in a different voice, not stress emphasis. */}
+              <ol className="list-[lower-alpha] list-inside space-y-3 pl-4 border-l border-(--line) py-2">
                 <li>
-                  <strong className="font-normal">a)</strong> w celu udzielenia odpowiedzi na zapytanie
+                  w celu udzielenia odpowiedzi na zapytanie
                   oraz podjęcia działań przed zawarciem ewentualnej umowy — na podstawie
-                  {' '}<em>art. 6 ust. 1 lit. b RODO</em> (działania na żądanie osoby, której dane
+                  {' '}<i>art. 6 ust. 1 lit. b RODO</i> (działania na żądanie osoby, której dane
                   dotyczą);
                 </li>
                 <li>
-                  <strong className="font-normal">b)</strong> w celu realizacji prawnie uzasadnionego
+                  w celu realizacji prawnie uzasadnionego
                   interesu Administratora, polegającego na prowadzeniu korespondencji i obsłudze
-                  zapytań dotyczących nieruchomości — na podstawie <em>art. 6 ust. 1 lit. f
-                  RODO</em>;
+                  zapytań dotyczących nieruchomości — na podstawie <i>art. 6 ust. 1 lit. f
+                  RODO</i>;
                 </li>
                 <li>
-                  <strong className="font-normal">c)</strong> w celu ewentualnego ustalenia,
-                  dochodzenia lub obrony roszczeń — na podstawie <em>art. 6 ust. 1 lit. f RODO</em>.
+                  w celu ewentualnego ustalenia,
+                  dochodzenia lub obrony roszczeń — na podstawie <i>art. 6 ust. 1 lit. f RODO</i>.
                 </li>
-              </ul>
+              </ol>
               <p className="bg-(--bg-alt) border border-(--line) p-5 text-md leading-relaxed">
                 <strong className="font-normal">Wysyłając wiadomość przez formularz kontaktowy,</strong> potwierdzasz, że zapoznałaś/eś się
                 z niniejszą polityką prywatności i akceptujesz przetwarzanie podanych danych w
@@ -110,24 +118,24 @@ export default function PrivacyPolicy() {
                 Dane są przechowywane przez okres niezbędny do realizacji celów, dla których
                 zostały zebrane, nie dłużej jednak niż:
               </p>
-              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
-                <li>— 6 miesięcy od ostatniej korespondencji, jeśli nie doszło do dalszych ustaleń,</li>
-                <li>— do czasu zakończenia ewentualnej transakcji oraz przez okres wymagany
+              <ul className="dash-list space-y-2 pl-8 border-l border-(--line) py-2">
+                <li>6 miesięcy od ostatniej korespondencji, jeśli nie doszło do dalszych ustaleń,</li>
+                <li>do czasu zakończenia ewentualnej transakcji oraz przez okres wymagany
                   przepisami prawa, jeśli korespondencja doprowadzi do zawarcia umowy,</li>
-                <li>— do czasu przedawnienia roszczeń, jeśli zaistnieje taka potrzeba.</li>
+                <li>do czasu przedawnienia roszczeń, jeśli zaistnieje taka potrzeba.</li>
               </ul>
             </Section>
 
             <Section number="06" title="Twoje prawa">
               <p>W związku z przetwarzaniem danych przysługują Ci następujące prawa:</p>
-              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
-                <li>— prawo dostępu do danych (art. 15 RODO),</li>
-                <li>— prawo do sprostowania danych (art. 16 RODO),</li>
-                <li>— prawo do usunięcia danych — „prawo do bycia zapomnianym” (art. 17 RODO),</li>
-                <li>— prawo do ograniczenia przetwarzania (art. 18 RODO),</li>
-                <li>— prawo do przenoszenia danych (art. 20 RODO),</li>
-                <li>— prawo do sprzeciwu wobec przetwarzania (art. 21 RODO),</li>
-                <li>— prawo do wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych
+              <ul className="dash-list space-y-2 pl-8 border-l border-(--line) py-2">
+                <li>prawo dostępu do danych (art. 15 RODO),</li>
+                <li>prawo do sprostowania danych (art. 16 RODO),</li>
+                <li>prawo do usunięcia danych — „prawo do bycia zapomnianym” (art. 17 RODO),</li>
+                <li>prawo do ograniczenia przetwarzania (art. 18 RODO),</li>
+                <li>prawo do przenoszenia danych (art. 20 RODO),</li>
+                <li>prawo do sprzeciwu wobec przetwarzania (art. 21 RODO),</li>
+                <li>prawo do wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych
                   (ul. Stawki 2, 00-193 Warszawa).</li>
               </ul>
               <p>
@@ -141,9 +149,9 @@ export default function PrivacyPolicy() {
                 Dane mogą być udostępniane podmiotom świadczącym usługi techniczne związane z
                 prowadzeniem strony i obsługą poczty elektronicznej:
               </p>
-              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
-                <li>— dostawca hostingu strony i obsługi formularza kontaktowego (Netlify Inc., USA),</li>
-                <li>— dostawca usług poczty elektronicznej (Proton AG, Szwajcaria).</li>
+              <ul className="dash-list space-y-2 pl-8 border-l border-(--line) py-2">
+                <li>dostawca hostingu strony i obsługi formularza kontaktowego (Netlify Inc., USA),</li>
+                <li>dostawca usług poczty elektronicznej (Proton AG, Szwajcaria).</li>
               </ul>
               <p>
                 Przekazanie danych do Netlify Inc. (USA) odbywa się na podstawie standardowych
@@ -170,10 +178,10 @@ export default function PrivacyPolicy() {
                 do prawidłowego działania strony, które zgodnie z art. 173 ust. 3 Prawa
                 telekomunikacyjnego nie wymagają odrębnej zgody:
               </p>
-              <ul className="list-none space-y-2 pl-4 border-l border-(--line) py-2">
-                <li>— zapamiętanie wybranego motywu (jasny / ciemny),</li>
-                <li>— informacja o tym, że animacja powitalna została już wyświetlona w tej sesji,</li>
-                <li>— zapis Twojej decyzji dotyczącej zgód wraz z datą jej udzielenia.</li>
+              <ul className="dash-list space-y-2 pl-8 border-l border-(--line) py-2">
+                <li>zapamiętanie wybranego motywu (jasny / ciemny),</li>
+                <li>informacja o tym, że animacja powitalna została już wyświetlona w tej sesji,</li>
+                <li>zapis Twojej decyzji dotyczącej zgód wraz z datą jej udzielenia.</li>
               </ul>
               <p>
                 Dane te pozostają wyłącznie w pamięci Twojej przeglądarki i nie są nigdzie

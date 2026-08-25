@@ -69,20 +69,21 @@ export default function Contact() {
         </div>
 
         <div className="contact-headline mb-20">
+          {/* 4.1.1 — phrasing content only inside a heading; see Pricing.tsx. */}
           <h2 id="kontakt-title" className="display-serif leading-[0.92]">
-            <div className="overflow-hidden">
-              <div className="contact-line text-[clamp(2.5rem,8vw,7rem)]">
+            <span className="block overflow-hidden">
+              <span className="contact-line block text-[clamp(2.5rem,8vw,7rem)]">
                 {contact.headline.lead}{' '}
                 <span className="italic text-(--accent)">
                   {contact.headline.accent}
                 </span>
-              </div>
-            </div>
-            <div className="overflow-hidden">
-              <div className="contact-line text-[clamp(2.5rem,8vw,7rem)]">
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span className="contact-line block text-[clamp(2.5rem,8vw,7rem)]">
                 {contact.headline.second}
-              </div>
-            </div>
+              </span>
+            </span>
           </h2>
           <p className="mt-8 max-w-xl opacity-75 text-lg leading-relaxed">
             {contact.intro}
@@ -296,41 +297,56 @@ export default function Contact() {
 
           {/* Contact info */}
           <div className="contact-info col-span-12 lg:col-span-5 mt-12 lg:mt-0 pl-0 lg:pl-16 lg:border-l lg:border-(--line)">
-            <div className="contact-info-item mb-10">
-              <div className="label-mono text-(--fg-muted) mb-2">
-                {contact.info.contact.label}
-              </div>
-              <div className="display-serif text-2xl">{contact.info.contact.value}</div>
-              <div className="text-sm opacity-70 mt-2">{contact.info.contact.note}</div>
-            </div>
+            {/* 1.3.1 — this is the page's own contact information, which is what
+                <address> is for, and the three rows inside it are name/value
+                pairs. `not-italic` cancels the UA stylesheet's italic, which
+                Tailwind's preflight leaves in place. */}
+            <address className="not-italic">
+              <dl>
+                <div className="contact-info-item mb-10">
+                  <dt className="label-mono text-(--fg-muted) mb-2">
+                    {contact.info.contact.label}
+                  </dt>
+                  <dd className="display-serif text-2xl">
+                    {contact.info.contact.value}
+                  </dd>
+                  <dd className="text-sm opacity-70 mt-2">
+                    {contact.info.contact.note}
+                  </dd>
+                </div>
 
-            <div className="contact-info-item mb-10">
-              <div className="label-mono text-(--fg-muted) mb-2">
-                {contact.info.emailLabel}
-              </div>
-              <a
-                href={`mailto:${site.email}`}
-                className="display-serif text-2xl hover:text-(--accent) transition-colors break-all"
-              >
-                {site.email}
-              </a>
-            </div>
+                <div className="contact-info-item mb-10">
+                  <dt className="label-mono text-(--fg-muted) mb-2">
+                    {contact.info.emailLabel}
+                  </dt>
+                  <dd>
+                    <a
+                      href={`mailto:${site.email}`}
+                      className="display-serif text-2xl hover:text-(--accent) transition-colors break-all"
+                    >
+                      {site.email}
+                    </a>
+                  </dd>
+                </div>
 
-            <div className="contact-info-item mb-10">
-              <div className="label-mono text-(--fg-muted) mb-2">
-                {contact.info.locationLabel}
-              </div>
-              <div className="display-serif text-xl">
-                {site.address.street}, {site.address.locality}
-              </div>
-              <div className="text-sm opacity-70 mt-1">{site.address.detail}</div>
-            </div>
+                <div className="contact-info-item mb-10">
+                  <dt className="label-mono text-(--fg-muted) mb-2">
+                    {contact.info.locationLabel}
+                  </dt>
+                  <dd className="display-serif text-xl">
+                    {site.address.street}, {site.address.locality}
+                  </dd>
+                  <dd className="text-sm opacity-70 mt-1">{site.address.detail}</dd>
+                </div>
+              </dl>
+            </address>
 
+            {/* Not contact detail, so deliberately outside <address>. */}
             <div className="contact-info-item mt-12 p-6 rounded-xs border border-(--line-strong)">
-              <div className="label-mono text-(--accent) mb-3">
+              <h3 className="label-mono text-(--accent) mb-3">
                 {contact.info.why.label}
-              </div>
-              <div className="text-sm leading-relaxed">{contact.info.why.body}</div>
+              </h3>
+              <p className="text-sm leading-relaxed">{contact.info.why.body}</p>
             </div>
           </div>
         </div>

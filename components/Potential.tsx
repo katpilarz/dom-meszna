@@ -59,9 +59,11 @@ export default function Potential() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-strong) rounded-xs border border-(--line-strong) mb-24">
+        {/* 1.3.1 — six equivalent cards, so a list; and each card's title is
+            set at text-5xl and reads as a heading, so it is one. */}
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-(--line-strong) rounded-xs border border-(--line-strong) mb-24">
           {potential.opportunities.map((opp) => (
-            <div
+            <li
               key={opp.n}
               className="pot-card bg-(--bg-alt) p-8 md:p-12 min-h-[280px] flex flex-col"
             >
@@ -69,17 +71,22 @@ export default function Potential() {
                   holding the row open at its longest word's width, which under a
                   spacing stylesheet pushed the number clean off the page. */}
               <div className="flex items-start justify-between gap-4 mb-6">
-                <div className="display-serif text-5xl min-w-0">{opp.title}</div>
-                <span className="display-serif text-[3rem] opacity-15 shrink-0">
+                <h3 className="display-serif text-5xl min-w-0">{opp.title}</h3>
+                {/* The list already carries position; this is the decorative
+                    oversized numeral, not content. */}
+                <span
+                  className="display-serif text-[3rem] opacity-15 shrink-0"
+                  aria-hidden="true"
+                >
                   {opp.n}
                 </span>
               </div>
               <p className="text-sm opacity-75 leading-relaxed mt-auto">
                 {opp.body}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <div className="pot-quote max-w-4xl">
           <div className="label-mono text-(--accent) mb-6">

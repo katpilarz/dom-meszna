@@ -29,10 +29,12 @@ export default function Marquee() {
   // button that does nothing — hide it rather than offer a dead affordance.
 
   return (
-    <section
-      className="relative py-8 border-y border-(--line) overflow-hidden no-select bg-(--bg-alt)"
-      aria-label={marquee.label}
-    >
+    // 1.3.6 — not a landmark. As a named <section> this advertised itself as
+    // "the most important information about the property" while its entire
+    // contents were aria-hidden, so a visitor who navigated to it found one
+    // pause button. The text is decorative and repeats the stats section; the
+    // button stays exactly where it was, outside the hidden subtree.
+    <div className="relative py-8 border-y border-(--line) overflow-hidden no-select bg-(--bg-alt)">
       <div
         className="marquee-track flex whitespace-nowrap"
         data-paused={paused ? 'true' : 'false'}
@@ -64,6 +66,6 @@ export default function Marquee() {
           )}
         </button>
       )}
-    </section>
+    </div>
   );
 }

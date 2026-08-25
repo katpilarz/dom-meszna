@@ -78,30 +78,39 @@ export default function Gallery() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-12 gap-4 md:gap-6">
+        {/* 1.3.1 — six equivalent items, so a list: a screen reader announces
+            the count and the position ("6 items… item 3 of 6") instead of
+            reading six unrelated blocks. */}
+        <ul className="grid grid-cols-12 gap-4 md:gap-6">
           {gallery.photos.map((p) => (
-            <figure key={p.tag} className={`gallery-item ${p.span}`}>
-              <div
-                className="relative overflow-hidden"
-                style={{ aspectRatio: p.aspect }}
-              >
-                <Image
-                  src={p.src}
-                  alt={p.label}
-                  fill
-                  className="object-cover img-warm"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <figcaption className="mt-3 flex items-baseline justify-between">
-                <div className="display-serif text-xl italic">{p.label}</div>
-                <div className="label-mono text-(--fg-muted)">
-                  {p.tag} / {String(gallery.photos.length).padStart(2, '0')}
+            <li key={p.tag} className={`gallery-item ${p.span}`}>
+              <figure>
+                <div
+                  className="relative overflow-hidden"
+                  style={{ aspectRatio: p.aspect }}
+                >
+                  {/* 1.1.1 — alt describes the photograph; the caption below
+                      names it. Repeating the caption here had every figure
+                      announced twice. */}
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    className="object-cover img-warm"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
-              </figcaption>
-            </figure>
+                <figcaption className="mt-3 flex items-baseline justify-between">
+                  <span className="display-serif text-xl italic">{p.label}</span>
+                  {/* The list already carries position and count. */}
+                  <span className="label-mono text-(--fg-muted)" aria-hidden="true">
+                    {p.tag} / {String(gallery.photos.length).padStart(2, '0')}
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
