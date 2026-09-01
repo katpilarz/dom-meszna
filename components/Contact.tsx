@@ -58,7 +58,7 @@ export default function Contact() {
       id="kontakt"
       ref={root}
       aria-labelledby="kontakt-title"
-      className="py-32 md:py-48 relative overflow-x-clip"
+      className="py-16 md:py-32 lg:py-48 relative overflow-x-clip"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex items-center justify-between mb-16">
@@ -267,7 +267,7 @@ export default function Contact() {
                 disabled={status === 'submitting'}
                 className="group inline-flex rounded-xs items-center justify-between gap-6 w-full lg:min-w-[400px] border border-(--fg) px-6 md:px-8 py-6 lg:py-8 hover:bg-(--fg) hover:text-(--bg) transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current"
               >
-                <span className="display-serif italic text-4xl">
+                <span className="display-serif italic text-2xl md:text-4xl">
                   {status === 'submitting'
                     ? contact.form.submitting
                     : contact.form.submit}
@@ -277,7 +277,7 @@ export default function Contact() {
                   className="transition-transform duration-500 group-hover:translate-x-1.5"
                 />
               </button>
-              <p className="text-md opacity-60 mt-5 max-w-full leading-relaxed">
+              <p className="text-sm opacity-60 mt-5 max-w-full leading-relaxed">
                 {contact.form.consentBefore}
                 {/* py-1 lifts this inline link to a 28 px target. SC 2.5.8 exempts
                     links in a sentence, but a bigger tap area costs nothing. */}
@@ -289,7 +289,7 @@ export default function Contact() {
                 </a>
                 {contact.form.consentAfter}
               </p>
-              <p className="text-md text-(--fg-muted) mt-2">
+              <p className="text-sm text-(--fg-muted) mt-2">
                 {contact.form.reassurance}
               </p>
             </div>

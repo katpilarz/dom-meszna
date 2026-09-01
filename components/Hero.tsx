@@ -1,11 +1,24 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
+import { getImageProps } from 'next/image';
 import { gsap } from 'gsap';
 import { useSectionAnim } from '@/hooks/useSectionAnim';
 import { onIntroOpen } from '@/utils/introGate';
 import { hero } from '@/data/site';
+
+/* Both sources go through next/image's optimizer, so each still gets AVIF/WebP
+   and a density-aware srcSet — <picture> only decides which of the two crops the
+   browser downloads. Computed once at module scope: the inputs are constants. */
+const common = { alt: hero.image.alt, sizes: '100vw' };
+
+const {
+  props: { srcSet: heroDesktopSrcSet },
+} = getImageProps({ ...common, ...hero.image });
+
+const {
+  props: { srcSet: heroMobileSrcSet, ...heroImgProps },
+} = getImageProps({ ...common, ...hero.imageMobile });
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -79,14 +92,24 @@ export default function Hero() {
     >
       <div className="absolute inset-0 z-0">
         <div className="hero-img-bg absolute inset-0">
-          <Image
-            src={hero.image.src}
-            alt={hero.image.alt}
-            fill
-            priority
-            className="object-cover img-warm"
-            sizes="100vw"
-          />
+          {/* The LCP element, so it must not wait for lazy-loading heuristics.
+              `priority` is deprecated in Next 16; eager + high fetchPriority is
+              the documented replacement, and it is the honest one here — a
+              preload <link> can only name one href, which is exactly the wrong
+              tool when <picture> is choosing between two. */}
+          <picture>
+            {/* md — the landscape frame, once the viewport is wide enough to
+                show it without cropping the house out of its own photograph. */}
+            <source media="(min-width: 768px)" srcSet={heroDesktopSrcSet} />
+            <source srcSet={heroMobileSrcSet} />
+            <img
+              {...heroImgProps}
+              alt={hero.image.alt}
+              loading="eager"
+              fetchPriority="high"
+              className="absolute inset-0 h-full w-full object-cover img-warm"
+            />
+          </picture>
         </div>
 
         {/* Warm color cast — light warm tone with multiply

@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { site } from '@/data/site';
 
 export const metadata = {
-  title: 'Polityka prywatności — Dom w Mesznej',
+  title: 'Polityka prywatności',
   description: 'Informacje o przetwarzaniu danych osobowych zgodnie z RODO.',
+  /* Without this the page inherits the root layout's canonical and tells Google
+     it is a copy of the homepage, contradicting its own entry in the sitemap. */
+  alternates: { canonical: '/polityka-prywatnosci' },
 };
 
 export default function PrivacyPolicy() {
@@ -106,7 +109,7 @@ export default function PrivacyPolicy() {
                   dochodzenia lub obrony roszczeń — na podstawie <i>art. 6 ust. 1 lit. f RODO</i>.
                 </li>
               </ol>
-              <p className="bg-(--bg-alt) border border-(--line) p-5 text-md leading-relaxed">
+              <p className="bg-(--bg-alt) border border-(--line) p-5 leading-relaxed">
                 <strong className="font-normal">Wysyłając wiadomość przez formularz kontaktowy,</strong> potwierdzasz, że zapoznałaś/eś się
                 z niniejszą polityką prywatności i akceptujesz przetwarzanie podanych danych w
                 celu udzielenia odpowiedzi na Twoje zapytanie.

@@ -55,7 +55,7 @@
   --sage: #6b7a5a;
   --line: rgba(14, 14, 12, 0.12);
   --line-strong: rgba(14, 14, 12, 0.2);
-  /* Hero and Showcase set their type over a darkened photograph, so their
+  /* Hero and Gallery set their type over a darkened photograph, so their
      surface is dark in both themes. They need the light-on-dark gold, not the
      theme accent — in light theme --accent is deliberately dark and would
      disappear into the image. Identical in both blocks on purpose. */

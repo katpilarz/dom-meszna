@@ -16,7 +16,7 @@
 export const site = {
   name: 'Dom w Mesznej',
   tagline: 'Bez pośredników',
-  url: 'https://www.dom-meszna.pl',
+  url: 'https://dom-meszna.pl',
   locale: 'pl_PL',
   lang: 'pl',
   email: 'dommeszna@proton.me',
@@ -89,7 +89,7 @@ export const ogImage = {
   headlineItalicEnd: 'Beskidy.',
   location: 'MESZNA · BESKID ŚLĄSKI',
   facts: '402 m² · 1 600 m² działki · 1 899 000 zł',
-  url: 'www.dom-meszna.pl',
+  url: 'dom-meszna.pl',
 } as const;
 
 /* ── Chrome ───────────────────────────────────────────────────────────────── */
@@ -120,9 +120,22 @@ export const preloader = {
 /* ── 00 · Hero ────────────────────────────────────────────────────────────── */
 
 export const hero = {
+  /* Art direction, not just a resize. The landscape frame is 4:3, and a portrait
+     phone crops it to a ~35 % vertical slice of gutter and roof — the house stops
+     reading as a house. house-07 is shot portrait and holds the whole front
+     elevation at phone aspect, so each viewport gets the frame it can actually
+     show. The alt describes what both photographs have in common, because
+     <picture> carries a single accessible name across its sources. */
   image: {
     src: '/images/house/house-01.jpg',
-    alt: 'Dom w Mesznej — elewacja południowa',
+    width: 2400,
+    height: 1800,
+    alt: 'Dom w Mesznej — bryła domu z czerwonym dachem, balkonami na białych kolumnach i kamienną okładziną elewacji.',
+  },
+  imageMobile: {
+    src: '/images/house/house-07.jpg',
+    width: 1799,
+    height: 2400,
   },
   labelPrimary: 'Oferta bezpośrednia',
   labelSecondary: 'Meszna · Wilkowice · Śląskie',
@@ -189,36 +202,37 @@ export const gallery = {
   eyebrow: '02 — Galeria',
   eyebrowAside: 'Perspektywa',
   headline: { lead: 'Architektura', mid: 'wpisana w', accent: 'krajobraz.' },
+  /* The section heading is set over this photograph rather than over an empty
+     dark band, which is what the standalone full-bleed interlude used to be for.
+     One frame, one heading — the interlude repeated both a screen later. */
+  backdrop: {
+    src: '/images/house/house-03.jpg',
+    alt: 'Bryła domu od strony podjazdu — dwa balkony na białych kolumnach, kamienna okładzina cokołu i ceramiczna dachówka.',
+  },
+  /** Standfirst under the heading; formerly the interlude's own headline. */
+  standfirst: { lead: 'Kolumny, kamień.', accent: 'Klasyka,', tail: 'która się broni.' },
   photos: [
     {
-      src: '/images/house/house-05.jpg',
-      alt: 'Bryła domu z czerwonym dachem i balkonami, widziana zza metalowego ogrodzenia od strony podjazdu z kostki brukowej.',
-      label: 'Panorama od strony drogi',
+      src: '/images/house/house-04.jpg',
+      alt: 'Trawiasta działka za kamiennym murem i ogrodzeniem, w tle drewniane domy i drzewa na zboczu.',
+      label: 'Duża działka obok',
       tag: '01',
       span: 'col-span-12',
       aspect: '16/9',
     },
     {
-      src: '/images/house/house-04.jpg',
-      alt: 'Trawiasta działka za kamiennym murem i ogrodzeniem, w tle drewniane domy i drzewa na zboczu.',
-      label: 'Duża działka obok',
-      tag: '02',
-      span: 'col-span-12 md:col-span-8',
-      aspect: '4/3',
-    },
-    {
-      src: '/images/house/house-07.jpg',
-      alt: 'Narożnik domu z białymi kolumnami podtrzymującymi balkony i elewacją z okładziną kamienną, obok iglaki i podjazd z kostki.',
-      label: 'Kolumny i kamień',
-      tag: '03',
-      span: 'col-span-12 md:col-span-4',
-      aspect: '3/4',
-    },
-    {
       src: '/images/house/house-02.jpg',
       alt: 'Widok z góry na podjazd, skalniak z iglakami i sąsiednie zabudowania u podnóża zalesionego zbocza.',
       label: 'Panorama na ogród',
-      tag: '04',
+      tag: '02',
+      span: 'col-span-12',
+      aspect: '16/9',
+    },
+    {
+      src: '/images/house/house-05.jpg',
+      alt: 'Bryła domu z czerwonym dachem i balkonami, widziana zza metalowego ogrodzenia od strony podjazdu z kostki brukowej.',
+      label: 'Panorama od strony drogi',
+      tag: '03',
       span: 'col-span-12',
       aspect: '16/9',
     },
@@ -226,7 +240,7 @@ export const gallery = {
       src: '/images/house/house-09.jpg',
       alt: 'Zielona dolina latem — brzozy, ogrody i droga dojazdowa, w tle pasmo gór za mgłą.',
       label: 'Zieleń dookoła',
-      tag: '05',
+      tag: '04',
       span: 'col-span-12 md:col-span-8',
       aspect: '4/3',
     },
@@ -234,7 +248,7 @@ export const gallery = {
       src: '/images/house/house-10.jpg',
       alt: 'Drewniany taras z metalową balustradą oplecioną winoroślą, z widokiem na dolinę i odległe wzgórza.',
       label: 'Przestronny taras',
-      tag: '06',
+      tag: '05',
       span: 'col-span-12 md:col-span-4',
       aspect: '3/4',
     },
@@ -285,18 +299,6 @@ export const potential = {
     label: '✦ Dla kogo jest ten dom',
     body: 'Dla kogoś, kto szuka prawdziwego domu na lata — z miejscem dla rodziny, ogrodem i widokiem na góry. Z perspektywą remontu, który sprawi, że wnętrze stanie się naprawdę Twoje.',
   },
-} as const;
-
-/* ── Showcase (full-bleed interlude on the home page) ─────────────────────── */
-
-export const showcase = {
-  src: '/images/house/house-03.jpg',
-  alt: 'Bryła domu — detal architektoniczny',
-  caption: 'Architektura',
-  position: 'top',
-  headline: { lead: 'Kolumny, kamień.', accent: 'Klasyka', tail: 'która się broni' },
-  accent:
-    'Projekt: Studio Atrium, Bielsko-Biała. Keramzyt, wełna 20 cm, ceramiczna dachówka.',
 } as const;
 
 /* ── 04 · Floorplan ───────────────────────────────────────────────────────── */

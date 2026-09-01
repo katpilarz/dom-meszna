@@ -49,7 +49,6 @@ dom-meszna/
 │   ├── Statement.tsx
 │   ├── Gallery.tsx
 │   ├── Potential.tsx
-│   ├── Showcase.tsx
 │   ├── Floorplan.tsx
 │   ├── Location.tsx
 │   ├── Interior.tsx
@@ -123,7 +122,7 @@ Two theme tokens carry accessibility intent worth knowing about before editing
 
 - `--accent` must keep **4.5:1** against both `--bg` and `--bg-alt`. It is also
   the focus-ring colour, which 1.4.11 holds to 3:1.
-- `--accent-on-dark` is for type set over the darkened hero and showcase
+- `--accent-on-dark` is for type set over the darkened hero and gallery
   photographs. That surface is dark in both themes, so it does **not** flip with
   the theme.
 

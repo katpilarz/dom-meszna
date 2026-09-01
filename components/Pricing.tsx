@@ -59,7 +59,7 @@ export default function Pricing() {
     <section
       ref={root}
       aria-labelledby="cena-title"
-      className="py-32 md:py-48 relative bg-(--bg-alt)"
+      className="py-16 md:py-32 lg:py-48 relative bg-(--bg-alt)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="flex items-center justify-between mb-16">
@@ -127,7 +127,7 @@ export default function Pricing() {
         <div className="pricing-detail mt-20 max-w-4xl">
           {/* 2.4.10 — set at text-6xl and read as this section's closing
               statement, so it is a heading rather than a paragraph. */}
-          <h3 className="display-serif text-6xl italic leading-snug opacity-95">
+          <h3 className="display-serif text-[clamp(1.875rem,5vw,3.75rem)] italic leading-snug opacity-95">
             {pricing.closing.lead}
             <span className="text-(--accent) not-italic">{pricing.closing.accent}</span>.
             <br />
