@@ -33,7 +33,7 @@ export default function Potential() {
       aria-labelledby="mozliwosci-title"
       ref={root}
       id="mozliwosci"
-      className="py-32 md:py-48 relative bg-(--bg-alt)"
+      className="py-16 md:py-32 lg:py-48 relative bg-(--bg-alt)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="pot-heading mb-20">
@@ -71,7 +71,9 @@ export default function Potential() {
                   holding the row open at its longest word's width, which under a
                   spacing stylesheet pushed the number clean off the page. */}
               <div className="flex items-start justify-between gap-4 mb-6">
-                <h3 className="display-serif text-5xl min-w-0">{opp.title}</h3>
+                <h3 className="display-serif text-[clamp(1.75rem,4.5vw,3rem)] min-w-0">
+                  {opp.title}
+                </h3>
                 {/* The list already carries position; this is the decorative
                     oversized numeral, not content. */}
                 <span

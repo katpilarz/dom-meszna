@@ -36,7 +36,7 @@ export default function Floorplan() {
       aria-labelledby="uklad-title"
       id="uklad"
       ref={root}
-      className="py-32 md:py-48 relative bg-(--bg-alt)"
+      className="py-16 md:py-32 lg:py-48 relative bg-(--bg)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-10">
         <div className="floor-heading mb-20">
@@ -65,7 +65,7 @@ export default function Floorplan() {
           {floorplan.floors.map((floor) => (
             <div
               key={floor.level}
-              className="floor-card bg-(--bg-alt) p-8 md:p-12 min-h-[480px] flex flex-col"
+              className="floor-card bg-(--bg) p-8 md:p-12 min-h-[480px] flex flex-col"
             >
               <div className="flex items-start justify-between gap-4 mb-12">
                 <div className="min-w-0">
@@ -75,7 +75,7 @@ export default function Floorplan() {
                   <h3 className="display-serif text-3xl md:text-4xl">{floor.title}</h3>
                   <div className="text-sm opacity-60 mt-2 italic">{floor.subtitle}</div>
                 </div>
-                <div className="display-serif text-6xl md:text-7xl opacity-10 shrink-0">
+                <div className="display-serif text-4xl md:text-7xl opacity-10 shrink-0">
                   {floor.level}
                 </div>
               </div>

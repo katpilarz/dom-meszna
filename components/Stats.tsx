@@ -54,7 +54,7 @@ export default function Stats() {
       aria-labelledby="dom-title"
       ref={root}
       id="dom"
-      className="py-24 md:py-32 relative bg-(--bg-alt)"
+      className="py-16 md:py-24 lg:py-32 relative bg-(--bg-alt)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="flex items-center justify-between mb-16">

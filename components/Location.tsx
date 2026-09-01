@@ -13,24 +13,17 @@ gsap.registerPlugin(DrawSVGPlugin);
 
 export default function Location() {
   const root = useRef<HTMLElement>(null);
+  const backdrop = useRef<HTMLDivElement>(null);
 
-  useSectionAnim(root, () => {
+  useSectionAnim(
+    root,
+    () => {
     gsap.from('.location-heading > *', {
       opacity: 0,
       y: 40,
       stagger: 0.1,
       duration: 1,
-      scrollTrigger: { trigger: '.location-heading', start: 'top 80%' },
-    });
-
-    // The banner image is the element that actually exists; ".location-img"
-    // never matched anything and GSAP logged a "target not found" warning on
-    // every page load.
-    gsap.from('.location-banner', {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 1.6,
-      ease: 'expo.out',
-      scrollTrigger: { trigger: '.location-banner', start: 'top 80%' },
+      scrollTrigger: { trigger: '.location-heading', start: 'top 85%' },
     });
 
     gsap.from('.nearby-row', {
@@ -58,53 +51,97 @@ export default function Location() {
       ease: 'power2.inOut',
       scrollTrigger: { trigger: '.map-illustration', start: 'top 70%' },
     });
-  });
+    },
+    // Scrubbed parallax on the backdrop — a per-frame transform, so it is
+    // confined to large viewports the way the gallery panel's is.
+    () => {
+      gsap.to(backdrop.current, {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: root.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    },
+  );
 
   return (
     <section
       id="lokalizacja"
       ref={root}
       aria-labelledby="lokalizacja-title"
-      className="py-32 md:py-48 relative"
+      className="relative"
     >
-      <div className="mx-auto max-w-[1880px] px-6 md:px-10">
-        <div className="location-heading mb-20">
-          <div className="flex items-center justify-between mb-12">
-            <div className="label-mono opacity-60">{location.eyebrow}</div>
-            <div className="label-mono opacity-60 hidden md:block">
-              {site.geo.label}
+      {/* Same device as the gallery opener: the section's own heading set at the
+          foot of its photograph rather than above it. min-h so the intro, which
+          runs to several lines on a phone, can push the panel taller instead of
+          spilling out of the bottom of the image. */}
+      <div className="relative min-h-screen overflow-hidden flex flex-col justify-end">
+        {/* inset-[-5%] gives the parallax somewhere to travel without ever
+            exposing an edge of the photograph. */}
+        <div ref={backdrop} className="absolute inset-[-5%]">
+          <Image
+            src={location.banner.src}
+            alt={location.banner.alt}
+            fill
+            className="object-cover img-warm"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Darkening for text legibility, and nothing more. The sky is left
+            completely clear — the ramp only starts below the cloud line and is
+            at full strength by the time the eyebrow appears, so the scrim pays
+            for itself in contrast instead of flattening the photograph. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent 0%, transparent 36%, rgba(14,14,12,0.62) 48%, rgba(14,14,12,0.85) 64%, rgba(14,14,12,0.92) 82%, rgba(14,14,12,0.95) 100%)',
+          }}
+        />
+
+        <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-20 text-white">
+          <div className="mx-auto max-w-[1880px]">
+            <div className="location-heading">
+              <div className="flex items-center justify-between mb-8 md:mb-12">
+                <div className="label-mono opacity-80">{location.eyebrow}</div>
+                <div className="label-mono opacity-80 hidden md:block">
+                  {site.geo.label}
+                </div>
+              </div>
+              {/* 1.4.12 Text Spacing — ordinary spaces only. "prawdziwi&nbsp;miłośnicy"
+                  was one unbreakable 19-character run and pushed this heading 55 px
+                  past a 375 px viewport under a spacing stylesheet. */}
+              <h2
+                id="lokalizacja-title"
+                className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl"
+              >
+                {location.headline.lead}
+                <br />
+                {location.headline.mid}{' '}
+                {/* Set over a darkened photograph, so this takes the on-dark
+                    gold; the theme --accent is deliberately dark in light mode
+                    and would disappear here. */}
+                <span className="italic text-(--accent-on-dark)">
+                  {location.headline.accent}
+                </span>
+              </h2>
+              {/* Kept at reading size rather than the gallery standfirst's
+                  text-2xl: that one is a single line, this is four sentences and
+                  would take most of a phone screen set that large. */}
+              <p className="mt-6 max-w-3xl text-lg md:text-xl opacity-85 leading-relaxed">
+                {location.intro}
+              </p>
             </div>
           </div>
-          {/* 1.4.12 Text Spacing — ordinary spaces only. "prawdziwi&nbsp;miłośnicy"
-              was one unbreakable 19-character run and pushed this heading 55 px
-              past a 375 px viewport under a spacing stylesheet. */}
-          <h2
-            id="lokalizacja-title"
-            className="display-serif text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] max-w-5xl"
-          >
-            {location.headline.lead}
-            <br />
-            {location.headline.mid}{' '}
-            <span className="italic text-(--accent)">{location.headline.accent}</span>
-          </h2>
-          <p className="mt-8 max-w-2xl text-lg opacity-75 leading-relaxed">
-            {location.intro}
-          </p>
         </div>
+      </div>
 
-        {/* Beskidy landscape banner */}
-        <div className="location-banner mb-12 md:mb-20 relative overflow-hidden border border-(--line-strong)">
-          <div className="relative" style={{ aspectRatio: '16/9' }}>
-            <Image
-              src={location.banner.src}
-              alt={location.banner.alt}
-              fill
-              className="object-cover img-warm"
-              sizes="100vw"
-            />
-          </div>
-        </div>
-
+      <div className="bg-(--bg) mx-auto max-w-[1880px] px-6 md:px-10 py-16 md:py-24 lg:py-32">
         <div className="grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 lg:col-span-7">
             {/* Map illustration */}

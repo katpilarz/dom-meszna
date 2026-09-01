@@ -50,7 +50,10 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: site.url,
+    /* Relative, so it resolves against metadataBase. Inherited by every route,
+       which is why any page that is not the homepage has to override it — see
+       app/polityka-prywatnosci/page.tsx. */
+    canonical: '/',
   },
   openGraph: {
     title: meta.openGraph.title,

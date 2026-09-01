@@ -27,7 +27,7 @@ export default function Plans() {
       ref={root}
       id="plany"
       aria-labelledby="plany-title"
-      className="py-32 md:py-48 relative"
+      className="py-16 md:py-32 lg:py-48 relative"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="plans-heading mb-20">

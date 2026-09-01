@@ -50,7 +50,7 @@ export default function Interior() {
       aria-labelledby="wnetrza-title"
       ref={root}
       id="wnetrza"
-      className="py-32 md:py-48 relative bg-(--bg-alt)"
+      className="py-16 md:py-32 lg:py-48 relative bg-(--bg-alt)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <div className="interior-heading mb-20">

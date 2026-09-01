@@ -30,7 +30,7 @@ export default function Statement() {
     <section
       ref={root}
       aria-labelledby="statement-title"
-      className="pt-32 pb-40 lg:pb-60 relative bg-(--bg-alt)"
+      className="pt-16 pb-20 md:pt-32 md:pb-40 lg:pb-60 relative bg-(--bg-alt)"
     >
       <div className="mx-auto max-w-[1880px] px-6 md:px-12">
         <h2
