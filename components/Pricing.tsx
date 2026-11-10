@@ -3,12 +3,12 @@
 import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { useSectionAnim } from '@/hooks/useSectionAnim';
-import { facts, pricing } from '@/data/site';
+import { pricing } from '@/data/site';
 
 export default function Pricing() {
   const root = useRef<HTMLElement>(null);
 
-  useSectionAnim(root, (el) => {
+  useSectionAnim(root, () => {
     gsap.from('.pricing-line', {
       yPercent: 110,
       stagger: 0.1,
@@ -23,35 +23,6 @@ export default function Pricing() {
       stagger: 0.1,
       duration: 0.8,
       scrollTrigger: { trigger: '.pricing-details', start: 'top 80%' },
-    });
-
-    // The markup ships the real asking price (1 899 000) so crawlers and no-JS
-    // visitors never see the anchor figure the counter starts from — it used to
-    // contradict the 1899000 in our JSON-LD. Rewind to the anchor only once we
-    // know the count-down is going to run.
-    const priceEl = el.querySelector<HTMLElement>('.big-price');
-    if (priceEl) {
-      priceEl.textContent = facts.priceAnchor.toLocaleString('pl-PL');
-      const obj = { val: facts.priceAnchor };
-      gsap.to(obj, {
-        val: facts.price,
-        duration: 2.6,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: priceEl, start: 'top 80%' },
-        onUpdate: () => {
-          priceEl.textContent = Math.round(obj.val).toLocaleString('pl-PL');
-        },
-      });
-    }
-
-    // Reveal anchor label after price animation lands
-    gsap.from('.price-anchor-note', {
-      opacity: 0,
-      y: 12,
-      duration: 1.2,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: '.big-price', start: 'top 80%' },
-      delay: 2.4,
     });
   });
 
@@ -82,7 +53,7 @@ export default function Pricing() {
           <h2 id="cena-title" className="display-serif leading-[0.92]">
             <span className="block overflow-hidden">
               <span className="pricing-line block text-[clamp(3rem,9vw,8rem)]">
-                <span className="big-price">{pricing.priceLabel}</span>
+                <span>{pricing.priceLabel}</span>
                 <span className="text-(--accent)">{pricing.currencySuffix}</span>
               </span>
             </span>
@@ -92,25 +63,12 @@ export default function Pricing() {
               </span>
             </span>
           </h2>
-
-          <div className="price-anchor-note mt-8 max-w-xl">
-            <div className="label-mono text-(--fg-muted) text-[0.65rem] mb-2">
-              {pricing.anchor.label}
-            </div>
-            <p className="text-sm md:text-base opacity-75 leading-relaxed">
-              {pricing.anchor.before}
-              <span className="text-lg! display-serif italic text-(--accent)">
-                {pricing.anchor.amount}
-              </span>
-              {pricing.anchor.after}
-            </p>
-          </div>
         </div>
 
         <div className="hairline my-16" />
 
         {/* 1.3.1 — name/value pairs; see Stats.tsx. */}
-        <dl className="pricing-details grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-16">
+        <dl className="pricing-details grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
           {pricing.details.map((d) => (
             <div key={d.label} className="pricing-detail">
               <dt className="label-mono text-(--fg-muted) mb-3">{d.label}</dt>

@@ -6,17 +6,23 @@ import './globals.css';
 // Google, which removes the only third-party data transfer on the site and so
 // removes any need to ask consent for it (GDPR Art. 25, privacy by design).
 // 'latin-ext' is not optional here — it carries ą ć ę ł ń ó ś ź ż.
+// Weights are the ones the CSS actually asks for — every serif is 300, plus 400
+// for the <strong className="font-normal"> in the privacy policy. Each extra
+// weight is another font file on the critical path.
 const cormorant = Cormorant_Garamond({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['300', '400'],
   style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-cormorant',
 });
 
+// Body text is 300 only. The italic is loaded for the floor-card subtitles,
+// which were rendered as a synthesised oblique without it.
 const interTight = Inter_Tight({
   subsets: ['latin', 'latin-ext'],
-  weight: ['200', '300', '400', '500', '600'],
+  weight: ['300'],
+  style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-inter-tight',
 });

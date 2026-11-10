@@ -55,6 +55,13 @@
   --sage: #6b7a5a;
   --line: rgba(14, 14, 12, 0.12);
   --line-strong: rgba(14, 14, 12, 0.2);
+  /* 1.4.11 — the underline is the only visible boundary of a form field, so it
+     is held to 3:1 (3.53:1 on --bg, 3.43:1 on --bg-alt). --line-strong
+     measured 1.55:1 and is kept for decorative rules only. */
+  --line-control: rgba(14, 14, 12, 0.5);
+  /* 1.4.3 — error text. Tailwind's red-500 measured 3.38:1 on --bg and 3.00:1
+     on --bg-alt; this red is 5.83:1 and 5.18:1. */
+  --error: #b42318;
   /* Hero and Gallery set their type over a darkened photograph, so their
      surface is dark in both themes. They need the light-on-dark gold, not the
      theme accent — in light theme --accent is deliberately dark and would
@@ -71,6 +78,8 @@
   --sage: #8a9978;
   --line: rgba(244, 241, 234, 0.12);
   --line-strong: rgba(244, 241, 234, 0.22);
+  --line-control: rgba(244, 241, 234, 0.42);
+  --error: #fb2c36;
   --accent-on-dark: #d4a76a;
 }
 
@@ -214,6 +223,13 @@ a, button { cursor: pointer; }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* 1.4.11 — controls set over the hero photograph. The light-theme --accent
+   measured 1.2–1.8:1 against the sky there; the on-dark gold over the header
+   scrim (Header.tsx) measures ≥ 3.4:1 at 375, 768 and 1440. */
+.on-photo :focus-visible {
+  outline-color: var(--accent-on-dark);
 }
 
 /* C-1 — 2.4.11 Focus Not Obscured. The consent banner is fixed to the bottom of

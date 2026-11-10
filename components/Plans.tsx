@@ -59,26 +59,33 @@ export default function Plans() {
             breaking the layout to sit outside it. */}
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {plans.sheets.map((p) => (
-            <li key={p.title} className="plan-item group cursor-zoom-in">
+            <li key={p.title} className="plan-item group">
               <figure>
-                <div
-                  className="rounded-xs border border-(--line-strong) relative flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-(--accent)"
+                {/* The zoom-in cursor used to promise an action that did not
+                    exist. The sheet is now a plain link to the full-resolution
+                    scan: works without JavaScript, from the keyboard, and in the
+                    browser's own image viewer. */}
+                <a
+                  href={p.src}
+                  className="rounded-xs border border-(--line-strong) relative flex items-center justify-center overflow-hidden cursor-zoom-in transition-colors duration-500 group-hover:border-(--accent) focus-visible:border-(--accent)"
                   style={{
                     padding: '1.5rem',
                     aspectRatio: '5 / 7',
                   }}
                 >
                   {/* 1.1.1 — alt says what the drawing shows; the caption below
-                      names the sheet. The two used to be the same string. */}
+                      names the sheet. The two used to be the same string. The
+                      link's name is the alt text plus what activating it does. */}
                   <Image
                     src={p.src}
                     alt={p.alt}
                     fill
-                    className="object-contain transition-transform duration-700 ease-out group-hover:scale-125"
+                    className="object-contain transition-transform duration-700 ease-out group-hover:scale-125 group-focus-within:scale-125"
                     style={{ filter: 'contrast(1.4)', padding: '1.5rem' }}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                </div>
+                  <span className="sr-only">— {plans.openLabel}</span>
+                </a>
                 <figcaption className="mt-4 flex gap-2 flex-col sm:flex-row items-baseline justify-between">
                   <h3 className="display-serif text-xl italic">{p.title}</h3>
                   <span className="label-mono text-(--fg-muted)">{p.subtitle}</span>

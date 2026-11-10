@@ -44,10 +44,8 @@ export const facts = {
   bathrooms: 2,
   floors: 3,
   yearBuilt: 2018,
-  price: 1899000,
-  /** What agencies previously listed it for — the anchor the counter starts from. */
-  priceAnchor: 2250000,
-  pricePerSqm: 4720,
+  price: 2250000,
+  pricePerSqm: 5597,
   currency: 'PLN',
 } as const;
 
@@ -88,7 +86,7 @@ export const ogImage = {
   headlineRightPrefix: 'na',
   headlineItalicEnd: 'Beskidy.',
   location: 'MESZNA · BESKID ŚLĄSKI',
-  facts: '402 m² · 1 600 m² działki · 1 899 000 zł',
+  facts: '402 m² · 1 600 m² działki · 2 250 000 zł',
   url: 'dom-meszna.pl',
 } as const;
 
@@ -287,7 +285,7 @@ export const potential = {
     {
       n: '05',
       title: 'Cena z marginesem',
-      body: '1 899 000 zł za 402 m² i 1 600 m² działki. Cena uwzględnia zakres prac — zostawia realny budżet na ich przeprowadzenie.',
+      body: '2 250 000 zł za 402 m² i 1 600 m² działki. Cena uwzględnia zakres prac — zostawia realny budżet na ich przeprowadzenie.',
     },
     {
       n: '06',
@@ -519,6 +517,8 @@ export const plans = {
   headline: { lead: 'Plany do', accent: 'wglądu.' },
   intro:
     'Dom został zaprojektowany przez Studio Atrium z Bielska-Białej. Pełna dokumentacja architektoniczna dostępna do wglądu — poniżej skany planów i sytuacji geodezyjnej.',
+  /** Appended (visually hidden) to each sheet's link name, after the alt text. */
+  openLabel: 'otwórz skan w pełnej rozdzielczości',
   sheets: [
     {
       src: '/images/plans/plan-site.jpg',
@@ -563,21 +563,13 @@ export const pricing = {
   eyebrow: '08 — Oferta',
   eyebrowAside: 'Sprzedaż bez pośredników',
   kicker: '✦ Bez pośredników · bez prowizji · bez ukrytych kosztów',
-  /** Rendered as the count-down target; the anchor it starts from is facts.priceAnchor. */
-  priceLabel: '1 899 000',
+  priceLabel: '2 250 000',
   currencySuffix: ' zł',
-  perSqm: '4 720 zł / m² za 402 m² i 1 600 m² działki.',
-  anchor: {
-    label: '↳ Wcześniej w ofertach agencyjnych',
-    before: 'Nieruchomość była wystawiona w ofertach pośredników za ',
-    amount: '2 250 000 zł',
-    after:
-      '. Oferta bezpośrednia oznacza realną oszczędność na prowizji i marży pośrednika — różnica trafia do Ciebie.',
-  },
+  perSqm: '5 597 zł / m² za 402 m² i 1 600 m² działki.',
   details: [
     {
       label: 'Cena za m²',
-      value: '4 720 zł',
+      value: '5 597 zł',
       note: 'Atrakcyjna stawka jak na lokalizację',
       accent: false,
     },
@@ -622,6 +614,14 @@ export const contact = {
         placeholder: 'np. najbliższa sobota, popołudnie',
       },
       wiadomosc: { label: 'Dodatkowe pytania' },
+    },
+    /** Shown after the label of every required field (3.3.2). */
+    requiredMarker: 'wymagane',
+    /** Inline validation, rendered under the field and linked with aria-describedby. */
+    errors: {
+      imie: 'Podaj imię i nazwisko.',
+      emailMissing: 'Podaj adres e-mail — na niego wyślę odpowiedź.',
+      emailFormat: 'Ten adres wygląda na niepełny — sprawdź, czy ma „@” i domenę, np. jan@example.pl.',
     },
     submit: 'Wyślij zapytanie',
     submitting: 'Wysyłam…',

@@ -7,6 +7,24 @@ import Arrow from './Arrow';
 import { contact, footer, site } from '@/data/site';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
+type Required = 'imie' | 'email';
+type Errors = Partial<Record<Required, string>>;
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// 3.3.1 / 3.3.3 — the browser's own bubbles vanish on blur and speak the
+// browser's language, not the page's. The form is noValidate and checks the two
+// required fields itself, in Polish, with the message kept next to the field.
+function validate(form: HTMLFormElement): Errors {
+  const value = (name: string) =>
+    ((form.elements.namedItem(name) as HTMLInputElement | null)?.value ?? '').trim();
+  const errors: Errors = {};
+  if (!value('imie')) errors.imie = contact.form.errors.imie;
+  const email = value('email');
+  if (!email) errors.email = contact.form.errors.emailMissing;
+  else if (!EMAIL.test(email)) errors.email = contact.form.errors.emailFormat;
+  return errors;
+}
 
 // Encode form data for Netlify Forms (application/x-www-form-urlencoded)
 function encode(data: Record<string, string>) {
@@ -15,13 +33,24 @@ function encode(data: Record<string, string>) {
     .join('&');
 }
 
+// 1.4.11 — the underline is the field's only visible boundary, so it uses
+// --line-control (≥ 3.4:1). Focus doubles it to 2px in the accent with an inset
+// shadow, so the field does not shift; an invalid field does the same in --error.
+// Keyboard focus also gets the global :focus-visible ring — an outline-hidden
+// utility here never applied, because the unlayered rule in globals.css wins.
 const fieldClass =
-  'w-full px-3 bg-transparent border-b border-(--line-strong) py-3 focus:border-(--accent) outline-hidden transition-colors';
+  'w-full px-3 bg-transparent border-b border-(--line-control) py-3 transition-colors focus:border-(--accent) focus:shadow-[inset_0_-1px_0_var(--accent)] aria-invalid:border-(--error) aria-invalid:shadow-[inset_0_-1px_0_var(--error)]';
 
 export default function Contact() {
   const root = useRef<HTMLElement>(null);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [errors, setErrors] = useState<Errors>({});
+
+  const invalid = (name: Required) =>
+    errors[name]
+      ? { 'aria-invalid': true as const, 'aria-describedby': `${name}-error` }
+      : {};
 
   useSectionAnim(root, () => {
     gsap.from('.contact-line', {
@@ -98,12 +127,37 @@ export default function Contact() {
             method="POST"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
+            noValidate
+            onChange={(e) => {
+              // Once a field has been flagged, re-check it as the visitor types
+              // so the message disappears the moment it is no longer true.
+              const target: EventTarget = e.target;
+              if (!(target instanceof HTMLInputElement)) return;
+              const name = target.name as Required;
+              if (!(name in errors)) return;
+              const next = validate(e.currentTarget);
+              setErrors((prev) => {
+                const copy = { ...prev };
+                if (next[name]) copy[name] = next[name];
+                else delete copy[name];
+                return copy;
+              });
+            }}
             onSubmit={async (e) => {
               e.preventDefault();
               if (status === 'submitting') return;
+              const form = e.currentTarget;
+              const found = validate(form);
+              setErrors(found);
+              const first = (Object.keys(found) as Required[])[0];
+              if (first) {
+                // Focus lands on the first invalid field; its aria-describedby
+                // makes the screen reader read the message with the label.
+                (form.elements.namedItem(first) as HTMLElement | null)?.focus();
+                return;
+              }
               setStatus('submitting');
               setErrorMsg('');
-              const form = e.currentTarget;
               const formData = new FormData(form);
               const payload: Record<string, string> = {
                 'form-name': contact.form.netlifyName,
@@ -155,6 +209,11 @@ export default function Contact() {
                   htmlFor="imie"
                 >
                   {contact.form.fields.imie.label}
+                  {/* 3.3.2 — visible to everyone; hidden from the accessibility
+                      tree because `required` already announces it. */}
+                  <span className="text-(--accent)" aria-hidden="true">
+                    {' '}· {contact.form.requiredMarker}
+                  </span>
                 </label>
                 <input
                   id="imie"
@@ -163,7 +222,13 @@ export default function Contact() {
                   autoComplete={contact.form.fields.imie.autoComplete}
                   required
                   className={fieldClass}
+                  {...invalid('imie')}
                 />
+                {errors.imie && (
+                  <p id="imie-error" className="mt-2 text-xs text-(--error)">
+                    {errors.imie}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -185,6 +250,9 @@ export default function Contact() {
             <div className="contact-field">
               <label className="label-mono text-(--fg-muted) block mb-2" htmlFor="email">
                 {contact.form.fields.email.label}
+                <span className="text-(--accent)" aria-hidden="true">
+                  {' '}· {contact.form.requiredMarker}
+                </span>
               </label>
               <input
                 id="email"
@@ -193,7 +261,13 @@ export default function Contact() {
                 autoComplete={contact.form.fields.email.autoComplete}
                 required
                 className={fieldClass}
+                {...invalid('email')}
               />
+              {errors.email && (
+                <p id="email-error" className="mt-2 text-xs text-(--error)">
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             <div className="contact-field">
@@ -240,8 +314,8 @@ export default function Contact() {
               )}
 
               {status === 'error' && (
-                <div className="contact-field border-l-2 border-red-500 pl-5 py-3">
-                  <div className="display-serif italic text-xl mb-1 text-red-500">
+                <div className="contact-field border-l-2 border-(--error) pl-5 py-3">
+                  <div className="display-serif italic text-xl mb-1 text-(--error)">
                     {contact.form.error.title}
                   </div>
                   <p className="text-sm opacity-75">

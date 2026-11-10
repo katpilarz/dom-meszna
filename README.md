@@ -130,7 +130,7 @@ Two theme tokens carry accessibility intent worth knowing about before editing
 
 ## Property data
 
-- **Price:** 1 899 000 zł (4 720 zł/m²) · no agent commission
+- **Price:** 2 250 000 zł (5 597 zł/m²) · no agent commission
 - **Area:** 402.35 m² total (170.75 m² living space) · 1 600 m² plot
 - **Rooms:** 7 · floors: 3 · built: 2018 · architect: Studio Atrium
 - **Address:** Meszna, Wilkowice municipality

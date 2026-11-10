@@ -36,13 +36,28 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        isOpaque ? 'glass py-4' : 'py-6'
+        isOpaque ? 'glass py-4' : 'on-photo py-6'
       }`}
       style={{
         borderBottom: isOpaque ? '1px solid var(--line)' : 'none',
         color: isOpaque ? 'var(--fg)' : '#ffffff',
       }}
     >
+      {/* 1.4.3 / 1.4.11 — over the hero the header sits on sky. Measured on the
+          real photographs at 375, 768 and 1440 without this band: the CTA label
+          3.3–4.9:1, the outlines 2.3–3.1:1, the focus ring 1.2–1.8:1. A 45% ink
+          band under the controls lifts them to ≥ 7.5:1 (text), ≥ 4.3:1
+          (outlines) and ≥ 3.4:1 (on-dark focus ring). It fades out below the
+          header so the photograph is not visibly cut. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[150%] transition-opacity duration-500"
+        style={{
+          opacity: isLight ? 1 : 0,
+          background:
+            'linear-gradient(to bottom, rgba(14,14,12,0.45) 0%, rgba(14,14,12,0.45) 60%, rgba(14,14,12,0) 100%)',
+        }}
+      />
       <div className="mx-auto max-w-[1880px] px-3 sm:px-5 md:px-10 flex items-center justify-between gap-2 sm:gap-4">
         <Link
           href="/"
@@ -70,7 +85,7 @@ export default function Header() {
             <div className="display-serif text-lg md:text-xl hidden sm:block">
               {header.wordmark}
             </div>
-            <div className="label-mono text-[0.55rem] opacity-60 hidden sm:block">
+            <div className="label-mono text-[0.55rem] opacity-80 hidden sm:block">
               {header.wordmarkSub}
             </div>
           </div>
@@ -82,40 +97,32 @@ export default function Header() {
               can jump to; the theme toggle stays outside, because a preference
               control is not a way of getting somewhere. */}
           <nav aria-label={header.navLabel}>
+            {/* The inversion is CSS so keyboard focus gets it too — it used to
+                be written by onMouseEnter/onMouseLeave, which only a pointer
+                can trigger. */}
             <Link
               href={header.cta.href}
-              className="group rounded-xs inline-flex items-center gap-2 sm:gap-3 display-serif italic text-lg sm:text-xl h-11 px-3 sm:px-5 md:px-6 py-2 transition-colors duration-500 whitespace-nowrap"
-              style={{
-                border: `1px solid ${isOpaque ? 'var(--fg)' : 'rgba(255,255,255,0.65)'}`,
-              }}
-              onMouseEnter={(e) => {
-                if (isOpaque) {
-                  e.currentTarget.style.backgroundColor = 'var(--fg)';
-                  e.currentTarget.style.color = 'var(--bg)';
-                } else {
-                  e.currentTarget.style.backgroundColor = '#ffffff';
-                  e.currentTarget.style.color = '#000000';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = '';
-              }}
+              className={`group rounded-xs inline-flex items-center gap-2 sm:gap-3 display-serif italic text-lg sm:text-xl h-11 px-3 sm:px-5 md:px-6 py-2 border transition-colors duration-500 whitespace-nowrap ${
+                isOpaque
+                  ? 'border-(--fg) hover:bg-(--fg) hover:text-(--bg) focus-visible:bg-(--fg) focus-visible:text-(--bg)'
+                  : 'border-white/65 hover:bg-white hover:text-black focus-visible:bg-white focus-visible:text-black'
+              }`}
             >
               {header.cta.label}
               <Arrow
                 size={24}
-                className="transition-transform duration-500 group-hover:translate-x-1"
+                className="transition-transform duration-500 group-hover:translate-x-1 group-focus-visible:translate-x-1"
               />
             </Link>
           </nav>
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="w-11 h-11 rounded-xs flex items-center justify-center transition-colors shrink-0 hover:opacity-70"
-              style={{
-                border: `1px solid ${isOpaque ? 'var(--line-strong)' : 'rgba(255,255,255,0.55)'}`,
-              }}
+              className={`w-11 h-11 rounded-xs flex items-center justify-center border transition shrink-0 ${
+                isOpaque
+                  ? 'border-(--line-strong) hover:bg-(--bg-alt)'
+                  : 'border-white/65 hover:opacity-70'
+              }`}
               aria-label={header.themeToggleLabel}
             >
               {theme === 'dark' ? (
