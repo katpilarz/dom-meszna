@@ -89,7 +89,7 @@ export default function Interior() {
           </p>
         </div>
 
-        {/* 1.3.1 — fifteen equivalent items; see Gallery.tsx. */}
+        {/* 1.3.1 — twelve equivalent items; see Gallery.tsx. */}
         <ul className="grid grid-cols-12 gap-4 md:gap-6">
           {interior.photos.map((p, i) => (
             <li key={p.src} className={`interior-item ${p.span}`}>
